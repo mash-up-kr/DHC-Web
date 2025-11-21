@@ -13,6 +13,10 @@ export type { CTAButtonProps, CTAButtonType, CTAButtonStatus, CTAButtonSize } fr
 export { ProgressBar } from './ProgressBar/ProgressBar';
 export type { ProgressBarProps } from './ProgressBar/ProgressBar';
 
+// Header Components
+export { Header } from './Header/Header';
+export type { HeaderProps, HeaderType } from './Header/Header';
+
 // 추가 컴포넌트 예시:
 // export { Input } from './Input';
 // export { Card } from './Card';
