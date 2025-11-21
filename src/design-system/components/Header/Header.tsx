@@ -76,6 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: '-10px', // left_btn.png 이미지 자체에 10px margin이 포함되어 있어 negative margin 적용
   };
 
   const titleStyle: React.CSSProperties = {
