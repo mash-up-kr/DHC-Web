@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Wanted Sans Font */
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,7 +20,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Wanted Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 @layer utilities {
