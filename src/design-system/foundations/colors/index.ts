@@ -35,6 +35,15 @@ export const colors = {
   background: {
     glassEffect: 'rgba(123, 134, 150, 0.15)', // neutral-300 with 15% opacity
     badgePrimary: 'rgba(94, 105, 212, 0.2)', // violet-400 with 20% opacity
+    main: '#0F1114', // neutral-900
+  },
+
+  // Semantic Colors - Text
+  text: {
+    main: '#F4F4F5', // neutral-30
+    bodyPrimary: '#D7E1EE', // neutral-100
+    highlightsPrimary: '#5E69D4', // violet-400
+    highlightsSecondary: '#B5BAEB', // violet-200
   },
 } as const;
 
