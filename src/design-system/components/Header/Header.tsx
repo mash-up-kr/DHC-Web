@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
     transform: 'translateX(-50%)',
     ...typography.body.body2,
     color: colors.text.main,
-    margin: 0,
+    margin: '9px 9px',
   };
 
   const currentPageStyle: React.CSSProperties = {
@@ -113,8 +113,8 @@ export const Header: React.FC<HeaderProps> = ({
             <Image
               src="/assets/design-system/left_btn.png"
               alt="뒤로가기"
-              width={24}
-              height={24}
+              width={44}
+              height={44}
             />
           </button>
 
@@ -125,13 +125,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* progressbar 타입: ProgressBar 표시 */}
           {type === 'progressbar' && (
-            <div style={{ width: '100%' }}>
+            <div style={{ flex: 1, margin: '19px 16px' }}>
               <ProgressBar value={progress} max={100} />
             </div>
           )}
           
           {/* 페이지 정보 (오른쪽) */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', margin: '11px 9.5px' }}>
             <span style={currentPageStyle}>{currentPage}</span>
             <span style={separatorAndTotalPageStyle}>/</span>
             <span style={separatorAndTotalPageStyle}>{totalPage}</span>
