@@ -23,13 +23,13 @@ export interface HeaderProps {
    */
   onBackClick?: () => void;
   /**
-   * 현재 페이지 번호
+   * 현재 페이지 번호 (페이지 정보를 표시할 때 사용)
    */
-  currentPage: number;
+  currentPage?: number;
   /**
-   * 전체 페이지 수
+   * 전체 페이지 수 (페이지 정보를 표시할 때 사용)
    */
-  totalPage: number;
+  totalPage?: number;
   /**
    * 헤더 제목 (type이 'title'일 때만 사용)
    */
@@ -129,13 +129,15 @@ export const Header: React.FC<HeaderProps> = ({
               <ProgressBar value={progress} max={100} />
             </div>
           )}
-          
+
           {/* 페이지 정보 (오른쪽) */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', margin: '11px 9.5px' }}>
-            <span style={currentPageStyle}>{currentPage}</span>
-            <span style={separatorAndTotalPageStyle}>/</span>
-            <span style={separatorAndTotalPageStyle}>{totalPage}</span>
-          </div>
+          {currentPage !== undefined && totalPage !== undefined && (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', margin: '11px 9.5px' }}>
+              <span style={currentPageStyle}>{currentPage}</span>
+              <span style={separatorAndTotalPageStyle}>/</span>
+              <span style={separatorAndTotalPageStyle}>{totalPage}</span>
+            </div>
+          )}
         </div>
       </div>
 

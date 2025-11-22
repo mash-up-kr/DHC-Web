@@ -59,7 +59,7 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 83%
    */
-  textGradient01: 'linear-gradient(90deg, #B5BAEB 16%, #F4F4F5 83%)',
+  textGradient01: 'linear-gradient(180deg, #B5BAEB 16%, #F4F4F5 83%)',
 
   /**
    * Text Gradient 02
@@ -68,7 +68,7 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 100%
    */
-  textGradient02: 'linear-gradient(90deg, #B5BAEB 16%, #F4F4F5 100%)',
+  textGradient02: 'linear-gradient(180deg, #B5BAEB 16%, #F4F4F5 100%)',
 
   /**
    * Background Gradient 01
