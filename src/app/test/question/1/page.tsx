@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import QuestionHeader from "@/components/QuestionHeader";
+import { Header } from "@/design-system/components/Header/Header";
 
 export default function Question1() {
   const router = useRouter();
@@ -16,7 +16,13 @@ export default function Question1() {
 
   return (
     <>
-      <QuestionHeader currentStep={1} totalSteps={3} />
+      <Header
+        type="progressbar"
+        currentPage={1}
+        totalPage={3}
+        progress={33.33}
+        onBackClick={() => router.back()}
+      />
       <main className="pt-28 pb-8 px-6 min-h-screen flex flex-col">
         <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
