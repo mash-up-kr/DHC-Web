@@ -71,8 +71,6 @@ DHC-Web/
 ```bash
 pnpm dev
 ```
-- 로컬: http://localhost:3000
-- 네트워크: http://192.168.0.29:3000
 
 ### 프로덕션 빌드
 ```bash
