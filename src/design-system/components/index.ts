@@ -19,7 +19,7 @@ export type { HeaderProps, HeaderType } from './Header/Header';
 
 // InputField Components
 export { InputField } from './InputField/InputField';
-export type { InputFieldProps, InputFieldType, InputFieldStatus } from './InputField/InputField';
+export type { InputFieldProps, InputFieldType } from './InputField/InputField';
 
 // 추가 컴포넌트 예시:
 // export { Card } from './Card';

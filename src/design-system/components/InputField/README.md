@@ -11,20 +11,29 @@
 | type | `'text' \| 'number' \| 'date' \| 'email' \| 'tel'` | `'text'` | 입력 필드 타입 |
 | label | `string` | - | 라벨 텍스트 |
 | placeholder | `string` | - | 플레이스홀더 텍스트 |
-| value | `string` | - | 입력값 |
+| value | `string` | `''` | 입력값 |
 | onChange | `(value: string) => void` | - | 입력값 변경 핸들러 |
-| errorMessage | `string` | - | 에러 메시지 |
 | disabled | `boolean` | `false` | 비활성화 여부 |
 | fullWidth | `boolean` | `true` | 전체 너비 사용 여부 |
 | className | `string` | `''` | 추가 CSS 클래스 |
 | maxLength | `number` | - | 최대 입력 길이 |
 
-## 상태 (Status)
+## 상태 (State)
 
-- **default**: 기본 상태
-- **focused**: 포커스된 상태
-- **error**: 에러 상태 (errorMessage가 있을 때)
-- **disabled**: 비활성화 상태
+InputField는 세 가지 상태를 조합하여 스타일을 결정합니다:
+
+- **Active**: value가 있으면 True, 없으면 False
+- **Focus**: 입력 필드에 포커스되면 True
+- **Disable**: disabled prop이 true이면 True
+
+### 상태별 스타일
+
+| Active | Disable | Focus | Border | Text Color |
+|--------|---------|-------|--------|------------|
+| True | False | True | 1px solid neutral-500 | text.highlightsSecondary |
+| True | False | False | none | text.highlightsSecondary |
+| True | True | - | none | neutral-300 |
+| False | - | - | none | highlightsSecondary (20% alpha) |
 
 ## 사용 예시
 
@@ -47,18 +56,6 @@ function Example() {
 }
 ```
 
-### 에러 상태
-
-```tsx
-<InputField
-  label="이메일"
-  type="email"
-  placeholder="이메일을 입력하세요"
-  value={email}
-  onChange={setEmail}
-  errorMessage="올바른 이메일 형식이 아닙니다"
-/>
-```
 
 ### 날짜 입력
 
@@ -81,20 +78,29 @@ function Example() {
 />
 ```
 
-## 스타일
+## 공통 스타일
 
-- **배경색**: `colors.background.main`
-- **테두리**: 상태에 따라 변경
-  - default: `colors.neutral[500]`
-  - focused: `colors.violet[400]`
-  - error: `#FF6B6B`
-  - disabled: `colors.neutral[600]`
-- **텍스트**: `typography.body.body3`
-- **에러 메시지**: `typography.body.body6`, `#FF6B6B`
+- **배경색**: `colors.neutral[700]`
+- **Corner Radius**: `8px`
+- **텍스트 Typography**: `typography.title.h6`
+- **Padding**: `12px 16px`
+
+## 상태별 스타일 상세
+
+### Active=True, Disable=False
+- Focus=True: Border `1px solid neutral-500`, 텍스트 `text.highlightsSecondary`
+- Focus=False: Border 없음, 텍스트 `text.highlightsSecondary`
+
+### Active=True, Disable=True
+- Border 없음
+- 텍스트 `neutral-300`
+
+### Active=False
+- Border 없음
+- 텍스트 `highlightsSecondary` with 20% alpha
 
 ## TODO
 
-- [ ] 실제 디자인 스펙에 맞게 스타일 수정
 - [ ] 접근성(a11y) 개선
 - [ ] 아이콘 지원 추가
 - [ ] 헬퍼 텍스트 추가

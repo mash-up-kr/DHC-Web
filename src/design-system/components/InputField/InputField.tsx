@@ -12,7 +12,6 @@ import { colors } from '../../foundations/colors';
 import { typography } from '../../foundations/typography';
 
 export type InputFieldType = 'text' | 'number' | 'date' | 'email' | 'tel';
-export type InputFieldStatus = 'default' | 'focused' | 'error' | 'disabled';
 
 export interface InputFieldProps {
   /**
@@ -41,11 +40,6 @@ export interface InputFieldProps {
   onChange?: (value: string) => void;
 
   /**
-   * 에러 메시지
-   */
-  errorMessage?: string;
-
-  /**
    * 비활성화 여부
    */
   disabled?: boolean;
@@ -70,9 +64,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   type = 'text',
   label,
   placeholder,
-  value,
+  value = '',
   onChange,
-  errorMessage,
   disabled = false,
   fullWidth = true,
   className = '',
@@ -80,14 +73,8 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
   const [isFocused, setIsFocused] = React.useState(false);
 
-  const getStatus = (): InputFieldStatus => {
-    if (disabled) return 'disabled';
-    if (errorMessage) return 'error';
-    if (isFocused) return 'focused';
-    return 'default';
-  };
-
-  const status = getStatus();
+  // Active: value가 있으면 True
+  const isActive = value.length > 0;
 
   // 컨테이너 스타일
   const containerStyle: React.CSSProperties = {
@@ -104,51 +91,46 @@ export const InputField: React.FC<InputFieldProps> = ({
 
   // 입력 필드 스타일
   const getInputStyles = (): React.CSSProperties => {
+    // 공통 스타일
     const baseStyle: React.CSSProperties = {
       width: '100%',
       padding: '12px 16px',
       borderRadius: '8px',
-      border: '1px solid',
-      ...typography.body.body3,
+      backgroundColor: colors.neutral[700],
+      ...typography.title.h6,
       transition: 'all 0.2s ease',
       outline: 'none',
     };
 
-    const statusStyles: Record<InputFieldStatus, Partial<React.CSSProperties>> = {
-      default: {
-        backgroundColor: colors.background.main,
-        borderColor: colors.neutral[500],
-        color: colors.text.main,
-      },
-      focused: {
-        backgroundColor: colors.background.main,
-        borderColor: colors.violet[400],
-        color: colors.text.main,
-      },
-      error: {
-        backgroundColor: colors.background.main,
-        borderColor: '#FF6B6B',
-        color: colors.text.main,
-      },
-      disabled: {
-        backgroundColor: colors.neutral[700],
-        borderColor: colors.neutral[600],
-        color: colors.neutral[400],
-        cursor: 'not-allowed',
-      },
-    };
+    // 텍스트 색상 결정
+    let textColor: string;
+    if (isActive && disabled) {
+      // Active=True, Disable=True
+      textColor = colors.neutral[300];
+    } else if (isActive && !disabled) {
+      // Active=True, Disable=False
+      textColor = colors.text.highlightsSecondary;
+    } else {
+      // Active=False
+      textColor = `rgba(181, 186, 235, 0.2)`; // highlightsSecondary with 20% alpha
+    }
+
+    // 보더 결정
+    let borderStyle: string;
+    if (isActive && !disabled && isFocused) {
+      // Active=True, Disable=False, Focus=True
+      borderStyle = `1px solid ${colors.neutral[500]}`;
+    } else {
+      // 그 외: 보더 없음
+      borderStyle = 'none';
+    }
 
     return {
       ...baseStyle,
-      ...statusStyles[status],
+      color: textColor,
+      border: borderStyle,
+      cursor: disabled ? 'not-allowed' : 'text',
     };
-  };
-
-  // 에러 메시지 스타일
-  const errorStyle: React.CSSProperties = {
-    marginTop: '8px',
-    ...typography.body.body6,
-    color: '#FF6B6B',
   };
 
   return (
@@ -165,7 +147,6 @@ export const InputField: React.FC<InputFieldProps> = ({
         maxLength={maxLength}
         style={getInputStyles()}
       />
-      {errorMessage && <div style={errorStyle}>{errorMessage}</div>}
     </div>
   );
 };
