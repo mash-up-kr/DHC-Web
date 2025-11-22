@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
+import { colors } from "@/design-system/foundations/colors";
 
 export default function Question1() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Question1() {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }}>
       <Header
         type="progressbar"
         currentPage={1}
@@ -59,6 +60,6 @@ export default function Question1() {
           </button>
         </div>
       </main>
-    </>
+    </div>
   );
 }

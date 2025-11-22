@@ -59,6 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
     width: '100%',
     padding: '16px 20px',
     gap: '12px',
+    backgroundColor: 'transparent',
   };
 
   const topRowStyle: React.CSSProperties = {
