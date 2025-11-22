@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="뒤로가기"
           >
             <Image
-              src="/assets/left_btn.png"
+              src="/assets/design-system/left_btn.png"
               alt="뒤로가기"
               width={24}
               height={24}
