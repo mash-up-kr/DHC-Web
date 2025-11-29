@@ -98,27 +98,28 @@ export const InputField: React.FC<InputFieldProps> = ({
       borderRadius: '8px',
       backgroundColor: colors.neutral[700],
       ...typography.title.h6,
+      textAlign: 'center',
       transition: 'all 0.2s ease',
       outline: 'none',
     };
 
     // 텍스트 색상 결정
     let textColor: string;
-    if (isActive && disabled) {
-      // Active=True, Disable=True
+    if (disabled) {
+      // Disable=True
       textColor = colors.neutral[300];
-    } else if (isActive && !disabled) {
+    } else if (isActive) {
       // Active=True, Disable=False
       textColor = colors.text.highlightsSecondary;
     } else {
-      // Active=False
-      textColor = `rgba(181, 186, 235, 0.2)`; // highlightsSecondary with 20% alpha
+      // Active=False (placeholder 상태) - 입력 가능하도록 적절한 색상 유지
+      textColor = colors.text.highlightsSecondary;
     }
 
     // 보더 결정
     let borderStyle: string;
-    if (isActive && !disabled && isFocused) {
-      // Active=True, Disable=False, Focus=True
+    if (!disabled && isFocused) {
+      // Focus=True
       borderStyle = `1px solid ${colors.neutral[500]}`;
     } else {
       // 그 외: 보더 없음
