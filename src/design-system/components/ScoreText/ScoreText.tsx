@@ -26,7 +26,7 @@ export interface ScoreTextProps {
    */
   badgeText: string;
   /**
-   * 점수 (result 타입에서 사용)
+   * 점수 (result 타입에서 사용, title과 함께 사용 불가)
    */
   score?: number;
   /**
@@ -34,6 +34,10 @@ export interface ScoreTextProps {
    * @default '점'
    */
   scoreUnit?: string;
+  /**
+   * 메인 텍스트 (result 타입에서 score 대신 사용)
+   */
+  title?: string;
   /**
    * 설명 텍스트 (result 타입에서 사용)
    */
@@ -53,6 +57,7 @@ export const ScoreText: React.FC<ScoreTextProps> = ({
   badgeText,
   score,
   scoreUnit = '점',
+  title,
   description,
   loadingText,
   className = '',
@@ -109,8 +114,7 @@ export const ScoreText: React.FC<ScoreTextProps> = ({
     <div className={className} style={containerStyle}>
       <Badge type="date">{badgeText}</Badge>
       <div style={scoreStyle}>
-        {score}
-        {scoreUnit}
+        {title ? title : `${score}${scoreUnit}`}
       </div>
       {description && <div style={descriptionStyle}>{description}</div>}
     </div>
