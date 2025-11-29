@@ -128,7 +128,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
         <InputField
           type={item.type || 'text'}
           value={item.value}
-          onChange={(value) => onChange(item.key, value)}
+          onChange={(value: string) => onChange(item.key, value)}
           placeholder={item.placeholder}
           disabled={item.disabled}
           maxLength={item.maxLength}
