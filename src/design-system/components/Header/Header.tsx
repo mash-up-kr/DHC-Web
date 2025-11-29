@@ -79,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
     flexDirection: 'row',
     alignItems: type === 'screenInfo' ? 'flex-end' : 'center',
     justifyContent: type === 'progressBar' ? 'space-between' : undefined,
-    gap: type === 'progressBar' ? '113px' : undefined,
+    gap: type === 'progressBar' ? '16px' : undefined,
     width: '100%',
     padding: '8px 12px 0px',
     background:
