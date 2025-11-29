@@ -6,16 +6,18 @@ import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { LabelButton } from "@/design-system/components/LabelButton";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
+import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 
 export default function Question1() {
   const router = useRouter();
-  const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
 
+  const isFormValid = gender && name;
+
   const handleNext = () => {
-    if (birthdate) {
+    if (isFormValid) {
       router.push("/test/question/2");
     }
   };
@@ -79,33 +81,17 @@ export default function Question1() {
         onChange={(_, value) => setName(value)}
       />
 
-      <main className="pb-8 px-6 flex flex-col">
-        <div className="flex-1">
-          <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700 mb-2">
-            생년월일
-          </label>
-          <input
-            type="date"
-            id="birthdate"
-            value={birthdate}
-            onChange={(e) => setBirthdate(e.target.value)}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none text-lg"
-            max={new Date().toISOString().split('T')[0]}
-          />
-        </div>
-
-        <button
-          onClick={handleNext}
-          disabled={!birthdate}
-          className={`w-full font-semibold py-4 px-8 rounded-lg transition-colors duration-200 mt-6 ${
-            birthdate
-              ? "bg-pink-600 hover:bg-pink-700 text-white"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
-          }`}
-        >
-          다음
-        </button>
-      </main>
+      {/* CTA 버튼 */}
+      <div
+        className="fixed bottom-0 left-0 right-0"
+        style={{ backgroundColor: colors.background.main }}
+      >
+        <CTAButtonGroup
+          type="oneButton"
+          secondaryButtonText="다음"
+          onSecondaryClick={handleNext}
+        />
+      </div>
     </div>
   );
 }
