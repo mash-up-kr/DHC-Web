@@ -118,10 +118,14 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
     gap: '8px',
   };
 
-  const renderInputWithSuffix = (item: InputFieldItem, isFlexible: boolean) => {
-    const inputWrapperStyle: React.CSSProperties = isFlexible
-      ? { flex: 1 }
-      : { width: '172px' };
+  const renderInputWithSuffix = (item: InputFieldItem, index: number) => {
+    // single 타입이면 항상 전체 너비, multi 타입이면 첫 번째는 172px, 나머지는 flex
+    const inputWrapperStyle: React.CSSProperties =
+      type === 'single'
+        ? { flex: 1 }
+        : index === 0
+          ? { width: '172px' }
+          : { flex: 1 };
 
     return (
       <div key={item.key} style={{ ...inputWrapperStyle, position: 'relative' }}>
@@ -160,7 +164,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
       <div style={inputContainerStyle}>
         <div style={inputRowStyle}>
           {items.map((item, index) =>
-            renderInputWithSuffix(item, type === 'multi' && index > 0)
+            renderInputWithSuffix(item, index)
           )}
         </div>
       </div>
