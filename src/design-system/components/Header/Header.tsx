@@ -31,13 +31,13 @@ export interface HeaderProps {
    */
   onBackClick?: () => void;
   /**
-   * 현재 페이지 번호
+   * 현재 페이지 번호 (페이지 정보를 표시할 때 사용)
    */
-  currentPage: number;
+  currentPage?: number;
   /**
-   * 전체 페이지 수
+   * 전체 페이지 수 (페이지 정보를 표시할 때 사용)
    */
-  totalPage: number;
+  totalPage?: number;
   /**
    * 헤더 제목 (type이 'screenInfo'일 때 사용)
    */
