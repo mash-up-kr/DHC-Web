@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
+import { colors } from "@/design-system/foundations/colors";
 
 export default function Home() {
   const router = useRouter();
@@ -11,7 +12,10 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-pink-50 to-white">
+    <main
+      className="flex min-h-screen flex-col items-center p-6"
+      style={{ backgroundColor: colors.background.main }}
+    >
       <Header
         type="screenInfo"
         title="그녀와 나의 궁합은?!"
@@ -21,7 +25,23 @@ export default function Home() {
         showIndicator={false}
         className="fixed top-0 left-0 right-0 z-50"
       />
-      <div className="text-center max-w-md">
+
+      {/* Header 높이(52px) + 40px 공백 */}
+      <div style={{ height: '92px' }} />
+
+      {/* 임시 그래픽 영역 */}
+      <div
+        className="w-full flex items-center justify-center -mx-6"
+        style={{
+          height: '188px',
+          backgroundColor: colors.violet[50],
+          width: 'calc(100% + 48px)',
+        }}
+      >
+        <span style={{ color: colors.neutral[500] }}>그래픽 (변경예정)</span>
+      </div>
+
+      <div className="text-center max-w-md mt-8">
         <div className="mb-6">
           <span className="text-6xl mb-4 inline-block">💕</span>
         </div>
