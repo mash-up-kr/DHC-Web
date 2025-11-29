@@ -5,12 +5,14 @@ import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { LabelButton } from "@/design-system/components/LabelButton";
+import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { colors } from "@/design-system/foundations/colors";
 
 export default function Question1() {
   const router = useRouter();
   const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
 
   const handleNext = () => {
     if (birthdate) {
@@ -64,6 +66,17 @@ export default function Question1() {
         ]}
         selectedValue={gender}
         onSelect={setGender}
+      />
+
+      {/* 이름 입력 */}
+      <InputFieldGroup
+        type="single"
+        size="md"
+        label="내 이름"
+        items={[
+          { key: 'name', value: name, placeholder: '홍길동' },
+        ]}
+        onChange={(_, value) => setName(value)}
       />
 
       <main className="pb-8 px-6 flex flex-col">
