@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
+import { LabelButton } from "@/design-system/components/LabelButton";
 import { colors } from "@/design-system/foundations/colors";
 
 export default function Question1() {
   const router = useRouter();
   const [birthdate, setBirthdate] = useState("");
+  const [gender, setGender] = useState("");
 
   const handleNext = () => {
     if (birthdate) {
@@ -49,6 +51,19 @@ export default function Question1() {
         size="sm"
         title="Q1.당신에 대해서 알려주세요"
         description="성별과 이름을 알려주세요"
+      />
+
+      {/* 성별 선택 */}
+      <LabelButton
+        type="select"
+        size="md"
+        label="성별"
+        options={[
+          { label: '남성', value: 'male' },
+          { label: '여성', value: 'female' },
+        ]}
+        selectedValue={gender}
+        onSelect={setGender}
       />
 
       <main className="pb-8 px-6 flex flex-col">
