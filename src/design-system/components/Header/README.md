@@ -72,7 +72,7 @@ import { Header } from '@/design-system';
 - 페이지 정보 (오른쪽)
 
 **구성:**
-- 뒤로가기 버튼: `assets/left_btn.png`
+- 뒤로가기 버튼: `assets/design-system/icon-back.svg`
 - 제목: typography.body.body2, colors.text.main
 - 페이지 정보:
   - 현재 페이지: typography.title.h5, colors.text.main
@@ -90,7 +90,7 @@ import { Header } from '@/design-system';
 - **두 번째 줄**: 진행도 바 (전체 너비)
 
 **구성:**
-- 뒤로가기 버튼: `assets/left_btn.png` (왼쪽)
+- 뒤로가기 버튼: `assets/design-system/icon-back.svg` (왼쪽)
 - 페이지 정보 (오른쪽):
   - 현재 페이지: typography.title.h5, colors.text.main
   - '/' 구분자: typography.body.body3, colors.text.main (20% alpha)
@@ -122,9 +122,9 @@ import { Header } from '@/design-system';
 ## Assets
 
 ### 필수 이미지
-- **경로**: `/public/assets/left_btn.png`
+- **경로**: `/public/assets/design-system/icon-back.svg`
 - **용도**: 뒤로가기 버튼
-- **권장 크기**: 24x24px 이상 (SVG 권장)
+- **크기**: 24x24px (SVG)
 
 ## 사용 사례
 
@@ -163,8 +163,5 @@ import { Header } from '@/design-system';
 
 ## TODO
 
-- [ ] left_btn.png 이미지 추가 (public/assets/)
-- [ ] SVG 아이콘으로 교체 검토
 - [ ] 반응형 디자인 (모바일/태블릿/데스크톱)
-- [ ] 접근성 개선 (aria-label, role 등)
 - [ ] 애니메이션 효과 (페이지 전환 시)
