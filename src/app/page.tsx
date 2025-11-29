@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Header } from "@/design-system/components/Header/Header";
 
 export default function Home() {
   const router = useRouter();
@@ -11,6 +12,15 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-pink-50 to-white">
+      <Header
+        type="screenInfo"
+        title="그녀와 나의 궁합은?!"
+        currentPage={1}
+        totalPage={4}
+        showBackButton={false}
+        showIndicator={false}
+        className="fixed top-0 left-0 right-0 z-50"
+      />
       <div className="text-center max-w-md">
         <div className="mb-6">
           <span className="text-6xl mb-4 inline-block">💕</span>
