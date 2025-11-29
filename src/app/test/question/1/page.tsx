@@ -18,7 +18,7 @@ export default function Question1() {
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }}>
       <Header
-        type="progressbar"
+        type="progressBar"
         currentPage={1}
         totalPage={3}
         progress={33.33}
