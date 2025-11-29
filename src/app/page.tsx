@@ -1,17 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
+import { MoreBtn } from "@/design-system/components/MoreBtn";
+import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleStart = () => {
-    router.push("/test/question/1");
-  };
-
   return (
     <main
       className="flex min-h-screen flex-col items-center p-6"
@@ -53,14 +48,23 @@ export default function Home() {
         description={"그녀의 생일을 입력하고\n나와의 궁합을 쉽게 확인해보세요!"}
       />
 
-      <div className="text-center max-w-md mt-8">
-        <button
-          onClick={handleStart}
-          className="w-full max-w-xs bg-pink-600 hover:bg-pink-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg"
-        >
-          시작하기
-        </button>
+      {/* 참여 인원 표시 */}
+      <div style={{ marginTop: '12px' }}>
+        <MoreBtn showIcon={false}>
+          지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
+        </MoreBtn>
       </div>
+
+      {/* CTA 버튼 그룹 */}
+      <CTAButtonGroup
+        type="twoButton"
+        primaryButtonText="테스트 시작하기"
+        onPrimaryClick={() => {}}
+        tertiaryButtonText="공유하기"
+        onTertiaryClick={() => {}}
+        className="fixed bottom-0 left-0 right-0"
+      />
+
     </main>
   );
 }
