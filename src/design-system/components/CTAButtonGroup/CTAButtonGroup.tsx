@@ -5,7 +5,7 @@
  * Figma: https://www.figma.com/design/7xHHLZb5X78nH2Is3CIpFC/Design---Flifin-v3.0.0?node-id=560-35610
  *
  * Variants:
- * - Type=one button: 버튼 1개 (Secondary)
+ * - Type=one button: 버튼 1개 (Primary)
  * - Type=two button: 버튼 2개 (Primary + Tertiary)
  */
 
@@ -22,7 +22,7 @@ export interface CTAButtonGroupProps {
    */
   type: CTAButtonGroupType;
   /**
-   * Primary 버튼 텍스트 (twoButton 타입에서 사용)
+   * Primary 버튼 텍스트
    */
   primaryButtonText?: string;
   /**
@@ -30,13 +30,9 @@ export interface CTAButtonGroupProps {
    */
   onPrimaryClick?: () => void;
   /**
-   * Secondary 버튼 텍스트 (oneButton 타입에서 사용)
+   * Primary 버튼 비활성화 여부
    */
-  secondaryButtonText?: string;
-  /**
-   * Secondary 버튼 클릭 핸들러
-   */
-  onSecondaryClick?: () => void;
+  primaryDisabled?: boolean;
   /**
    * Tertiary 버튼 텍스트 (twoButton 타입에서 사용)
    */
@@ -55,8 +51,7 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
   type,
   primaryButtonText = '확인',
   onPrimaryClick,
-  secondaryButtonText = '확인',
-  onSecondaryClick,
+  primaryDisabled = false,
   tertiaryButtonText = '취소',
   onTertiaryClick,
   className = '',
@@ -73,12 +68,13 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
     return (
       <div className={className} style={containerStyle}>
         <CTAButton
-          buttonType="secondary"
+          buttonType="primary"
           size="xl"
           fullWidth
-          onClick={onSecondaryClick}
+          status={primaryDisabled ? 'disabled' : 'active'}
+          onClick={onPrimaryClick}
         >
-          {secondaryButtonText}
+          {primaryButtonText}
         </CTAButton>
       </div>
     );
@@ -91,6 +87,7 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
         buttonType="primary"
         size="xl"
         fullWidth
+        status={primaryDisabled ? 'disabled' : 'active'}
         onClick={onPrimaryClick}
       >
         {primaryButtonText}

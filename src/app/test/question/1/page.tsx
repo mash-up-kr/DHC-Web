@@ -88,8 +88,9 @@ export default function Question1() {
       >
         <CTAButtonGroup
           type="oneButton"
-          secondaryButtonText="다음"
-          onSecondaryClick={handleNext}
+          primaryButtonText="다음"
+          primaryDisabled={!isFormValid}
+          onPrimaryClick={handleNext}
         />
       </div>
     </div>
