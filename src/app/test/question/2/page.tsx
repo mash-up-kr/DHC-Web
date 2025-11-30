@@ -112,10 +112,13 @@ export default function Question2() {
             type="text"
             value={userBirth.birthTime}
             onChange={(value) => {
-              const numericValue = value.replace(/[^0-9]/g, '');
-              setUserBirth({ birthTime: numericValue });
+              const numericValue = value.replace(/[^0-9]/g, '').slice(0, 4);
+              const formattedValue = numericValue.length > 2
+                ? `${numericValue.slice(0, 2)}:${numericValue.slice(2)}`
+                : numericValue;
+              setUserBirth({ birthTime: formattedValue });
             }}
-            placeholder="00 : 00"
+            placeholder="00:00"
             disabled={userBirth.unknownTime}
           />
         </div>
