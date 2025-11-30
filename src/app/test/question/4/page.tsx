@@ -17,8 +17,11 @@ export default function Question4() {
   const [day, setDay] = useState("");
   const [unknownTime, setUnknownTime] = useState(false);
   const [birthTime, setBirthTime] = useState("");
+  const [hairColor, setHairColor] = useState("");
+  const [eyeColor, setEyeColor] = useState("");
+  const [skinColor, setSkinColor] = useState("");
 
-  const isFormValid = year && month && day && (unknownTime || birthTime);
+  const isFormValid = year && month && day && (unknownTime || birthTime) && hairColor && eyeColor && skinColor;
 
   const handleNext = () => {
     if (isFormValid) {
@@ -119,6 +122,55 @@ export default function Question4() {
             disabled={unknownTime}
           />
         </div>
+
+        {/* 하단 24px 여백 */}
+        <div style={{ height: '24px' }} />
+
+        {/* 안내 메시지 */}
+        <Title
+          type="page"
+          size="sm"
+          title={`생일을 몰라도 괜찮아요\n아래의 정보로 운을 점쳐드릴게요!`}
+        />
+
+        {/* 머리색상 선택 */}
+        <LabelButton
+          type="select"
+          size="md"
+          label="그녀의 머리색상"
+          options={[
+            { label: '밝은 편이다', value: 'light' },
+            { label: '어두운 편이다', value: 'dark' },
+          ]}
+          selectedValue={hairColor}
+          onSelect={setHairColor}
+        />
+
+        {/* 눈동자 색상 선택 */}
+        <LabelButton
+          type="select"
+          size="md"
+          label="눈동자 색상"
+          options={[
+            { label: '노란편이다', value: 'yellow' },
+            { label: '푸른편이다', value: 'blue' },
+          ]}
+          selectedValue={eyeColor}
+          onSelect={setEyeColor}
+        />
+
+        {/* 피부색 선택 */}
+        <LabelButton
+          type="select"
+          size="md"
+          label="피부색"
+          options={[
+            { label: '하얀 편이다', value: 'white' },
+            { label: '어두운 편이다', value: 'dark' },
+          ]}
+          selectedValue={skinColor}
+          onSelect={setSkinColor}
+        />
       </div>
 
       {/* CTA 버튼 */}
