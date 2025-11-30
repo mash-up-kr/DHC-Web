@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
@@ -9,16 +8,13 @@ import { InputField } from "@/design-system/components/InputField";
 import { LabelButton } from "@/design-system/components/LabelButton";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Question2() {
   const router = useRouter();
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [unknownTime, setUnknownTime] = useState(false);
-  const [birthTime, setBirthTime] = useState("");
+  const { userBirth, setUserBirth } = useTestStore();
 
-  const isFormValid = year && month && day && (unknownTime || birthTime);
+  const isFormValid = userBirth.year && userBirth.month && userBirth.day && (userBirth.unknownTime || userBirth.birthTime);
 
   const handleNext = () => {
     if (isFormValid) {
@@ -88,14 +84,14 @@ export default function Question2() {
           size="md"
           label="생년월일"
           items={[
-            { key: 'year', value: year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: userBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
+            { key: 'month', value: userBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
+            { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            if (key === 'year') setYear(value);
-            else if (key === 'month') setMonth(value);
-            else if (key === 'day') setDay(value);
+            if (key === 'year') setUserBirth({ year: value });
+            else if (key === 'month') setUserBirth({ month: value });
+            else if (key === 'day') setUserBirth({ day: value });
           }}
         />
 
@@ -105,18 +101,18 @@ export default function Question2() {
           size="sm"
           label="태어난 시간"
           checkLabel="잘 모르겠어요"
-          checked={unknownTime}
-          onCheck={setUnknownTime}
+          checked={userBirth.unknownTime}
+          onCheck={(checked) => setUserBirth({ unknownTime: checked })}
         />
 
         {/* 시간 입력 */}
         <div style={{ padding: '0 20px 20px' }}>
           <InputField
             type="text"
-            value={birthTime}
-            onChange={setBirthTime}
+            value={userBirth.birthTime}
+            onChange={(value) => setUserBirth({ birthTime: value })}
             placeholder="00 : 00"
-            disabled={unknownTime}
+            disabled={userBirth.unknownTime}
           />
         </div>
       </div>

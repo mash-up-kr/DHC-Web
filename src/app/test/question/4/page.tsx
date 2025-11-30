@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
@@ -9,19 +8,13 @@ import { InputField } from "@/design-system/components/InputField";
 import { LabelButton } from "@/design-system/components/LabelButton";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Question4() {
   const router = useRouter();
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [unknownTime, setUnknownTime] = useState(false);
-  const [birthTime, setBirthTime] = useState("");
-  const [hairColor, setHairColor] = useState("");
-  const [eyeColor, setEyeColor] = useState("");
-  const [skinColor, setSkinColor] = useState("");
+  const { partnerBirth, setPartnerBirth } = useTestStore();
 
-  const isFormValid = year && month && day && (unknownTime || birthTime) && hairColor && eyeColor && skinColor;
+  const isFormValid = partnerBirth.year && partnerBirth.month && partnerBirth.day && (partnerBirth.unknownTime || partnerBirth.birthTime) && partnerBirth.hairColor && partnerBirth.eyeColor && partnerBirth.skinColor;
 
   const handleNext = () => {
     if (isFormValid) {
@@ -91,14 +84,14 @@ export default function Question4() {
           size="md"
           label="생년월일"
           items={[
-            { key: 'year', value: year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: partnerBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
+            { key: 'month', value: partnerBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
+            { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            if (key === 'year') setYear(value);
-            else if (key === 'month') setMonth(value);
-            else if (key === 'day') setDay(value);
+            if (key === 'year') setPartnerBirth({ year: value });
+            else if (key === 'month') setPartnerBirth({ month: value });
+            else if (key === 'day') setPartnerBirth({ day: value });
           }}
         />
 
@@ -108,18 +101,18 @@ export default function Question4() {
           size="sm"
           label="태어난 시간"
           checkLabel="잘 모르겠어요"
-          checked={unknownTime}
-          onCheck={setUnknownTime}
+          checked={partnerBirth.unknownTime}
+          onCheck={(checked) => setPartnerBirth({ unknownTime: checked })}
         />
 
         {/* 시간 입력 */}
         <div style={{ padding: '0 20px 20px' }}>
           <InputField
             type="text"
-            value={birthTime}
-            onChange={setBirthTime}
+            value={partnerBirth.birthTime}
+            onChange={(value) => setPartnerBirth({ birthTime: value })}
             placeholder="00 : 00"
-            disabled={unknownTime}
+            disabled={partnerBirth.unknownTime}
           />
         </div>
 
@@ -142,8 +135,8 @@ export default function Question4() {
             { label: '밝은 편이다', value: 'light' },
             { label: '어두운 편이다', value: 'dark' },
           ]}
-          selectedValue={hairColor}
-          onSelect={setHairColor}
+          selectedValue={partnerBirth.hairColor}
+          onSelect={(value) => setPartnerBirth({ hairColor: value })}
         />
 
         {/* 눈동자 색상 선택 */}
@@ -155,8 +148,8 @@ export default function Question4() {
             { label: '노란편이다', value: 'yellow' },
             { label: '푸른편이다', value: 'blue' },
           ]}
-          selectedValue={eyeColor}
-          onSelect={setEyeColor}
+          selectedValue={partnerBirth.eyeColor}
+          onSelect={(value) => setPartnerBirth({ eyeColor: value })}
         />
 
         {/* 피부색 선택 */}
@@ -168,8 +161,8 @@ export default function Question4() {
             { label: '하얀 편이다', value: 'white' },
             { label: '어두운 편이다', value: 'dark' },
           ]}
-          selectedValue={skinColor}
-          onSelect={setSkinColor}
+          selectedValue={partnerBirth.skinColor}
+          onSelect={(value) => setPartnerBirth({ skinColor: value })}
         />
       </div>
 

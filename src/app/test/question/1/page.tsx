@@ -1,20 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { LabelButton } from "@/design-system/components/LabelButton";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Question1() {
   const router = useRouter();
-  const [gender, setGender] = useState("");
-  const [name, setName] = useState("");
+  const { userInfo, setUserInfo } = useTestStore();
 
-  const isFormValid = gender && name;
+  const isFormValid = userInfo.gender && userInfo.name;
 
   const handleNext = () => {
     if (isFormValid) {
@@ -87,8 +86,8 @@ export default function Question1() {
             { label: '남성', value: 'male' },
             { label: '여성', value: 'female' },
           ]}
-          selectedValue={gender}
-          onSelect={setGender}
+          selectedValue={userInfo.gender}
+          onSelect={(value) => setUserInfo({ gender: value })}
         />
 
         {/* 이름 입력 */}
@@ -97,9 +96,9 @@ export default function Question1() {
           size="md"
           label="내 이름"
           items={[
-            { key: 'name', value: name, placeholder: '홍길동' },
+            { key: 'name', value: userInfo.name, placeholder: '홍길동' },
           ]}
-          onChange={(_, value) => setName(value)}
+          onChange={(_, value) => setUserInfo({ name: value })}
         />
       </div>
 

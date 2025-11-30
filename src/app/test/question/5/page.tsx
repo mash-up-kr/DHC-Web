@@ -1,20 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Question5() {
   const router = useRouter();
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
+  const { loveDate, setLoveDate } = useTestStore();
 
-  const isFormValid = year && month && day;
+  const isFormValid = loveDate.year && loveDate.month && loveDate.day;
 
   const handleNext = () => {
     if (isFormValid) {
@@ -84,14 +82,14 @@ export default function Question5() {
           size="md"
           label="사랑에 빠진 날"
           items={[
-            { key: 'year', value: year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
+            { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
+            { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            if (key === 'year') setYear(value);
-            else if (key === 'month') setMonth(value);
-            else if (key === 'day') setDay(value);
+            if (key === 'year') setLoveDate({ year: value });
+            else if (key === 'month') setLoveDate({ month: value });
+            else if (key === 'day') setLoveDate({ day: value });
           }}
         />
       </div>
