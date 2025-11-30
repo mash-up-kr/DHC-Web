@@ -6,9 +6,11 @@ import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Home() {
   const router = useRouter();
+  const { resetAll } = useTestStore();
   return (
     <main
       className="flex min-h-screen flex-col items-center p-6"
@@ -63,7 +65,10 @@ export default function Home() {
         <CTAButtonGroup
           type="twoButton"
           primaryButtonText="테스트 시작하기"
-          onPrimaryClick={() => router.push('/test/question/1')}
+          onPrimaryClick={() => {
+            resetAll();
+            router.push('/test/question/1');
+          }}
           tertiaryButtonText="공유하기"
           onTertiaryClick={() => {}}
         />
