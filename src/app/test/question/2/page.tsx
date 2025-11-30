@@ -42,8 +42,8 @@ export default function Question2() {
         <Header
           type="progressBar"
           currentPage={2}
-          totalPage={3}
-          progress={66.66}
+          totalPage={5}
+          progress={40}
           onBackClick={() => router.back()}
         />
       </div>
