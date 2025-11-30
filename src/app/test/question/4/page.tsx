@@ -89,9 +89,10 @@ export default function Question4() {
             { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            if (key === 'year') setPartnerBirth({ year: value });
-            else if (key === 'month') setPartnerBirth({ month: value });
-            else if (key === 'day') setPartnerBirth({ day: value });
+            const numericValue = value.replace(/[^0-9]/g, '');
+            if (key === 'year') setPartnerBirth({ year: numericValue });
+            else if (key === 'month') setPartnerBirth({ month: numericValue });
+            else if (key === 'day') setPartnerBirth({ day: numericValue });
           }}
         />
 
@@ -110,7 +111,10 @@ export default function Question4() {
           <InputField
             type="text"
             value={partnerBirth.birthTime}
-            onChange={(value) => setPartnerBirth({ birthTime: value })}
+            onChange={(value) => {
+              const numericValue = value.replace(/[^0-9]/g, '');
+              setPartnerBirth({ birthTime: numericValue });
+            }}
             placeholder="00 : 00"
             disabled={partnerBirth.unknownTime}
           />
