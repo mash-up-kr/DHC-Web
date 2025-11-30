@@ -109,17 +109,16 @@ export default function Question2() {
           onCheck={setUnknownTime}
         />
 
-        {/* 시간 입력 (체크하지 않았을 때만 표시) */}
-        {!unknownTime && (
-          <div style={{ padding: '0 20px 20px' }}>
-            <InputField
-              type="text"
-              value={birthTime}
-              onChange={setBirthTime}
-              placeholder="00 : 00"
-            />
-          </div>
-        )}
+        {/* 시간 입력 */}
+        <div style={{ padding: '0 20px 20px' }}>
+          <InputField
+            type="text"
+            value={birthTime}
+            onChange={setBirthTime}
+            placeholder="00 : 00"
+            disabled={unknownTime}
+          />
+        </div>
       </div>
 
       {/* CTA 버튼 */}

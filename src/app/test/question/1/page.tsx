@@ -24,62 +24,84 @@ export default function Question1() {
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }}>
-      <Header
-        type="progressBar"
-        currentPage={1}
-        totalPage={3}
-        progress={33.33}
-        onBackClick={() => router.back()}
-      />
-
-      {/* Header 하단 24px 공백 */}
-      <div style={{ height: '24px' }} />
-
-      {/* 임시 그래픽 영역 */}
+      {/* 상단 고정 Header */}
       <div
-        className="w-full flex items-center justify-center"
         style={{
-          height: '188px',
-          backgroundColor: colors.violet[50],
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          backgroundColor: colors.background.main,
         }}
       >
-        <span style={{ color: colors.neutral[500] }}>그래픽 (변경예정)</span>
+        <Header
+          type="progressBar"
+          currentPage={1}
+          totalPage={3}
+          progress={33.33}
+          onBackClick={() => router.back()}
+        />
       </div>
 
-      {/* 그래픽 하단 24px 공백 */}
-      <div style={{ height: '24px' }} />
+      {/* 스크롤 가능한 콘텐츠 영역 */}
+      <div
+        style={{
+          paddingTop: '52px',
+          paddingBottom: '100px',
+          overflowY: 'auto',
+          minHeight: '100vh',
+        }}
+      >
+        {/* Header 하단 24px 공백 */}
+        <div style={{ height: '24px' }} />
 
-      {/* Title */}
-      <Title
-        type="page"
-        size="sm"
-        title="Q1.당신에 대해서 알려주세요"
-        description="성별과 이름을 알려주세요"
-      />
+        {/* 임시 그래픽 영역 */}
+        <div
+          className="w-full flex items-center justify-center"
+          style={{
+            height: '188px',
+            backgroundColor: colors.violet[50],
+          }}
+        >
+          <span style={{ color: colors.neutral[500] }}>그래픽 (변경예정)</span>
+        </div>
 
-      {/* 성별 선택 */}
-      <LabelButton
-        type="select"
-        size="md"
-        label="성별"
-        options={[
-          { label: '남성', value: 'male' },
-          { label: '여성', value: 'female' },
-        ]}
-        selectedValue={gender}
-        onSelect={setGender}
-      />
+        {/* 그래픽 하단 24px 공백 */}
+        <div style={{ height: '24px' }} />
 
-      {/* 이름 입력 */}
-      <InputFieldGroup
-        type="single"
-        size="md"
-        label="내 이름"
-        items={[
-          { key: 'name', value: name, placeholder: '홍길동' },
-        ]}
-        onChange={(_, value) => setName(value)}
-      />
+        {/* Title */}
+        <Title
+          type="page"
+          size="sm"
+          title="Q1.당신에 대해서 알려주세요"
+          description="성별과 이름을 알려주세요"
+        />
+
+        {/* 성별 선택 */}
+        <LabelButton
+          type="select"
+          size="md"
+          label="성별"
+          options={[
+            { label: '남성', value: 'male' },
+            { label: '여성', value: 'female' },
+          ]}
+          selectedValue={gender}
+          onSelect={setGender}
+        />
+
+        {/* 이름 입력 */}
+        <InputFieldGroup
+          type="single"
+          size="md"
+          label="내 이름"
+          items={[
+            { key: 'name', value: name, placeholder: '홍길동' },
+          ]}
+          onChange={(_, value) => setName(value)}
+        />
+      </div>
 
       {/* CTA 버튼 */}
       <div
