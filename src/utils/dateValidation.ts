@@ -4,11 +4,13 @@
 
 /**
  * 년도 유효성 검사 (1900~2025)
+ * - 0만 입력되는 것 방지
  */
 export const validateYear = (value: string): string => {
   const numericValue = value.replace(/[^0-9]/g, '').slice(0, 4);
   if (numericValue.length === 4) {
     const yearNum = parseInt(numericValue, 10);
+    if (yearNum === 0) return '1900';
     if (yearNum < 1900) return '1900';
     if (yearNum > 2025) return '2025';
   }
@@ -17,20 +19,24 @@ export const validateYear = (value: string): string => {
 
 /**
  * 월 유효성 검사 (1~12)
+ * - 0만 입력되는 것 방지
  */
 export const validateMonth = (value: string): string => {
   const numericValue = value.replace(/[^0-9]/g, '').slice(0, 2);
   const monthNum = parseInt(numericValue, 10);
+  if (numericValue.length === 2 && monthNum === 0) return '1';
   if (monthNum > 12) return '12';
   return numericValue;
 };
 
 /**
  * 일 유효성 검사 (1~31)
+ * - 0만 입력되는 것 방지
  */
 export const validateDay = (value: string): string => {
   const numericValue = value.replace(/[^0-9]/g, '').slice(0, 2);
   const dayNum = parseInt(numericValue, 10);
+  if (numericValue.length === 2 && dayNum === 0) return '1';
   if (dayNum > 31) return '31';
   return numericValue;
 };
