@@ -7,6 +7,7 @@ import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
+import { validateDateField } from "@/utils/dateValidation";
 
 export default function Question5() {
   const router = useRouter();
@@ -87,10 +88,10 @@ export default function Question5() {
             { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            const numericValue = value.replace(/[^0-9]/g, '');
-            if (key === 'year') setLoveDate({ year: numericValue });
-            else if (key === 'month') setLoveDate({ month: numericValue });
-            else if (key === 'day') setLoveDate({ day: numericValue });
+            const { value: validatedValue } = validateDateField(key, value);
+            if (key === 'year') setLoveDate({ year: validatedValue });
+            else if (key === 'month') setLoveDate({ month: validatedValue });
+            else if (key === 'day') setLoveDate({ day: validatedValue });
           }}
         />
       </div>

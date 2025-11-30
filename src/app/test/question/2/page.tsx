@@ -9,6 +9,7 @@ import { LabelButton } from "@/design-system/components/LabelButton";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
+import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 
 export default function Question2() {
   const router = useRouter();
@@ -89,10 +90,10 @@ export default function Question2() {
             { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            const numericValue = value.replace(/[^0-9]/g, '');
-            if (key === 'year') setUserBirth({ year: numericValue });
-            else if (key === 'month') setUserBirth({ month: numericValue });
-            else if (key === 'day') setUserBirth({ day: numericValue });
+            const { value: validatedValue } = validateDateField(key, value);
+            if (key === 'year') setUserBirth({ year: validatedValue });
+            else if (key === 'month') setUserBirth({ month: validatedValue });
+            else if (key === 'day') setUserBirth({ day: validatedValue });
           }}
         />
 
@@ -111,13 +112,7 @@ export default function Question2() {
           <InputField
             type="text"
             value={userBirth.birthTime}
-            onChange={(value) => {
-              const numericValue = value.replace(/[^0-9]/g, '').slice(0, 4);
-              const formattedValue = numericValue.length > 2
-                ? `${numericValue.slice(0, 2)}:${numericValue.slice(2)}`
-                : numericValue;
-              setUserBirth({ birthTime: formattedValue });
-            }}
+            onChange={(value) => setUserBirth({ birthTime: formatBirthTime(value) })}
             placeholder="00:00"
             disabled={userBirth.unknownTime}
           />
