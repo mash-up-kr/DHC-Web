@@ -9,6 +9,7 @@ import { LabelButton } from "@/design-system/components/LabelButton";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
+import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 
 export default function Question4() {
   const router = useRouter();
@@ -89,9 +90,10 @@ export default function Question4() {
             { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
           ]}
           onChange={(key, value) => {
-            if (key === 'year') setPartnerBirth({ year: value });
-            else if (key === 'month') setPartnerBirth({ month: value });
-            else if (key === 'day') setPartnerBirth({ day: value });
+            const { value: validatedValue } = validateDateField(key, value);
+            if (key === 'year') setPartnerBirth({ year: validatedValue });
+            else if (key === 'month') setPartnerBirth({ month: validatedValue });
+            else if (key === 'day') setPartnerBirth({ day: validatedValue });
           }}
         />
 
@@ -110,8 +112,8 @@ export default function Question4() {
           <InputField
             type="text"
             value={partnerBirth.birthTime}
-            onChange={(value) => setPartnerBirth({ birthTime: value })}
-            placeholder="00 : 00"
+            onChange={(value) => setPartnerBirth({ birthTime: formatBirthTime(value) })}
+            placeholder="00:00"
             disabled={partnerBirth.unknownTime}
           />
         </div>
