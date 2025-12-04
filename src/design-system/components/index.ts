@@ -21,5 +21,8 @@ export type { HeaderProps, HeaderType } from './Header/Header';
 export { InputField } from './InputField/InputField';
 export type { InputFieldProps, InputFieldType } from './InputField/InputField';
 
+// MessageCard Components
+export { MessageCard } from './MessageCard/MessageCard';
+export type { MessageCardProps } from './MessageCard/MessageCard';
 // 추가 컴포넌트 예시:
 // export { Card } from './Card';
