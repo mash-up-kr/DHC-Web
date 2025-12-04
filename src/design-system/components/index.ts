@@ -24,5 +24,10 @@ export type { InputFieldProps, InputFieldType } from './InputField/InputField';
 // MessageCard Components
 export { MessageCard } from './MessageCard/MessageCard';
 export type { MessageCardProps } from './MessageCard/MessageCard';
+
+// TipCard Components
+export { TipCard } from './TipCard/TipCard';
+export type { TipCardProps } from './TipCard/TipCard';
+
 // 추가 컴포넌트 예시:
 // export { Card } from './Card';
