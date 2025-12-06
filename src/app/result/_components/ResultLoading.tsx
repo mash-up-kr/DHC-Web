@@ -1,49 +1,45 @@
 "use client";
 
 import { colors } from "@/design-system/foundations/colors";
-import { typography } from "@/design-system/foundations/typography";
+import { ScoreText } from "@/design-system/components/ScoreText";
 
 export function ResultLoading() {
   return (
     <main
-      className="flex min-h-screen flex-col items-center justify-center"
+      className="flex min-h-screen flex-col items-center"
       style={{ backgroundColor: colors.background.main }}
     >
+      {/* ScoreText - 상단 26px 여백 */}
+      <div style={{ paddingTop: '26px', width: '100%' }}>
+        <ScoreText
+          type="loading"
+          badgeText="me 🩷 her"
+          loadingText={`당신과 그녀의\n궁합을 살펴보는 중이에요...`}
+        />
+      </div>
+
+      {/* Orb 이미지 섹션 - 상단 64px 여백 */}
       <div
         style={{
+          marginTop: '64px',
+          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          justifyContent: 'center',
           alignItems: 'center',
-          gap: '24px',
+          padding: '20px',
+          background: 'radial-gradient(circle 300px 150px at 50% 66%, rgba(94, 105, 212, 0.4) 23%, rgba(94, 105, 212, 0.12) 51%, rgba(94, 105, 212, 0.04) 75%, rgba(94, 105, 212, 0.02) 88%, rgba(94, 105, 212, 0) 100%)',
         }}
       >
-        {/* 로딩 애니메이션 */}
-        <div
+        <img
+          src="/images/loading-orb.png"
+          alt="Loading Orb"
           style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            border: '4px solid',
-            borderColor: `${colors.violet[500]} transparent ${colors.violet[500]} transparent`,
-            animation: 'spin 1.2s linear infinite',
+            width: '100%',
+            maxWidth: '375px',
+            height: 'auto',
           }}
         />
-        <p
-          style={{
-            ...typography.title['h4-1'],
-            color: colors.text.main,
-            textAlign: 'center',
-          }}
-        >
-          궁합을 분석하고 있어요...
-        </p>
       </div>
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </main>
   );
 }
