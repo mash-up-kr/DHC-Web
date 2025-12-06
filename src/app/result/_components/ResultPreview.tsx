@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
@@ -9,6 +10,7 @@ import { typography } from "@/design-system/foundations/typography";
 
 export function ResultPreview() {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
   const compatibilityScore = 85;
@@ -23,6 +25,19 @@ export function ResultPreview() {
 
   const handleRestart = () => {
     router.push("/");
+  };
+
+  const handleShareClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleShare = () => {
+    setIsModalOpen(false);
+    router.push("/result/content");
   };
 
   return (
@@ -170,6 +185,7 @@ export function ResultPreview() {
               자세한 꿀팁{'\n'}무료로 확인해보세요!
             </p>
             <button
+              onClick={handleShareClick}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -257,6 +273,204 @@ export function ResultPreview() {
           />
         </div>
       </div>
+
+      {/* 공유 모달 */}
+      {isModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(15, 17, 20, 0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+            padding: '0 20px',
+          }}
+          onClick={handleModalClose}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '16px 0',
+              backgroundColor: colors.neutral[700],
+              borderRadius: '12px',
+              boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+              border: `1px solid ${colors.neutral[600]}`,
+              width: '100%',
+              maxWidth: '300px',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 닫기 버튼 */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                alignSelf: 'stretch',
+                padding: '0 12px',
+              }}
+            >
+              <button
+                onClick={handleModalClose}
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  cursor: 'pointer',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                aria-label="닫기"
+              >
+                <img
+                  src="/images/icon-close.svg"
+                  alt="닫기"
+                  style={{ width: '28px', height: '28px' }}
+                />
+              </button>
+            </div>
+
+            {/* 콘텐츠 영역 */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                alignSelf: 'stretch',
+                gap: '16px',
+              }}
+            >
+              {/* Badge */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '4px 12px',
+                  backgroundColor: 'rgba(123, 134, 150, 0.15)',
+                  borderRadius: '999999px',
+                }}
+              >
+                <span
+                  style={{
+                    ...typography.body.body6,
+                    color: colors.neutral[100],
+                  }}
+                >
+                  테스트 완료
+                </span>
+              </div>
+
+              {/* 제목 */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  alignSelf: 'stretch',
+                  gap: '2px',
+                  padding: '0 20px',
+                }}
+              >
+                <span
+                  style={{
+                    ...typography.title.h4,
+                    background: gradients.textGradient01,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    textAlign: 'center',
+                  }}
+                >
+                  테스트 공유하고
+                </span>
+                <span
+                  style={{
+                    ...typography.title.h4,
+                    color: colors.neutral[30],
+                    textAlign: 'center',
+                  }}
+                >
+                  자세한 내용 확인해보세요!
+                </span>
+              </div>
+
+              {/* 그래픽 영역 */}
+              <div
+                style={{
+                  width: '100%',
+                  height: '138px',
+                  backgroundColor: colors.neutral[600],
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    ...typography.body.body3,
+                    color: colors.text.main,
+                    opacity: 0.4,
+                    textAlign: 'center',
+                  }}
+                >
+                  그래픽 (변경예정)
+                </span>
+              </div>
+            </div>
+
+            {/* CTA 버튼 */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignSelf: 'stretch',
+                gap: '4px',
+                padding: '0 20px',
+              }}
+            >
+              <button
+                onClick={handleShare}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'stretch',
+                  gap: '8px',
+                  padding: '14px 24px',
+                  backgroundColor: colors.violet[400],
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                <span
+                  style={{
+                    ...typography.title.h6,
+                    color: colors.neutral[30],
+                    textAlign: 'center',
+                  }}
+                >
+                  테스트 공유하기
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
