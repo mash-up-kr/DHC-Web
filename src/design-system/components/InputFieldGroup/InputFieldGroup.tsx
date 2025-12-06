@@ -92,6 +92,11 @@ export interface InputFieldGroupProps {
    */
   fullWidth?: boolean;
   /**
+   * 레이블 표시 여부
+   * @default true
+   */
+  showLabel?: boolean;
+  /**
    * 커스텀 클래스명
    */
   className?: string;
@@ -105,6 +110,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
   onChange,
   align = 'center',
   fullWidth = false,
+  showLabel = true,
   className = '',
 }) => {
   const textAlign = align === 'center' ? 'center' : 'left';
@@ -121,7 +127,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
   };
 
   const labelStyle: React.CSSProperties = {
-    ...(size === 'md' ? typography.body.body5 : typography.title['h1']),
+    ...(size === 'md' ? typography.body.body5 : typography.title['h5-1']),
     color: colors.neutral[100],
   };
 
@@ -181,9 +187,11 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
 
   return (
     <div className={className} style={containerStyle}>
-      <div style={labelContainerStyle}>
-        <span style={labelStyle}>{label}</span>
-      </div>
+      {showLabel && (
+        <div style={labelContainerStyle}>
+          <span style={labelStyle}>{label}</span>
+        </div>
+      )}
       <div style={inputContainerStyle}>
         <div style={inputRowStyle}>
           {items.map((item, index) =>

@@ -185,11 +185,24 @@ export default function Result() {
         </div>
 
         {/* 언제 고백할까? 섹션 */}
+        <h2
+          style={{
+            ...typography.title['h5-1'],
+            color: colors.text.main,
+            textAlign: 'left',
+            width: '100%',
+            padding: '24px 0 16px 0',
+            margin: 0,
+          }}
+        >
+          언제 고백할까?
+        </h2>
         <InputFieldGroup
           type="multi"
           size="md"
           align="start"
           fullWidth
+          showLabel={false}
           label="언제 고백할까?"
           items={[
             { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 175 },
