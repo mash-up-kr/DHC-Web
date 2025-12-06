@@ -64,6 +64,7 @@ export default function Result() {
           >
             <span
               style={{
+                fontFamily: 'Wanted Sans',
                 fontSize: '16px',
                 fontWeight: 500,
                 color: 'white',
@@ -296,6 +297,7 @@ export default function Result() {
               padding: '16px 32px',
               backgroundColor: colors.violet[400],
               color: 'white',
+              fontFamily: 'Wanted Sans',
               fontWeight: 600,
               fontSize: '16px',
               borderRadius: '12px',
@@ -311,6 +313,7 @@ export default function Result() {
               padding: '16px 32px',
               backgroundColor: colors.neutral[700],
               color: colors.text.bodyPrimary,
+              fontFamily: 'Wanted Sans',
               fontWeight: 600,
               fontSize: '16px',
               borderRadius: '12px',
