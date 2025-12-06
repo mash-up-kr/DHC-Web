@@ -38,6 +38,41 @@ export default function Result() {
           />
         </div>
 
+        {/* Orb Graphic */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: '40px',
+          }}
+        >
+          <div
+            style={{
+              width: '160px',
+              height: '160px',
+              borderRadius: '50%',
+              backgroundColor: '#2E3341',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <span
+              style={{
+                fontSize: '16px',
+                fontWeight: 500,
+                color: 'white',
+                opacity: 0.4,
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              그래픽 (변경예정)
+            </span>
+          </div>
+        </div>
+
         <div className="mt-8 bg-pink-50 rounded-xl p-6 mb-6">
           <h3 className="font-semibold text-gray-800 mb-3">궁합 분석 포인트</h3>
           <ul className="text-sm text-gray-600 space-y-2 text-left">
