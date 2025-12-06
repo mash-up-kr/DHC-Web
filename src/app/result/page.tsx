@@ -92,9 +92,10 @@ export default function Result() {
             style={{
               width: '132px',
               height: '32px',
-              marginTop: '12px',
+              marginTop: '52px',
               background: gradients.cardBottomGradient01,
               borderRadius: '50%',
+              opacity: '0.4',
             }}
           />
         </div>
@@ -191,7 +192,7 @@ export default function Result() {
             color: colors.text.main,
             textAlign: 'left',
             width: '100%',
-            padding: '24px 0 16px 0',
+            padding: '24px 20px 16px 20px',
             margin: 0,
           }}
         >
