@@ -29,5 +29,6 @@ export type { MessageCardProps } from './MessageCard/MessageCard';
 export { TipCard } from './TipCard/TipCard';
 export type { TipCardProps } from './TipCard/TipCard';
 
-// 추가 컴포넌트 예시:
-// export { Card } from './Card';
+// Modal Components
+export { Modal } from './Modal/Modal';
+export type { ModalProps } from './Modal/Modal';
