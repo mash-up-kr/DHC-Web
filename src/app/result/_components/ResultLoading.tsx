@@ -7,7 +7,13 @@ export function ResultLoading() {
   return (
     <main
       className="flex min-h-screen flex-col items-center"
-      style={{ backgroundColor: colors.background.main }}
+      style={{
+        backgroundColor: colors.background.main,
+        backgroundImage: 'url(/images/loading-background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
       {/* ScoreText - 상단 26px 여백 */}
       <div style={{ paddingTop: '26px', width: '100%' }}>
@@ -18,15 +24,16 @@ export function ResultLoading() {
         />
       </div>
 
-      {/* Orb 이미지 섹션 - 상단 64px 여백 */}
+      {/* Orb 이미지 섹션 - 화면 중앙 */}
       <div
         style={{
-          marginTop: '64px',
+          flex: 1,
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           padding: '20px',
+          marginTop: '-140px',
           background: 'radial-gradient(circle 300px 150px at 50% 66%, rgba(94, 105, 212, 0.4) 23%, rgba(94, 105, 212, 0.12) 51%, rgba(94, 105, 212, 0.04) 75%, rgba(94, 105, 212, 0.02) 88%, rgba(94, 105, 212, 0) 100%)',
         }}
       >

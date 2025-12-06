@@ -96,6 +96,7 @@ export const ScoreText: React.FC<ScoreTextProps> = ({
     color: colors.neutral[100],
     textAlign: 'center',
     width: '100%',
+    whiteSpace: 'pre-line',
   };
 
   if (type === 'loading') {
