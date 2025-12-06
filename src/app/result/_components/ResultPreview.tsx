@@ -3,22 +3,12 @@
 import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
-import { TipCard } from "@/design-system/components/TipCard";
-import { Title } from "@/design-system/components/Title";
-import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
-import { useTestStore } from "@/store/useTestStore";
 
 export function ResultPreview() {
   const router = useRouter();
-  const { partnerInfo, userInfo } = useTestStore();
-
-  // 상대방 이름 (없으면 빈 문자열)
-  const partnerName = partnerInfo.name || '';
-  // 사용자 이름 (없으면 빈 문자열)
-  const userName = userInfo.name || '';
 
   // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
   const compatibilityScore = 85;
@@ -134,7 +124,7 @@ export function ResultPreview() {
               display: 'flex',
               flexDirection: 'column',
               gap: '16px',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               width: '100%',
             }}
           >
@@ -150,112 +140,93 @@ export function ResultPreview() {
             </h2>
             <div
               style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '12px',
-                justifyContent: 'center',
                 width: '100%',
+                height: '212px',
+              borderRadius: '12px',
+              backgroundImage: 'url(/images/tip-background.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '62px 76px',
+            }}
+          >
+            <p
+              style={{
+                ...typography.title['h5-1'],
+                background: gradients.textGradient01,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textAlign: 'center',
+                margin: 0,
+                whiteSpace: 'pre-line',
               }}
             >
-              <TipCard
-                icon={<span style={{ fontSize: '20px' }}>🍴</span>}
-                title="행운의 메뉴"
-                value="카레"
-                width="calc(50% - 6px)"
+              자세한 꿀팁{'\n'}무료로 확인해보세요!
+            </p>
+            <button
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '8px 12px 8px 16px',
+                backgroundColor: 'rgba(123, 134, 150, 0.15)',
+                borderRadius: '4px',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'Wanted Sans',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  color: '#D7E1EE',
+                }}
+              >
+                공유하고 내용 확인하기
+              </span>
+              <img
+                src="/images/share-icon.svg"
+                alt="공유"
+                style={{ width: '16px', height: '16px' }}
               />
-              <TipCard
-                icon={<span style={{ fontSize: '20px' }}>🍀</span>}
-                title="행운의 색상"
-                value="연두색"
-                color="#23B169"
-                width="calc(50% - 6px)"
-              />
-              <TipCard
-                icon={<span style={{ fontSize: '20px' }}>😰</span>}
-                title="이건 조심해야해!"
-                value="치킨, 닭"
-                width="calc(50% - 6px)"
-              />
-              <TipCard
-                icon={<span style={{ fontSize: '20px' }}>😣</span>}
-                title="이 색상도 조심해!"
-                value="흰색"
-                color={colors.text.main}
-                width="calc(50% - 6px)"
-              />
+            </button>
             </div>
           </div>
 
           {/* 언제 고백할까? 섹션 */}
-          <h2
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              textAlign: 'left',
-              width: '100%',
-              padding: '24px 20px 16px 20px',
-              margin: 0,
-            }}
-          >
-            언제 고백할까?
-          </h2>
-          <InputFieldGroup
-            type="multi"
-            size="md"
-            align="start"
-            fullWidth
-            showLabel={false}
-            label="언제 고백할까?"
-            items={[
-              { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 175 },
-              { key: 'month', value: '1', suffix: '월', type: 'number', maxLength: 2, flex: 73.5 },
-              { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2, flex: 73.5 },
-            ]}
-            onChange={() => {}}
-          />
-
-          {/* 프로모션 텍스트 */}
-          <div style={{ marginBottom: '24px' }}>
-            <Title
-              type="intro"
-              size="sm"
-              titleNode={
-                <p
-                  style={{
-                    ...typography.title['h4-1'],
-                    color: colors.text.main,
-                    textAlign: 'center',
-                    margin: 0,
-                  }}
-                >
-                  <span
-                    style={{
-                      background: gradients.textGradient01,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}
-                  >
-                    {partnerName ? `${partnerName} 님의 마음을 사로잡기 위해선` : '마음을 사로잡기 위해선'}
-                  </span>
-                  <br />
-                  지금이 타이밍이에요!
-                </p>
-              }
-              description={`연애 성공률을 높이는 ${userName ? `${userName}님` : '당신'} 만의\n맞춤형 미션을 확인해보세요!`}
-            />
-          </div>
-
-          {/* 앱 프리뷰 이미지 */}
           <div
             style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+              alignItems: 'flex-start',
               width: '100%',
-              marginBottom: '40px',
+              marginTop: '24px',
             }}
           >
+            <h2
+              style={{
+                ...typography.title['h5-1'],
+                color: colors.text.main,
+                width: '100%',
+                textAlign: 'left',
+              }}
+            >
+              언제 고백할까?
+            </h2>
             <img
-              src="/images/app-preview-7e1ca8.png"
-              alt="앱 미리보기"
+              src="/images/confession-date.png"
+              alt="언제 고백할까?"
               style={{
                 width: '100%',
                 height: 'auto',
