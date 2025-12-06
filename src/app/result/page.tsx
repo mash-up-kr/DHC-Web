@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
 import { TipCard } from "@/design-system/components/TipCard";
+import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 
@@ -252,7 +253,7 @@ export default function Result() {
             alignItems: 'center',
             gap: '8px',
             paddingTop: '40px',
-            paddingBottom: '24px',
+            marginBottom: '24px',
             width: '100%',
           }}
         >
@@ -289,46 +290,31 @@ export default function Result() {
           </p>
         </div>
 
-        {/* CTA 버튼 영역 */}
+        {/* 앱 프리뷰 이미지 */}
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
             width: '100%',
-            padding: '20px 0',
+            marginBottom: '40px',
           }}
         >
-          <button
+          <img
+            src="/images/app-preview-7e1ca8.png"
+            alt="앱 미리보기"
             style={{
               width: '100%',
-              padding: '15px 24px',
-              backgroundColor: colors.violet[400],
-              color: colors.text.main,
-              ...typography.title['h5-1'],
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
+              height: 'auto',
+              borderRadius: '12px',
             }}
-          >
-            앱 설치하고 맞춤 미션 확인하기
-          </button>
-          <button
-            onClick={handleRestart}
-            style={{
-              width: '100%',
-              padding: '15px 24px',
-              backgroundColor: colors.background.glassEffect,
-              color: colors.text.main,
-              ...typography.title['h5-1'],
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            테스트 다시하기
-          </button>
+          />
         </div>
+
+        {/* CTA 버튼 영역 */}
+        <CTAButtonGroup
+          type="twoButton"
+          primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
+          tertiaryButtonText="테스트 다시하기"
+          onTertiaryClick={handleRestart}
+        />
       </div>
     </main>
   );
