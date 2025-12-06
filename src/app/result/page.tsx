@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
-import { colors } from "@/design-system/foundations/colors";
+import { colors, gradients } from "@/design-system/foundations/colors";
 
 export default function Result() {
   const router = useRouter();
@@ -42,6 +42,7 @@ export default function Result() {
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             paddingTop: '40px',
@@ -71,6 +72,18 @@ export default function Result() {
               그래픽 (변경예정)
             </span>
           </div>
+
+          {/* FortuneCard Shadow */}
+          <div
+            style={{
+              width: '132px',
+              height: '32px',
+              marginTop: '12px',
+              marginBottom: '24px',
+              background: gradients.cardBottomGradient01,
+              borderRadius: '50%',
+            }}
+          />
         </div>
 
         <div className="mt-8 bg-pink-50 rounded-xl p-6 mb-6">
