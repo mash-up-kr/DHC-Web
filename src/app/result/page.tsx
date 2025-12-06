@@ -187,7 +187,7 @@ export default function Result() {
         {/* 언제 고백할까? 섹션 */}
         <InputFieldGroup
           type="multi"
-          size="lg"
+          size="md"
           label="언제 고백할까?"
           items={[
             { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4 },
@@ -198,10 +198,11 @@ export default function Result() {
         />
 
         {/* 프로모션 텍스트 */}
-        <Title
-          type="intro"
-          size="sm"
-          titleNode={
+        <div style={{ marginBottom: '24px' }}>
+          <Title
+            type="intro"
+            size="sm"
+            titleNode={
             <p
               style={{
                 ...typography.title['h4-1'],
@@ -225,7 +226,8 @@ export default function Result() {
             </p>
           }
           description={`연애 성공률을 높이는 ${userName ? `${userName}님` : '당신'} 만의\n맞춤형 미션을 확인해보세요!`}
-        />
+          />
+        </div>
 
         {/* 앱 프리뷰 이미지 */}
         <div
