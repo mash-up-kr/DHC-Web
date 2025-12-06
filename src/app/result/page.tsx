@@ -1,22 +1,32 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ResultLoading, ResultPreview } from "./_components";
+import { ResultLoading, ResultPreview, ResultContent } from "./_components";
+
+type ResultStep = 'loading' | 'preview' | 'content';
 
 export default function Result() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [step, setStep] = useState<ResultStep>('loading');
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setStep('preview');
     }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
+  const handleShare = () => {
+    setStep('content');
+  };
+
+  if (step === 'loading') {
     return <ResultLoading />;
   }
 
-  return <ResultPreview />;
+  if (step === 'preview') {
+    return <ResultPreview onShare={handleShare} />;
+  }
+
+  return <ResultContent />;
 }
