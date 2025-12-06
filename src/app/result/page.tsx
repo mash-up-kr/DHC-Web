@@ -289,39 +289,44 @@ export default function Result() {
           </p>
         </div>
 
-        <div className="space-y-3 w-full">
+        {/* CTA 버튼 영역 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            width: '100%',
+            padding: '20px 0',
+          }}
+        >
+          <button
+            style={{
+              width: '100%',
+              padding: '15px 24px',
+              backgroundColor: colors.violet[400],
+              color: colors.text.main,
+              ...typography.title['h5-1'],
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            앱 설치하고 맞춤 미션 확인하기
+          </button>
           <button
             onClick={handleRestart}
             style={{
               width: '100%',
-              padding: '16px 32px',
-              backgroundColor: colors.violet[400],
-              color: 'white',
-              fontFamily: 'Wanted Sans',
-              fontWeight: 600,
-              fontSize: '16px',
-              borderRadius: '12px',
+              padding: '15px 24px',
+              backgroundColor: colors.background.glassEffect,
+              color: colors.text.main,
+              ...typography.title['h5-1'],
+              borderRadius: '8px',
               border: 'none',
               cursor: 'pointer',
             }}
           >
-            다시 하기
-          </button>
-          <button
-            style={{
-              width: '100%',
-              padding: '16px 32px',
-              backgroundColor: colors.neutral[700],
-              color: colors.text.bodyPrimary,
-              fontFamily: 'Wanted Sans',
-              fontWeight: 600,
-              fontSize: '16px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            결과 공유하기
+            테스트 다시하기
           </button>
         </div>
       </div>
