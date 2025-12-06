@@ -188,11 +188,13 @@ export default function Result() {
         <InputFieldGroup
           type="multi"
           size="md"
+          align="start"
+          fullWidth
           label="언제 고백할까?"
           items={[
-            { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 175 },
+            { key: 'month', value: '1', suffix: '월', type: 'number', maxLength: 2, flex: 73.5 },
+            { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2, flex: 73.5 },
           ]}
           onChange={() => {}}
         />
