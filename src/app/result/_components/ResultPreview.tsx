@@ -11,7 +11,7 @@ import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 import { useTestStore } from "@/store/useTestStore";
 
-export function ResultContent() {
+export function ResultPreview() {
   const router = useRouter();
   const { partnerInfo, userInfo } = useTestStore();
 
@@ -263,10 +263,11 @@ export function ResultContent() {
           />
         </div>
 
-        {/* CTA 버튼 영역 */}
+        {/* CTA 버튼 영역 - Preview 버전 */}
         <CTAButtonGroup
           type="twoButton"
-          primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
+          primaryButtonText="앱 설치하기"
+          secondButtonType="secondary"
           secondButtonText="테스트 다시하기"
           onSecondButtonClick={handleRestart}
         />

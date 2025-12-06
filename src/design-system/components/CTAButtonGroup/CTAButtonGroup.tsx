@@ -6,7 +6,7 @@
  *
  * Variants:
  * - Type=one button: 버튼 1개 (Primary)
- * - Type=two button: 버튼 2개 (Primary + Tertiary)
+ * - Type=two button: 버튼 2개 (Primary + Secondary/Tertiary)
  */
 
 'use client';
@@ -15,6 +15,7 @@ import React from 'react';
 import { CTAButton } from '../Button/CTAButton';
 
 export type CTAButtonGroupType = 'oneButton' | 'twoButton';
+export type SecondButtonType = 'secondary' | 'tertiary';
 
 export interface CTAButtonGroupProps {
   /**
@@ -34,13 +35,18 @@ export interface CTAButtonGroupProps {
    */
   primaryDisabled?: boolean;
   /**
-   * Tertiary 버튼 텍스트 (twoButton 타입에서 사용)
+   * 두 번째 버튼 타입 (twoButton 타입에서 사용)
+   * @default 'tertiary'
    */
-  tertiaryButtonText?: string;
+  secondButtonType?: SecondButtonType;
   /**
-   * Tertiary 버튼 클릭 핸들러
+   * 두 번째 버튼 텍스트 (twoButton 타입에서 사용)
    */
-  onTertiaryClick?: () => void;
+  secondButtonText?: string;
+  /**
+   * 두 번째 버튼 클릭 핸들러
+   */
+  onSecondButtonClick?: () => void;
   /**
    * 커스텀 클래스명
    */
@@ -52,8 +58,9 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
   primaryButtonText = '확인',
   onPrimaryClick,
   primaryDisabled = false,
-  tertiaryButtonText = '취소',
-  onTertiaryClick,
+  secondButtonType = 'tertiary',
+  secondButtonText = '취소',
+  onSecondButtonClick,
   className = '',
 }) => {
   const containerStyle: React.CSSProperties = {
@@ -93,12 +100,12 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
         {primaryButtonText}
       </CTAButton>
       <CTAButton
-        buttonType="tertiary"
+        buttonType={secondButtonType}
         size="xl"
         fullWidth
-        onClick={onTertiaryClick}
+        onClick={onSecondButtonClick}
       >
-        {tertiaryButtonText}
+        {secondButtonText}
       </CTAButton>
     </div>
   );
