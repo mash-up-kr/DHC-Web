@@ -94,7 +94,7 @@ export default function Result() {
             display: 'flex',
             flexDirection: 'column',
             gap: '16px',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             padding: '24px 0',
             width: '100%',
           }}
@@ -148,23 +148,27 @@ export default function Result() {
               icon={<span style={{ fontSize: '20px' }}>🍴</span>}
               title="행운의 메뉴"
               value="카레"
+              width="calc(50% - 6px)"
             />
             <TipCard
               icon={<span style={{ fontSize: '20px' }}>🍀</span>}
               title="행운의 색상"
               value="연두색"
               color="#23B169"
+              width="calc(50% - 6px)"
             />
             <TipCard
               icon={<span style={{ fontSize: '20px' }}>😰</span>}
               title="이건 조심해야해!"
               value="치킨, 닭"
+              width="calc(50% - 6px)"
             />
             <TipCard
               icon={<span style={{ fontSize: '20px' }}>😣</span>}
               title="이 색상도 조심해!"
               value="흰색"
               color={colors.text.main}
+              width="calc(50% - 6px)"
             />
           </div>
         </div>
@@ -258,7 +262,16 @@ export default function Result() {
               textAlign: 'center',
             }}
           >
-            김김김 님의 마음을 사로잡기 위해선
+            <span
+              style={{
+                background: gradients.textGradient01,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              김김김 님의 마음을 사로잡기 위해선
+            </span>
             <br />
             지금이 타이밍이에요!
           </p>

@@ -9,6 +9,8 @@ import React from 'react';
 import { colors } from '../../foundations/colors';
 import { typography } from '../../foundations/typography';
 
+export type MessageCardAlign = 'start' | 'center';
+
 export interface MessageCardProps {
   /**
    * 카드 타이틀 (예: "금전운", "애정운")
@@ -19,6 +21,11 @@ export interface MessageCardProps {
    */
   message: string;
   /**
+   * 텍스트 정렬
+   * @default 'start'
+   */
+  align?: MessageCardAlign;
+  /**
    * 커스텀 클래스명
    */
   className?: string;
@@ -27,8 +34,11 @@ export interface MessageCardProps {
 export const MessageCard: React.FC<MessageCardProps> = ({
   title,
   message,
+  align = 'start',
   className = '',
 }) => {
+  const textAlign = align === 'center' ? 'center' : 'left';
+
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -43,6 +53,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: align === 'center' ? 'center' : 'flex-start',
     gap: '4px',
     paddingBottom: '12px',
   };
@@ -50,12 +61,14 @@ export const MessageCard: React.FC<MessageCardProps> = ({
   const titleStyle: React.CSSProperties = {
     ...typography.body.body5,
     color: colors.neutral[400],
+    textAlign,
   };
 
   const messageStyle: React.CSSProperties = {
     ...typography.body.body3,
     color: colors.neutral[100],
     whiteSpace: 'pre-line',
+    textAlign,
   };
 
   return (
