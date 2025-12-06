@@ -77,8 +77,8 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   const closeButtonStyle: React.CSSProperties = {
-    width: '28px',
-    height: '28px',
+    width: '24px',
+    height: '24px',
     cursor: 'pointer',
     background: 'none',
     border: 'none',
@@ -169,7 +169,7 @@ export const Modal: React.FC<ModalProps> = ({
             <img
               src="/images/icon-close.svg"
               alt="닫기"
-              style={{ width: '28px', height: '28px' }}
+              style={{ width: '24px', height: '24px' }}
             />
           </button>
         </div>

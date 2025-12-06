@@ -326,8 +326,8 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               <button
                 onClick={handleModalClose}
                 style={{
-                  width: '28px',
-                  height: '28px',
+                  width: '24px',
+                  height: '24px',
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
@@ -341,7 +341,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                 <img
                   src="/images/icon-close.svg"
                   alt="닫기"
-                  style={{ width: '28px', height: '28px' }}
+                  style={{ width: '24px', height: '24px' }}
                 />
               </button>
             </div>
