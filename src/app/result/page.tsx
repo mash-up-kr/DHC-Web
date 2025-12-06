@@ -2,7 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
+import { MessageCard } from "@/design-system/components/MessageCard";
+import { TipCard } from "@/design-system/components/TipCard";
 import { colors, gradients } from "@/design-system/foundations/colors";
+import { typography } from "@/design-system/foundations/typography";
 
 export default function Result() {
   const router = useRouter();
@@ -79,31 +82,228 @@ export default function Result() {
               width: '132px',
               height: '32px',
               marginTop: '12px',
-              marginBottom: '24px',
               background: gradients.cardBottomGradient01,
               borderRadius: '50%',
             }}
           />
         </div>
 
-        <div className="mt-8 bg-pink-50 rounded-xl p-6 mb-6">
-          <h3 className="font-semibold text-gray-800 mb-3">궁합 분석 포인트</h3>
-          <ul className="text-sm text-gray-600 space-y-2 text-left">
-            <li>✨ 생년월일로 본 운명적인 연결</li>
-            <li>💫 두 사람의 에너지 조화도</li>
-            <li>💖 사랑의 시작점이 주는 의미</li>
-          </ul>
+        {/* 궁합 상세보기 섹션 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            alignItems: 'center',
+            padding: '24px 0',
+            width: '100%',
+          }}
+        >
+          <h2
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            궁합 상세보기
+          </h2>
+          <MessageCard
+            title="궁합운"
+            message="궁합운 관련 설명"
+          />
         </div>
 
-        <div className="space-y-3">
+        {/* 그녀와 사귀기 위한 꿀팁! 섹션 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <h2
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            그녀와 사귀기 위한 꿀팁!
+          </h2>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '12px',
+              justifyContent: 'center',
+              width: '100%',
+            }}
+          >
+            <TipCard
+              icon={<span style={{ fontSize: '20px' }}>🍴</span>}
+              title="행운의 메뉴"
+              value="카레"
+            />
+            <TipCard
+              icon={<span style={{ fontSize: '20px' }}>🍀</span>}
+              title="행운의 색상"
+              value="연두색"
+              color="#23B169"
+            />
+            <TipCard
+              icon={<span style={{ fontSize: '20px' }}>😰</span>}
+              title="이건 조심해야해!"
+              value="치킨, 닭"
+            />
+            <TipCard
+              icon={<span style={{ fontSize: '20px' }}>😣</span>}
+              title="이 색상도 조심해!"
+              value="흰색"
+              color={colors.text.main}
+            />
+          </div>
+        </div>
+
+        {/* 언제 고백할까? 섹션 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            alignItems: 'center',
+            padding: '24px 0',
+            width: '100%',
+          }}
+        >
+          <h2
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            언제 고백할까?
+          </h2>
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              width: '100%',
+            }}
+          >
+            <div
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                backgroundColor: colors.neutral[700],
+                borderRadius: '8px',
+                textAlign: 'center',
+                ...typography.body.body3,
+                color: colors.text.bodyPrimary,
+              }}
+            >
+              2000 년
+            </div>
+            <div
+              style={{
+                flex: 0.5,
+                padding: '12px 16px',
+                backgroundColor: colors.neutral[700],
+                borderRadius: '8px',
+                textAlign: 'center',
+                ...typography.body.body3,
+                color: colors.text.bodyPrimary,
+              }}
+            >
+              1월
+            </div>
+            <div
+              style={{
+                flex: 0.5,
+                padding: '12px 16px',
+                backgroundColor: colors.neutral[700],
+                borderRadius: '8px',
+                textAlign: 'center',
+                ...typography.body.body3,
+                color: colors.text.bodyPrimary,
+              }}
+            >
+              1일
+            </div>
+          </div>
+        </div>
+
+        {/* 프로모션 텍스트 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '8px',
+            paddingTop: '40px',
+            paddingBottom: '24px',
+            width: '100%',
+          }}
+        >
+          <p
+            style={{
+              ...typography.title['h4-1'],
+              color: colors.text.main,
+              textAlign: 'center',
+            }}
+          >
+            김김김 님의 마음을 사로잡기 위해선
+            <br />
+            지금이 타이밍이에요!
+          </p>
+          <p
+            style={{
+              ...typography.body.body5,
+              color: colors.neutral[300],
+              textAlign: 'center',
+            }}
+          >
+            연애 성공률을 높이는 홍길동님 만의
+            <br />
+            맞춤형 미션을 확인해보세요!
+          </p>
+        </div>
+
+        <div className="space-y-3 w-full">
           <button
             onClick={handleRestart}
-            className="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg"
+            style={{
+              width: '100%',
+              padding: '16px 32px',
+              backgroundColor: colors.violet[400],
+              color: 'white',
+              fontWeight: 600,
+              fontSize: '16px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
           >
             다시 하기
           </button>
           <button
-            className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-4 px-8 rounded-lg border-2 border-gray-200 transition-colors duration-200"
+            style={{
+              width: '100%',
+              padding: '16px 32px',
+              backgroundColor: colors.neutral[700],
+              color: colors.text.bodyPrimary,
+              fontWeight: 600,
+              fontSize: '16px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
           >
             결과 공유하기
           </button>
