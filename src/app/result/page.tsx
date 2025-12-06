@@ -5,11 +5,20 @@ import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
 import { TipCard } from "@/design-system/components/TipCard";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
+import { Title } from "@/design-system/components/Title";
+import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
+import { useTestStore } from "@/store/useTestStore";
 
 export default function Result() {
   const router = useRouter();
+  const { partnerInfo, userInfo } = useTestStore();
+
+  // 상대방 이름 (없으면 빈 문자열)
+  const partnerName = partnerInfo.name || '';
+  // 사용자 이름 (없으면 빈 문자열)
+  const userName = userInfo.name || '';
 
   // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
   const compatibilityScore = 85;
@@ -176,119 +185,47 @@ export default function Result() {
         </div>
 
         {/* 언제 고백할까? 섹션 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            alignItems: 'center',
-            padding: '24px 0',
-            width: '100%',
-          }}
-        >
-          <h2
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              width: '100%',
-              textAlign: 'left',
-            }}
-          >
-            언제 고백할까?
-          </h2>
-          <div
-            style={{
-              display: 'flex',
-              gap: '8px',
-              width: '100%',
-            }}
-          >
-            <div
-              style={{
-                flex: 1,
-                padding: '12px 16px',
-                backgroundColor: colors.neutral[700],
-                borderRadius: '8px',
-                textAlign: 'center',
-                ...typography.body.body3,
-                color: colors.text.bodyPrimary,
-              }}
-            >
-              2000 년
-            </div>
-            <div
-              style={{
-                flex: 0.5,
-                padding: '12px 16px',
-                backgroundColor: colors.neutral[700],
-                borderRadius: '8px',
-                textAlign: 'center',
-                ...typography.body.body3,
-                color: colors.text.bodyPrimary,
-              }}
-            >
-              1월
-            </div>
-            <div
-              style={{
-                flex: 0.5,
-                padding: '12px 16px',
-                backgroundColor: colors.neutral[700],
-                borderRadius: '8px',
-                textAlign: 'center',
-                ...typography.body.body3,
-                color: colors.text.bodyPrimary,
-              }}
-            >
-              1일
-            </div>
-          </div>
-        </div>
+        <InputFieldGroup
+          type="multi"
+          size="lg"
+          label="언제 고백할까?"
+          items={[
+            { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4 },
+            { key: 'month', value: '1', suffix: '월', type: 'number', maxLength: 2 },
+            { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2 },
+          ]}
+          onChange={() => {}}
+        />
 
         {/* 프로모션 텍스트 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '8px',
-            paddingTop: '40px',
-            marginBottom: '24px',
-            width: '100%',
-          }}
-        >
-          <p
-            style={{
-              ...typography.title['h4-1'],
-              color: colors.text.main,
-              textAlign: 'center',
-            }}
-          >
-            <span
+        <Title
+          type="intro"
+          size="sm"
+          titleNode={
+            <p
               style={{
-                background: gradients.textGradient01,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                ...typography.title['h4-1'],
+                color: colors.text.main,
+                textAlign: 'center',
+                margin: 0,
               }}
             >
-              김김김 님의 마음을 사로잡기 위해선
-            </span>
-            <br />
-            지금이 타이밍이에요!
-          </p>
-          <p
-            style={{
-              ...typography.body.body5,
-              color: colors.neutral[300],
-              textAlign: 'center',
-            }}
-          >
-            연애 성공률을 높이는 홍길동님 만의
-            <br />
-            맞춤형 미션을 확인해보세요!
-          </p>
-        </div>
+              <span
+                style={{
+                  background: gradients.textGradient01,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                {partnerName ? `${partnerName} 님의 마음을 사로잡기 위해선` : '마음을 사로잡기 위해선'}
+              </span>
+              <br />
+              지금이 타이밍이에요!
+            </p>
+          }
+          description={`연애 성공률을 높이는 ${userName ? `${userName}님` : '당신'} 만의\n맞춤형 미션을 확인해보세요!`}
+        />
 
         {/* 앱 프리뷰 이미지 */}
         <div
