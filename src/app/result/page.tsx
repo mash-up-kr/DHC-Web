@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ResultLoading, ResultContent } from "./_components";
+import { ResultLoading, ResultPreview } from "./_components";
 
 export default function Result() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,5 +18,5 @@ export default function Result() {
     return <ResultLoading />;
   }
 
-  return <ResultContent />;
+  return <ResultPreview />;
 }
