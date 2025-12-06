@@ -117,12 +117,12 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
 
   const labelContainerStyle: React.CSSProperties = {
     padding: size === 'md' ? `20px ${horizontalPadding} 10px` : `20px ${horizontalPadding} 16px`,
+    textAlign,
   };
 
   const labelStyle: React.CSSProperties = {
-    ...(size === 'md' ? typography.body.body5 : typography.title['h5-1']),
+    ...(size === 'md' ? typography.body.body5 : typography.title['h1']),
     color: colors.neutral[100],
-    textAlign,
   };
 
   const inputContainerStyle: React.CSSProperties = {
