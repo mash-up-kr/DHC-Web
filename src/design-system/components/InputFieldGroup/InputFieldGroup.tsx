@@ -20,6 +20,7 @@ import { InputField } from '../InputField';
 
 export type InputFieldGroupType = 'single' | 'multi';
 export type InputFieldGroupSize = 'md' | 'lg';
+export type InputFieldGroupAlign = 'start' | 'center';
 
 export interface InputFieldItem {
   /**
@@ -50,6 +51,11 @@ export interface InputFieldItem {
    * 비활성화 여부
    */
   disabled?: boolean;
+  /**
+   * 입력 필드 flex 비율 (예: 175, 73.5)
+   * 지정하지 않으면 기본 레이아웃 적용
+   */
+  flex?: number;
 }
 
 export interface InputFieldGroupProps {
@@ -76,6 +82,21 @@ export interface InputFieldGroupProps {
    */
   onChange: (key: string, value: string) => void;
   /**
+   * 텍스트 정렬
+   * @default 'center'
+   */
+  align?: InputFieldGroupAlign;
+  /**
+   * 전체 너비 사용 여부 (좌우 패딩 제거)
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * 레이블 표시 여부
+   * @default true
+   */
+  showLabel?: boolean;
+  /**
    * 커스텀 클래스명
    */
   className?: string;
@@ -87,8 +108,13 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
   label,
   items,
   onChange,
+  align = 'center',
+  fullWidth = false,
+  showLabel = true,
   className = '',
 }) => {
+  const textAlign = align === 'center' ? 'center' : 'left';
+  const horizontalPadding = fullWidth ? '0px' : '20px';
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -96,7 +122,8 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
   };
 
   const labelContainerStyle: React.CSSProperties = {
-    padding: size === 'md' ? '20px 20px 10px' : '20px 20px 16px',
+    padding: size === 'md' ? `20px ${horizontalPadding} 10px` : `20px ${horizontalPadding} 16px`,
+    textAlign,
   };
 
   const labelStyle: React.CSSProperties = {
@@ -108,7 +135,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
-    padding: '0px 20px 20px',
+    padding: `0px ${horizontalPadding} 20px`,
   };
 
   const inputRowStyle: React.CSSProperties = {
@@ -119,9 +146,11 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
   };
 
   const renderInputWithSuffix = (item: InputFieldItem, index: number) => {
+    // item.flex가 지정되면 해당 비율로 flex 사용, 아니면 기본 레이아웃 적용
     // single 타입이면 항상 전체 너비, multi 타입이면 첫 번째는 172px, 나머지는 flex
-    const inputWrapperStyle: React.CSSProperties =
-      type === 'single'
+    const inputWrapperStyle: React.CSSProperties = item.flex !== undefined
+      ? { flex: item.flex }
+      : type === 'single'
         ? { flex: 1 }
         : index === 0
           ? { width: '172px' }
@@ -158,9 +187,11 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
 
   return (
     <div className={className} style={containerStyle}>
-      <div style={labelContainerStyle}>
-        <span style={labelStyle}>{label}</span>
-      </div>
+      {showLabel && (
+        <div style={labelContainerStyle}>
+          <span style={labelStyle}>{label}</span>
+        </div>
+      )}
       <div style={inputContainerStyle}>
         <div style={inputRowStyle}>
           {items.map((item, index) =>

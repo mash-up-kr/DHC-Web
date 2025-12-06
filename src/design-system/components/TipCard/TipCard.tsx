@@ -32,6 +32,11 @@ export interface TipCardProps {
    */
   color?: string;
   /**
+   * 카드 너비
+   * @default '160px'
+   */
+  width?: string;
+  /**
    * 커스텀 클래스명
    */
   className?: string;
@@ -42,6 +47,7 @@ export const TipCard: React.FC<TipCardProps> = ({
   title,
   value,
   color,
+  width = '160px',
   className = '',
 }) => {
   const containerStyle: React.CSSProperties = {
@@ -50,7 +56,7 @@ export const TipCard: React.FC<TipCardProps> = ({
     padding: '16px',
     backgroundColor: colors.neutral[700],
     borderRadius: '12px',
-    width: '160px',
+    width,
   };
 
   const contentStyle: React.CSSProperties = {

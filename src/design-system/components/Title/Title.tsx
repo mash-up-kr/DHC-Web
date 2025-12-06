@@ -36,7 +36,11 @@ export interface TitleProps {
   /**
    * 타이틀 텍스트
    */
-  title: string;
+  title?: string;
+  /**
+   * 커스텀 타이틀 노드 (그라데이션 등 커스텀 스타일 적용 시 사용)
+   */
+  titleNode?: React.ReactNode;
   /**
    * 설명 텍스트
    */
@@ -51,6 +55,7 @@ export const Title: React.FC<TitleProps> = ({
   type,
   size,
   title,
+  titleNode,
   description,
   className = '',
 }) => {
@@ -89,7 +94,7 @@ export const Title: React.FC<TitleProps> = ({
   return (
     <div className={className} style={containerStyle}>
       <div style={{ width: '100%' }}>
-        <span style={titleStyle}>{title}</span>
+        {titleNode ? titleNode : <span style={titleStyle}>{title}</span>}
       </div>
       {description && (
         <div style={{ width: '100%' }}>
