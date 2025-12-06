@@ -31,6 +31,11 @@ export interface ModalProps {
    */
   onClose?: () => void;
   /**
+   * 닫기 버튼 표시 여부
+   * @default true
+   */
+  showCloseButton?: boolean;
+  /**
    * 그래픽 영역 커스텀 렌더링
    */
   graphicNode?: React.ReactNode;
@@ -46,6 +51,7 @@ export const Modal: React.FC<ModalProps> = ({
   buttonText,
   onButtonClick,
   onClose,
+  showCloseButton = true,
   graphicNode,
   className = '',
 }) => {
@@ -157,15 +163,17 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div className={className} style={containerStyle}>
       {/* 닫기 버튼 */}
-      <div style={closeButtonContainerStyle}>
-        <button style={closeButtonStyle} onClick={onClose} aria-label="닫기">
-          <img
-            src="/images/icon-close.svg"
-            alt="닫기"
-            style={{ width: '28px', height: '28px' }}
-          />
-        </button>
-      </div>
+      {showCloseButton && (
+        <div style={closeButtonContainerStyle}>
+          <button style={closeButtonStyle} onClick={onClose} aria-label="닫기">
+            <img
+              src="/images/icon-close.svg"
+              alt="닫기"
+              style={{ width: '28px', height: '28px' }}
+            />
+          </button>
+        </div>
+      )}
 
       {/* 콘텐츠 영역 */}
       <div style={contentContainerStyle}>
