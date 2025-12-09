@@ -22,7 +22,7 @@ export default function Question1() {
   };
 
   return (
-    <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }}>
+    <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* 상단 고정 Header */}
       <div
         style={{
@@ -34,17 +34,20 @@ export default function Question1() {
           backgroundColor: colors.background.main,
         }}
       >
-        <Header
-          type="progressBar"
-          currentPage={1}
-          totalPage={5}
-          progress={20}
-          onBackClick={() => router.back()}
-        />
+        <div className="max-w-md w-full mx-auto">
+          <Header
+            type="progressBar"
+            currentPage={1}
+            totalPage={5}
+            progress={20}
+            onBackClick={() => router.back()}
+          />
+        </div>
       </div>
 
       {/* 스크롤 가능한 콘텐츠 영역 */}
       <div
+        className="max-w-md w-full"
         style={{
           paddingTop: '52px',
           paddingBottom: '100px',
@@ -95,6 +98,7 @@ export default function Question1() {
           type="single"
           size="md"
           label="내 이름"
+          align="start"
           items={[
             { key: 'name', value: userInfo.name, placeholder: '홍길동' },
           ]}
@@ -107,12 +111,14 @@ export default function Question1() {
         className="fixed bottom-0 left-0 right-0"
         style={{ backgroundColor: colors.background.main }}
       >
-        <CTAButtonGroup
+        <div className="max-w-md w-full mx-auto">
+          <CTAButtonGroup
           type="oneButton"
           primaryButtonText="다음"
           primaryDisabled={!isFormValid}
-          onPrimaryClick={handleNext}
-        />
+            onPrimaryClick={handleNext}
+          />
+        </div>
       </div>
     </div>
   );

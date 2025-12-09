@@ -22,7 +22,7 @@ export default function Question5() {
   };
 
   return (
-    <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }}>
+    <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* 상단 고정 Header */}
       <div
         style={{
@@ -34,17 +34,20 @@ export default function Question5() {
           backgroundColor: colors.background.main,
         }}
       >
-        <Header
-          type="progressBar"
-          currentPage={5}
-          totalPage={5}
-          progress={100}
-          onBackClick={() => router.back()}
-        />
+        <div className="max-w-md w-full mx-auto">
+          <Header
+            type="progressBar"
+            currentPage={5}
+            totalPage={5}
+            progress={100}
+            onBackClick={() => router.back()}
+          />
+        </div>
       </div>
 
       {/* 스크롤 가능한 콘텐츠 영역 */}
       <div
+        className="max-w-md w-full"
         style={{
           paddingTop: '52px',
           paddingBottom: '100px',
@@ -82,6 +85,7 @@ export default function Question5() {
           type="multi"
           size="md"
           label="사랑에 빠진 날"
+          align="start"
           items={[
             { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
             { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
@@ -101,12 +105,14 @@ export default function Question5() {
         className="fixed bottom-0 left-0 right-0"
         style={{ backgroundColor: colors.background.main }}
       >
-        <CTAButtonGroup
-          type="oneButton"
-          primaryButtonText="테스트 결과 확인"
-          primaryDisabled={!isFormValid}
-          onPrimaryClick={handleNext}
-        />
+        <div className="max-w-md w-full mx-auto">
+          <CTAButtonGroup
+            type="oneButton"
+            primaryButtonText="테스트 결과 확인"
+            primaryDisabled={!isFormValid}
+            onPrimaryClick={handleNext}
+          />
+        </div>
       </div>
     </div>
   );
