@@ -8,7 +8,7 @@
 ## 기술 스택
 
 ### 코어 기술
-- **프레임워크**: Next.js 15.5.6 (App Router)
+- **프레임워크**: Next.js 15.5.7 (App Router)
 - **언어**: TypeScript 5.9.3
 - **런타임**: React 19.2.0
 - **스타일링**: Tailwind CSS 3.4.18
