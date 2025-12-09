@@ -56,24 +56,27 @@ export default function Home() {
 
       {/* 하단 고정 영역 */}
       <div className="fixed bottom-0 left-0 right-0 flex flex-col items-center">
-        {/* 참여 인원 표시 */}
-        <div style={{ marginBottom: '12px', pointerEvents: 'none' }}>
-          <MoreBtn showIcon={false}>
-            지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
-          </MoreBtn>
-        </div>
+        <div className="max-w-md w-full flex flex-col items-center">
+          {/* 참여 인원 표시 */}
+          <div style={{ marginBottom: '12px', pointerEvents: 'none' }}>
+            <MoreBtn showIcon={false}>
+              지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
+            </MoreBtn>
+          </div>
 
-        {/* CTA 버튼 그룹 */}
-        <CTAButtonGroup
-          type="twoButton"
-          primaryButtonText="테스트 시작하기"
-          onPrimaryClick={() => {
-            resetAll();
-            router.push('/test/question/1');
-          }}
-          tertiaryButtonText="공유하기"
-          onTertiaryClick={() => {}}
-        />
+          {/* CTA 버튼 그룹 */}
+          <CTAButtonGroup
+            type="twoButton"
+            primaryButtonText="테스트 시작하기"
+            onPrimaryClick={() => {
+              resetAll();
+              router.push('/test/question/1');
+            }}
+            secondButtonType="tertiary"
+            secondButtonText="공유하기"
+            onSecondButtonClick={() => {}}
+          />
+        </div>
       </div>
 
     </main>
