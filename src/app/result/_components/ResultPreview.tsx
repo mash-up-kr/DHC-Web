@@ -276,6 +276,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
           <CTAButtonGroup
             type="twoButton"
             primaryButtonText="앱 설치하기"
+            onPrimaryClick={onShare}
             secondButtonType="secondary"
             secondButtonText="테스트 다시하기"
             onSecondButtonClick={handleRestart}
