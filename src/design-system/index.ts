@@ -11,8 +11,5 @@ export * from './foundations';
 // Components
 export * from './components';
 
-// Assets (Icons, Images, etc.)
-export * from './assets';
-
 // Utils
 export * from './utils';
