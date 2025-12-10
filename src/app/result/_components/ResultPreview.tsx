@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
@@ -17,6 +17,15 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // 2초 후 모달 자동 열기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsModalOpen(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
   const compatibilityScore = 85;
 
@@ -30,10 +39,6 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
 
   const handleRestart = () => {
     router.push("/");
-  };
-
-  const handleShareClick = () => {
-    setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
@@ -190,7 +195,6 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               자세한 꿀팁{'\n'}무료로 확인해보세요!
             </p>
             <button
-              onClick={handleShareClick}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
