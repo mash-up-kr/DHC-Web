@@ -5,9 +5,11 @@
  * Figma: https://www.figma.com/design/7xHHLZb5X78nH2Is3CIpFC/Design---Flifin-v3.0.0?node-id=5075-11416
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { colors } from '../../foundations/colors';
 import { typography } from '../../foundations/typography';
+
+const ANIMATION_DURATION = 300;
 
 export interface ModalProps {
   /**
@@ -88,6 +90,30 @@ export const Modal: React.FC<ModalProps> = ({
   showBorder = false,
   className = '',
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    // 마운트 시 fade in 시작
+    requestAnimationFrame(() => {
+      setIsVisible(true);
+    });
+  }, []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose?.();
+    }, ANIMATION_DURATION);
+  };
+
+  const handleOverlayClick = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onOverlayClick?.();
+    }, ANIMATION_DURATION);
+  };
+
   const overlayStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -100,6 +126,8 @@ export const Modal: React.FC<ModalProps> = ({
     alignItems: 'center',
     zIndex: 1000,
     padding: '0 20px',
+    opacity: isVisible && !isClosing ? 1 : 0,
+    transition: `opacity ${ANIMATION_DURATION}ms ease-in-out`,
   };
 
   const containerStyle: React.CSSProperties = {
@@ -115,6 +143,9 @@ export const Modal: React.FC<ModalProps> = ({
     width: '100%',
     maxWidth: '300px',
     ...(showBorder && { border: `1px solid ${colors.neutral[600]}` }),
+    opacity: isVisible && !isClosing ? 1 : 0,
+    transform: isVisible && !isClosing ? 'translateY(0)' : 'translateY(20px)',
+    transition: `opacity ${ANIMATION_DURATION}ms ease-in-out, transform ${ANIMATION_DURATION}ms ease-in-out`,
   };
 
   const closeButtonContainerStyle: React.CSSProperties = {
@@ -236,7 +267,7 @@ export const Modal: React.FC<ModalProps> = ({
       {/* 닫기 버튼 */}
       {showCloseButton && (
         <div style={closeButtonContainerStyle}>
-          <button style={closeButtonStyle} onClick={onClose} aria-label="닫기">
+          <button style={closeButtonStyle} onClick={handleClose} aria-label="닫기">
             <img
               src="/images/icon-close.svg"
               alt="닫기"
@@ -284,7 +315,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   if (showOverlay) {
     return (
-      <div style={overlayStyle} onClick={onOverlayClick}>
+      <div style={overlayStyle} onClick={handleOverlayClick}>
         {modalContent}
       </div>
     );

@@ -18,6 +18,7 @@ export function ResultContent() {
           type="twoButton"
           primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
           secondButtonText="테스트 다시하기"
+          secondButtonType="secondary"
           onSecondButtonClick={handleRestart}
         />
       }
