@@ -78,7 +78,7 @@ export default function Question4() {
         <Title
           type="page"
           size="sm"
-          title={`Q4.그녀의 생년월일과\n태어난 시간을 입력해주세요`}
+          title={`Q4.그 사람의 생년월일과\n태어난 시간을 입력해주세요`}
           description={`생년월일이 정확할수록\n더 적합한 정보를 제공해 드릴 수 있어요`}
         />
 
@@ -136,7 +136,7 @@ export default function Question4() {
         <LabelButton
           type="select"
           size="md"
-          label="그녀의 머리색상"
+          label="그 사람의 머리색상"
           options={[
             { label: '밝은 편이다', value: 'light' },
             { label: '어두운 편이다', value: 'dark' },

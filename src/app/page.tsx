@@ -18,12 +18,12 @@ export default function Home() {
     >
       <div className="max-w-md w-full flex flex-col items-center">
         <Header
-        type="screenInfo"
-        title="그녀와 나의 궁합은?!"
-        currentPage={1}
-        totalPage={4}
-        showBackButton={false}
-        showIndicator={false}
+          type="screenInfo"
+          title="그 사람과 나의 궁합은?!"
+          currentPage={1}
+          totalPage={4}
+          showBackButton={false}
+          showIndicator={false}
           className="fixed top-0 left-0 right-0 z-50"
         />
 
@@ -48,9 +48,9 @@ export default function Home() {
         {/* ScoreText */}
         <ScoreText
           type="result"
-          badgeText="짝사랑 하는 그녀... 나와 잘될 수 있을까?"
-          title="그녀와 나의 궁합은?!"
-          description={"그녀의 생일을 입력하고\n나와의 궁합을 쉽게 확인해보세요!"}
+          badgeText="짝사랑 하는 그 사람... 나와 잘될 수 있을까?"
+          title="그 사람과 나의 연애궁합은?!"
+          description={"짝사랑 상대의 생일을 입력하고\n나와의 궁합을 쉽게 확인해보세요!"}
         />
       </div>
 
