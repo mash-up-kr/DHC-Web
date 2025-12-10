@@ -96,7 +96,7 @@ export function ResultBase({ ctaSection }: ResultBaseProps) {
               marginTop: '52px',
               background: gradients.cardBottomGradient01,
               borderRadius: '50%',
-              opacity: '0.4',
+              opacity: '0.2',
             }}
           />
         </div>
