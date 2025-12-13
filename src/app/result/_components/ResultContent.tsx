@@ -10,6 +10,7 @@ import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 import { useTestStore } from "@/store/useTestStore";
+import { openStore } from "@/utils/storeUrl";
 
 export function ResultContent() {
   const router = useRouter();
@@ -269,6 +270,7 @@ export function ResultContent() {
           primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
           secondButtonText="테스트 다시하기"
           secondButtonType="secondary"
+          onPrimaryClick={openStore}
           onSecondButtonClick={handleRestart}
         />
       </div>

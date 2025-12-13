@@ -8,6 +8,7 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { Modal } from "@/design-system/components/Modal";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
+import { openStore } from "@/utils/storeUrl";
 
 interface ResultPreviewProps {
   onShare?: () => void;
@@ -276,7 +277,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
           <CTAButtonGroup
             type="twoButton"
             primaryButtonText="앱 설치하기"
-            onPrimaryClick={onShare}
+            onPrimaryClick={openStore}
             secondButtonType="secondary"
             secondButtonText="테스트 다시하기"
             onSecondButtonClick={handleRestart}
