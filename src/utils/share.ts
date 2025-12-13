@@ -3,15 +3,21 @@ export const getRootUrl = (): string => {
   return window.location.origin;
 };
 
+const isMobileDevice = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod|android/.test(userAgent);
+};
+
 export const shareUrl = async (url?: string): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
   const shareUrlValue = url || getRootUrl();
 
-  // Web Share API 지원 여부 확인 (주로 모바일 브라우저)
-  if (navigator.share) {
+  // 모바일에서만 Web Share API 사용
+  if (isMobileDevice() && navigator.share) {
     try {
       await navigator.share({
-        title: '플리핀 - 썸녀와의 궁합 테스트',
-        text: '나와 썸녀의 궁합을 확인해보세요!',
+        title: '플리핀 - 그사람과의 궁합 테스트',
+        text: '나와 그사람의 궁합을 확인해보세요!',
         url: shareUrlValue,
       });
       return { success: true, method: 'share' };

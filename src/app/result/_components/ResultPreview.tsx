@@ -201,6 +201,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               자세한 꿀팁{'\n'}무료로 확인해보세요!
             </p>
             <button
+              onClick={handleShareConfirm}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
