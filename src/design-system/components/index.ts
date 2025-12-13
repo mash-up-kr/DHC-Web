@@ -32,3 +32,7 @@ export type { TipCardProps } from './TipCard/TipCard';
 // Modal Components
 export { Modal } from './Modal/Modal';
 export type { ModalProps } from './Modal/Modal';
+
+// Tooltip Components
+export { Tooltip } from './Tooltip/Tooltip';
+export type { TooltipProps, TooltipArrowPosition } from './Tooltip/Tooltip';
