@@ -3,6 +3,7 @@
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { Tooltip } from "@/design-system/components/Tooltip";
+import { ScratchOrb } from "./ScratchOrb";
 
 interface ResultReadyProps {
   onConfirm: () => void;
@@ -42,16 +43,14 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
           {/* Swipe 툴팁 */}
           <Tooltip label="Swipe" arrowPosition="bottom-center" />
 
-          {/* Orb */}
-          <div
-            onClick={onConfirm}
-            style={{
-              width: '210px',
-              height: '210px',
-              borderRadius: '50%',
-              backgroundColor: '#CDE3FF',
-              cursor: 'pointer',
-            }}
+          {/* Scratch Orb */}
+          <ScratchOrb
+            size={210}
+            maskColor="#CDE3FF"
+            revealImageUrl="/images/scratch-reveal-orb.png"
+            completionThreshold={0.5}
+            brushSize={30}
+            onComplete={onConfirm}
           />
         </div>
       </main>
