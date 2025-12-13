@@ -22,7 +22,7 @@ export function useScratchCanvas({
   const [isDrawing, setIsDrawing] = useState(false);
   const [progress, setProgress] = useState(0);
   const hasCompleted = useRef(false);
-  const rafId = useRef<number>();
+  const rafId = useRef<number | undefined>(undefined);
   const currentProgress = useRef(0);
 
   // Canvas 초기화 (원형 마스크 그리기)
