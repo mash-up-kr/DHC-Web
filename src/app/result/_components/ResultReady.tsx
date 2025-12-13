@@ -2,6 +2,7 @@
 
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
+import { Tooltip } from "@/design-system/components/Tooltip";
 
 interface ResultReadyProps {
   onConfirm: () => void;
@@ -32,10 +33,16 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
             flex: 1,
             width: '100%',
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            gap: '16px',
           }}
         >
+          {/* Swipe 툴팁 */}
+          <Tooltip label="Swipe" arrowPosition="bottom-center" />
+
+          {/* Orb */}
           <div
             onClick={onConfirm}
             style={{
