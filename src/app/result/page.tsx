@@ -2,19 +2,25 @@
 
 import { useState, useEffect } from "react";
 import { ResultLoading, ResultReady, ResultPreview, ResultContent } from "./_components";
+import { useTestStore } from "@/store/useTestStore";
 
 type ResultStep = 'loading' | 'ready' | 'preview' | 'content';
 
 export default function Result() {
   const [step, setStep] = useState<ResultStep>('loading');
+  const { hasShared } = useTestStore();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setStep('ready');
+      if (hasShared) {
+        setStep('content');
+      } else {
+        setStep('ready');
+      }
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [hasShared]);
 
   const handleConfirm = () => {
     setStep('preview');

@@ -62,6 +62,10 @@ interface TestState {
   loveDate: LoveDate;
   setLoveDate: (date: Partial<LoveDate>) => void;
 
+  // 공유 여부
+  hasShared: boolean;
+  setHasShared: (shared: boolean) => void;
+
   // 전체 초기화
   resetAll: () => void;
 }
@@ -97,6 +101,7 @@ const initialState = {
     month: '',
     day: '',
   },
+  hasShared: false,
 };
 
 export const useTestStore = create<TestState>()(
@@ -128,6 +133,8 @@ export const useTestStore = create<TestState>()(
         set((state) => ({
           loveDate: { ...state.loveDate, ...date },
         })),
+
+      setHasShared: (shared) => set({ hasShared: shared }),
 
       resetAll: () => set(initialState),
     }),

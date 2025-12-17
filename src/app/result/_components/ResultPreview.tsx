@@ -10,6 +10,7 @@ import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
+import { useTestStore } from "@/store/useTestStore";
 
 interface ResultPreviewProps {
   onShare?: () => void;
@@ -18,6 +19,7 @@ interface ResultPreviewProps {
 export function ResultPreview({ onShare }: ResultPreviewProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setHasShared } = useTestStore();
 
   // 2초 후 모달 자동 열기
   useEffect(() => {
@@ -52,6 +54,9 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
     const result = await shareUrl();
     if (result.success && result.method === 'clipboard') {
       alert('링크가 클립보드에 복사되었습니다!');
+    }
+    if (result.success) {
+      setHasShared(true);
     }
     onShare?.();
   };
