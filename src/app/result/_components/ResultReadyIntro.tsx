@@ -40,7 +40,28 @@ export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
           }}
         >
           {/* Swipe 툴팁 */}
-          <Tooltip label="문질러 보세요!" arrowPosition="bottom-center" />
+          <div className="tooltip-bounce">
+            <Tooltip label="문질러 보세요!" arrowPosition="bottom-center" />
+          </div>
+          <style jsx>{`
+            .tooltip-bounce {
+              animation: tooltipBounce 1s ease-in-out infinite;
+            }
+            @keyframes tooltipBounce {
+              0% {
+                transform: translateY(0);
+              }
+              25% {
+                transform: translateY(-10px);
+              }
+              75% {
+                transform: translateY(10px);
+              }
+              100% {
+                transform: translateY(0);
+              }
+            }
+          `}</style>
 
           {/* Intro Orb 이미지 */}
           <img
