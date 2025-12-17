@@ -2,7 +2,6 @@
 
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
-import { Tooltip } from "@/design-system/components/Tooltip";
 import { ScratchOrb } from "./ScratchOrb";
 
 interface ResultReadyProps {
@@ -40,9 +39,6 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
             gap: '16px',
           }}
         >
-          {/* Swipe 툴팁 */}
-          <Tooltip label="Swipe" arrowPosition="bottom-center" />
-
           {/* Scratch Orb */}
           <ScratchOrb
             size={210}
