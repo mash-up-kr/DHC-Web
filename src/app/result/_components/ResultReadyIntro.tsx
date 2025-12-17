@@ -3,7 +3,6 @@
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { Tooltip } from "@/design-system/components/Tooltip";
-import { ScratchOrb } from "./ScratchOrb";
 
 interface ResultReadyIntroProps {
   onNext: () => void;
@@ -41,16 +40,18 @@ export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
           }}
         >
           {/* Swipe 툴팁 */}
-          <Tooltip label="Swipe" arrowPosition="bottom-center" />
+          <Tooltip label="문질러 보세요!" arrowPosition="bottom-center" />
 
-          {/* Scratch Orb */}
-          <ScratchOrb
-            size={210}
-            maskColor="#CDE3FF"
-            revealImageUrl="/images/scratch-reveal-orb.png"
-            completionThreshold={0.5}
-            brushSize={30}
-            onComplete={onNext}
+          {/* Intro Orb 이미지 */}
+          <img
+            src="/images/scratch-intro-orb.png"
+            alt="Intro Orb"
+            onClick={onNext}
+            style={{
+              width: 210,
+              height: 210,
+              cursor: 'pointer',
+            }}
           />
         </div>
       </main>
