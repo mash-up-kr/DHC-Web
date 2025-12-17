@@ -7,10 +7,19 @@ import { MoreBtn } from "@/design-system/components/MoreBtn";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
+import { shareUrl } from "@/utils/share";
 
 export default function Home() {
   const router = useRouter();
   const { resetAll } = useTestStore();
+
+  const handleShare = async () => {
+    const result = await shareUrl();
+    if (result.success && result.method === 'clipboard') {
+      alert('링크가 클립보드에 복사되었습니다!');
+    }
+  };
+
   return (
     <main
       className="flex min-h-screen flex-col items-center p-6"
@@ -74,7 +83,7 @@ export default function Home() {
             }}
             secondButtonType="tertiary"
             secondButtonText="공유하기"
-            onSecondButtonClick={() => {}}
+            onSecondButtonClick={handleShare}
           />
         </div>
       </div>
