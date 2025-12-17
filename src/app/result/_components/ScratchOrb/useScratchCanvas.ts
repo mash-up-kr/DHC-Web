@@ -139,21 +139,18 @@ export function useScratchCanvas({
     [canvasRef, size, brushSize, calculateProgress],
   );
 
-  // 스크래치 종료 시 체크 및 완료/초기화
+  // 스크래치 종료 시 체크 및 완료 처리
   const handleScratchEnd = useCallback(() => {
     setIsDrawing(false);
 
     if (hasCompleted.current) return;
 
-    // 50% 이상이면 완료 처리
+    // threshold 이상이면 완료 처리
     if (currentProgress.current >= completionThreshold) {
       hasCompleted.current = true;
       onComplete();
-    } else {
-      // 50% 미만이면 초기화
-      initCanvas();
     }
-  }, [completionThreshold, initCanvas, onComplete]);
+  }, [completionThreshold, onComplete]);
 
   // 마우스 이벤트 핸들러
   const handleMouseDown = useCallback(

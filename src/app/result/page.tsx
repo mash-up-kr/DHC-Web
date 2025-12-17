@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ResultLoading, ResultReady, ResultPreview, ResultContent } from "./_components";
+import { ResultLoading, ResultReadyIntro, ResultReady, ResultPreview, ResultContent } from "./_components";
 import { useTestStore } from "@/store/useTestStore";
 
-type ResultStep = 'loading' | 'ready' | 'preview' | 'content';
+type ResultStep = 'loading' | 'readyIntro' | 'ready' | 'preview' | 'content';
 
 export default function Result() {
   const [step, setStep] = useState<ResultStep>('loading');
@@ -15,12 +15,16 @@ export default function Result() {
       if (hasShared) {
         setStep('content');
       } else {
-        setStep('ready');
+        setStep('readyIntro');
       }
     }, 3000);
 
     return () => clearTimeout(timer);
   }, [hasShared]);
+
+  const handleIntroComplete = () => {
+    setStep('ready');
+  };
 
   const handleConfirm = () => {
     setStep('preview');
@@ -32,6 +36,10 @@ export default function Result() {
 
   if (step === 'loading') {
     return <ResultLoading />;
+  }
+
+  if (step === 'readyIntro') {
+    return <ResultReadyIntro onNext={handleIntroComplete} />;
   }
 
   if (step === 'ready') {
