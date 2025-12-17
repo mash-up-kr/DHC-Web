@@ -44,7 +44,7 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
             size={210}
             maskColor="#CDE3FF"
             revealImageUrl="/images/scratch-reveal-orb.png"
-            completionThreshold={0.5}
+            completionThreshold={0.65}
             brushSize={30}
             onComplete={onConfirm}
           />
