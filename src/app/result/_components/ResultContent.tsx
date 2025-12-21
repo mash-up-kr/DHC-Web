@@ -15,6 +15,7 @@ import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
 import { isMobileDevice } from "@/utils/device";
+import { showToast } from "@/utils/bridge";
 
 export function ResultContent() {
   const router = useRouter();
@@ -317,11 +318,11 @@ export function ResultContent() {
         {/* CTA 버튼 영역 */}
         <CTAButtonGroup
           type="twoButton"
-          primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
-          secondButtonText="테스트 다시하기"
-          secondButtonType="secondary"
-          onPrimaryClick={openStore}
-          onSecondButtonClick={handleRestart}
+          primaryButtonText={isMobile ? "공유하고 러브미션 받기" : "앱 설치하고 맞춤 미션 확인하기"}
+          secondButtonText={isMobile ? "메인화면으로 돌아가기" : "테스트 다시하기"}
+          secondButtonType={isMobile ? "tertiary" : "secondary"}
+          onPrimaryClick={isMobile ? handleShareConfirm : openStore}
+          onSecondButtonClick={isMobile ? () => showToast("hello world2") : handleRestart}
         />
       </div>
 
