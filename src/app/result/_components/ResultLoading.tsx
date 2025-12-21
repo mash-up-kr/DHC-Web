@@ -6,13 +6,15 @@ import { ScoreText } from "@/design-system/components/ScoreText";
 export function ResultLoading() {
   return (
     <main
-      className="flex min-h-screen flex-col items-center"
+      className="flex flex-col items-center"
       style={{
         backgroundColor: colors.background.main,
         backgroundImage: 'url(/images/loading-background.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        minHeight: '100dvh',
+        height: '100%',
       }}
     >
       {/* ScoreText - 상단 26px 여백 */}
