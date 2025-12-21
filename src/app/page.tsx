@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
@@ -8,10 +9,17 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { shareUrl } from "@/utils/share";
+import { isMobileDevice } from "@/utils/device";
+import { showToast } from "@/utils/bridge";
 
 export default function Home() {
   const router = useRouter();
   const { resetAll } = useTestStore();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const handleShare = async () => {
     const result = await shareUrl();
@@ -31,9 +39,10 @@ export default function Home() {
           title="그 사람과 나의 궁합은?!"
           currentPage={1}
           totalPage={4}
-          showBackButton={false}
+          showBackButton={isMobile}
           showIndicator={false}
           className="fixed top-0 left-0 right-0 z-50"
+          onBackClick={() => showToast("Hello world")}
         />
 
         {/* Header 높이(52px) + 40px 공백 */}
