@@ -14,24 +14,42 @@ import { typography } from "@/design-system/foundations/typography";
 import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
+import { isMobileDevice } from "@/utils/device";
 
 export function ResultContent() {
   const router = useRouter();
   const { partnerInfo, userInfo, setHasShared } = useTestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setIsMobile(isMobileDevice());
   }, []);
 
-  // 2초 후 모달 자동 열기
+  // 2초 후 모달 자동 열기 (모바일에서만)
   useEffect(() => {
+    if (!isMobile) return;
+
     const timer = setTimeout(() => {
       setIsModalOpen(true);
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMobile]);
+
+  // 모달이 열려있을 때 스크롤 방지
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isModalOpen]);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -343,6 +361,8 @@ export function ResultContent() {
           graphicHeight={138}
           buttonText="테스트 공유하기"
           onButtonClick={handleShareConfirm}
+          secondButtonText="테스트 결과 확인하기"
+          onSecondButtonClick={handleModalClose}
         />
       )}
     </main>
