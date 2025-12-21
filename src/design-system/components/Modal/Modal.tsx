@@ -37,6 +37,14 @@ export interface ModalProps {
    */
   onButtonClick?: () => void;
   /**
+   * 두 번째 버튼 텍스트 (tertiary 스타일)
+   */
+  secondButtonText?: string;
+  /**
+   * 두 번째 버튼 클릭 핸들러
+   */
+  onSecondButtonClick?: () => void;
+  /**
    * 닫기 버튼 클릭 핸들러
    */
   onClose?: () => void;
@@ -81,6 +89,8 @@ export const Modal: React.FC<ModalProps> = ({
   badgeText,
   buttonText,
   onButtonClick,
+  secondButtonText,
+  onSecondButtonClick,
   onClose,
   showCloseButton = true,
   showOverlay = false,
@@ -258,6 +268,25 @@ export const Modal: React.FC<ModalProps> = ({
     textAlign: 'center',
   };
 
+  const secondButtonStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    gap: '8px',
+    padding: '14px 24px',
+    backgroundColor: 'transparent',
+    borderRadius: '8px',
+    border: 'none',
+    cursor: 'pointer',
+  };
+
+  const secondButtonTextStyle: React.CSSProperties = {
+    ...typography.title.h6,
+    color: colors.neutral[300],
+    textAlign: 'center',
+  };
+
   const modalContent = (
     <div
       className={className}
@@ -309,6 +338,11 @@ export const Modal: React.FC<ModalProps> = ({
         <button style={buttonStyle} onClick={onButtonClick}>
           <span style={buttonTextStyle}>{buttonText}</span>
         </button>
+        {secondButtonText && (
+          <button style={secondButtonStyle} onClick={onSecondButtonClick}>
+            <span style={secondButtonTextStyle}>{secondButtonText}</span>
+          </button>
+        )}
       </div>
     </div>
   );
