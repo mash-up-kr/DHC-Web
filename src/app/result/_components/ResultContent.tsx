@@ -15,7 +15,7 @@ import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
 import { isMobileDevice } from "@/utils/device";
-import { showToast } from "@/utils/bridge";
+import { close } from "@/utils/bridge";
 
 export function ResultContent() {
   const router = useRouter();
@@ -322,7 +322,7 @@ export function ResultContent() {
           secondButtonText={isMobile ? "메인화면으로 돌아가기" : "테스트 다시하기"}
           secondButtonType={isMobile ? "tertiary" : "secondary"}
           onPrimaryClick={isMobile ? handleShareConfirm : openStore}
-          onSecondButtonClick={isMobile ? () => showToast("hello world2") : handleRestart}
+          onSecondButtonClick={isMobile ? () => close() : handleRestart}
         />
       </div>
 

@@ -10,7 +10,7 @@ import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { shareUrl } from "@/utils/share";
 import { isMobileDevice } from "@/utils/device";
-import { showToast } from "@/utils/bridge";
+import { close } from "@/utils/bridge";
 
 export default function Home() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function Home() {
           showBackButton={isMobile}
           showIndicator={false}
           className="fixed top-0 left-0 right-0 z-50"
-          onBackClick={() => showToast("Hello world")}
+          onBackClick={() => close()}
         />
 
         {/* Header 높이(52px) + 40px 공백 */}

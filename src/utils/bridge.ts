@@ -1,5 +1,5 @@
 interface DHCJavascriptInterface {
-  showToast: (message: string) => void;
+  close: () => void;
 }
 
 declare global {
@@ -8,8 +8,8 @@ declare global {
   }
 }
 
-export const showToast = (message: string): void => {
+export const close = (): void => {
   if (typeof window !== 'undefined' && window.DHCJavascriptInterface) {
-    window.DHCJavascriptInterface.showToast(message);
+    window.DHCJavascriptInterface.close();
   }
 };
