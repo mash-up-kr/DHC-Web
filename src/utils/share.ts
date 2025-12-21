@@ -1,12 +1,8 @@
+import { isMobileDevice } from './device';
+
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
   return window.location.origin;
-};
-
-const isMobileDevice = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return /iphone|ipad|ipod|android/.test(userAgent);
 };
 
 export const shareUrl = async (url?: string): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
