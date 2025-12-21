@@ -68,10 +68,16 @@ export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
             src="/images/scratch-intro-orb.png"
             alt="Intro Orb"
             onClick={onNext}
+            onMouseUp={onNext}
+            onTouchEnd={onNext}
+            draggable={false}
             style={{
               width: 210,
               height: 210,
               cursor: 'pointer',
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              touchAction: 'manipulation',
             }}
           />
         </div>
