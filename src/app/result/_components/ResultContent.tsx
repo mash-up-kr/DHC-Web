@@ -17,6 +17,7 @@ import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
+import { DangerZoneGraphic } from "./DangerZoneGraphic";
 
 export function ResultContent() {
   const router = useRouter();
@@ -261,15 +262,7 @@ export function ResultContent() {
             위험요소
           </span>
         </div>
-        <img
-          src="/icons/danger-zone-graphic.png"
-          alt="위험요소 그래픽"
-          style={{
-            width: '100%',
-            height: 'auto',
-            borderRadius: '20px',
-          }}
-        />
+        <DangerZoneGraphic />
         <div
           style={{
             width: '100%',
