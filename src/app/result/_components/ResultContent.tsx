@@ -17,7 +17,27 @@ import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
-import { DangerZoneGraphic } from "./DangerZoneGraphic";
+import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
+
+type Gender = 'male' | 'female';
+
+function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
+  const isMale = gender === 'male';
+
+  return {
+    centerIcon: {
+      iconImage: isMale ? '/icons/icon-male-crush.png' : '/icons/icon-female-crush.png',
+      name: isMale ? '남자 짝사랑' : '여자 짝사랑',
+      padding: '20px',
+    },
+    rivals: [
+      { iconImage: '/icons/icon-male-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
+      { iconImage: '/icons/icon-male-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
+      { iconImage: '/icons/icon-male-rival-3.png', name: '최**', top: '20%', left: '15%' },
+      { iconImage: '/icons/icon-male-rival-4.png', name: '김**', top: '20%', right: '15%' },
+    ],
+  };
+}
 
 export function ResultContent() {
   const router = useRouter();
@@ -262,19 +282,7 @@ export function ResultContent() {
             위험요소
           </span>
         </div>
-        <DangerZoneGraphic
-          centerIcon={{
-            iconImage: '/icons/icon-male-crush.png',
-            name: '남자 짝사랑',
-            padding: '20px',
-          }}
-          rivals={[
-            { iconImage: '/icons/icon-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
-            { iconImage: '/icons/icon-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
-            { iconImage: '/icons/icon-rival-3.png', name: '최**', top: '20%', left: '15%' },
-            { iconImage: '/icons/icon-rival-4.png', name: '김**', top: '20%', right: '15%' },
-          ]}
-        />
+        <DangerZoneGraphic {...getDangerZoneData('male')} />
         <div
           style={{
             width: '100%',
