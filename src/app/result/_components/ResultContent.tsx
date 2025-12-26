@@ -8,6 +8,7 @@ import { MessageCard } from "@/design-system/components/MessageCard";
 import { TipCard } from "@/design-system/components/TipCard";
 import { Title } from "@/design-system/components/Title";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
+import { InputField } from "@/design-system/components/InputField";
 import { Modal } from "@/design-system/components/Modal";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
@@ -273,6 +274,33 @@ export function ResultContent() {
             { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2, flex: 73.5 },
           ]}
           onChange={() => {}}
+        />
+
+        {/* 어디서 고백하면 좋을까? 섹션 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '4px',
+            padding: '20px 0px 16px 0px',
+            width: '100%',
+          }}
+        >
+          <img src="/icons/icon-map-marker.svg" alt="" width={18} height={18} />
+          <span
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              textAlign: 'left',
+              flex: 1,
+            }}
+          >
+            어디서 고백하면 좋을까?
+          </span>
+        </div>
+        <InputField
+          value="학교 근처 놀이터에서"
         />
 
         {/* 프로모션 텍스트 */}
