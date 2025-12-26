@@ -31,10 +31,10 @@ function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
       padding: '20px',
     },
     rivals: [
-      { iconImage: '/icons/icon-male-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
-      { iconImage: '/icons/icon-male-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
-      { iconImage: '/icons/icon-male-rival-3.png', name: '최**', top: '20%', left: '15%' },
-      { iconImage: '/icons/icon-male-rival-4.png', name: '김**', top: '20%', right: '15%' },
+      { iconImage: isMale ? '/icons/icon-female-rival-1.png' : '/icons/icon-male-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
+      { iconImage: isMale ? '/icons/icon-female-rival-2.png' : '/icons/icon-male-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
+      { iconImage: isMale ? '/icons/icon-female-rival-3.png' : '/icons/icon-male-rival-3.png', name: '최**', top: '20%', left: '15%' },
+      { iconImage: isMale ? '/icons/icon-female-rival-4.png' : '/icons/icon-male-rival-4.png', name: '김**', top: '20%', right: '15%' },
     ],
   };
 }
