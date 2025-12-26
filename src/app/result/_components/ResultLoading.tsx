@@ -1,24 +1,32 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
+import { isMobileDevice } from "@/utils/device";
 
 export function ResultLoading() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
+
   return (
     <main
       className="flex flex-col items-center"
       style={{
         backgroundColor: colors.background.main,
         backgroundImage: 'url(/images/loading-background.png)',
-        backgroundSize: 'cover',
+        backgroundSize: 'auto 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         minHeight: '100dvh',
         height: '100%',
       }}
     >
-      {/* ScoreText - 상단 26px 여백 */}
-      <div style={{ paddingTop: '26px', width: '100%' }}>
+      {/* ScoreText - 상단 여백 (모바일: 64px, 웹: 26px) */}
+      <div style={{ paddingTop: isMobile ? '64px' : '26px', width: '100%' }}>
         <ScoreText
           type="loading"
           badgeText="me 🩷 her"
