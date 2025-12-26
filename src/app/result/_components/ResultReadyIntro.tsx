@@ -10,13 +10,12 @@ interface ResultReadyIntroProps {
 
 export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
   return (
-    <div style={{ position: 'relative', minHeight: '100dvh', height: '100%' }}>
+    <div style={{ position: 'relative', height: '100dvh' }}>
       <main
         className="flex flex-col items-center"
         style={{
           backgroundColor: colors.background.main,
           paddingBottom: '140px',
-          minHeight: '100dvh',
           height: '100%',
         }}
       >

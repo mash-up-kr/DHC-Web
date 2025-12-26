@@ -5,18 +5,18 @@ import { ScoreText } from "@/design-system/components/ScoreText";
 
 export function ResultLoading() {
   return (
-    <main
-      className="flex flex-col items-center"
-      style={{
-        backgroundColor: colors.background.main,
-        backgroundImage: 'url(/images/loading-background.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100dvh',
-        height: '100%',
-      }}
-    >
+    <div style={{ position: 'relative', height: '100dvh' }}>
+      <main
+        className="flex flex-col items-center"
+        style={{
+          backgroundColor: colors.background.main,
+          backgroundImage: 'url(/images/loading-background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          height: '100%',
+        }}
+      >
       {/* ScoreText - 상단 26px 여백 */}
       <div style={{ paddingTop: '26px', width: '100%' }}>
         <ScoreText
@@ -49,6 +49,7 @@ export function ResultLoading() {
           }}
         />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }
