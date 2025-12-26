@@ -238,18 +238,28 @@ export function ResultContent() {
         </div>
 
         {/* 언제 고백할까? 섹션 */}
-        <h2
+        <div
           style={{
-            ...typography.title['h5-1'],
-            color: colors.text.main,
-            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '4px',
+            padding: '20px 0px 16px 0px',
             width: '100%',
-            padding: '24px 20px 16px 20px',
-            margin: 0,
           }}
         >
-          언제 고백할까?
-        </h2>
+          <img src="/icons/icon-alarm-clock.svg" alt="" width={18} height={18} />
+          <span
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              textAlign: 'left',
+              flex: 1,
+            }}
+          >
+            언제 고백하면 좋을까?
+          </span>
+        </div>
         <InputFieldGroup
           type="multi"
           size="md"
