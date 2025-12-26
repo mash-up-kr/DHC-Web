@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { ScoreText } from "@/design-system/components/ScoreText";
@@ -55,6 +55,35 @@ function generateRandomPositions(): Position[] {
   });
 }
 
+// 위치를 퍼센트 값(0-100)으로 변환
+function getPositionPercent(position: Position): { x: number; y: number } {
+  let x = 50, y = 50;
+
+  if (position.left) x = parseFloat(position.left);
+  if (position.right) x = 100 - parseFloat(position.right);
+  if (position.top) y = parseFloat(position.top);
+  if (position.bottom) y = 100 - parseFloat(position.bottom);
+
+  return { x, y };
+}
+
+// 중심(50%, 50%)에 가장 가까운 rival 찾기
+function getClosestRivalName(rivals: DangerZoneGraphicProps['rivals']): string {
+  let closestName = rivals[0].name;
+  let minDistance = Infinity;
+
+  rivals.forEach(rival => {
+    const pos = getPositionPercent(rival);
+    const distance = Math.sqrt(Math.pow(pos.x - 50, 2) + Math.pow(pos.y - 50, 2));
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestName = rival.name;
+    }
+  });
+
+  return closestName;
+}
+
 function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
   const isMale = gender === 'male';
   const rivalPrefix = isMale ? '/icons/icon-female-rival-' : '/icons/icon-male-rival-';
@@ -81,6 +110,16 @@ export function ResultContent() {
   const { partnerInfo, userInfo, setHasShared } = useTestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApp, setIsApp] = useState(false);
+
+  // 위험요소 데이터 캐싱 (리렌더링 시 랜덤값 유지)
+  const dangerZoneData = useMemo(
+    () => getDangerZoneData((partnerInfo.gender as Gender) || 'male'),
+    [partnerInfo.gender],
+  );
+  const closestRivalName = useMemo(
+    () => getClosestRivalName(dangerZoneData.rivals),
+    [dangerZoneData.rivals],
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -319,7 +358,7 @@ export function ResultContent() {
             위험요소
           </span>
         </div>
-        <DangerZoneGraphic {...getDangerZoneData((partnerInfo.gender as Gender) || 'male')} />
+        <DangerZoneGraphic {...dangerZoneData} />
         <div
           style={{
             width: '100%',
@@ -346,9 +385,9 @@ export function ResultContent() {
                 display: 'block',
               }}
             >
-              그의 마음 근처에 4명의 여자가 있어요!{'\n'}
-              특히 <span style={{ color: colors.violet[200] }}>이**</span> 을 조심해야해요{'\n'}
-              지금이 아니면 그를 놓칠 수도 있어요...
+              그의 마음 근처에 4명의 {partnerInfo.gender === 'male' ? '여자' : '남자'}가 있어요!{'\n'}
+              특히 <span style={{ color: colors.violet[200] }}>{closestRivalName}</span> 을 조심해야해요{'\n'}
+              지금이 아니면 {partnerInfo.gender === 'male' ? '그를' : '그녀를'} 놓칠 수도 있어요...
             </span>
           </div>
         </div>
