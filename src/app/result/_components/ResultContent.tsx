@@ -238,6 +238,71 @@ export function ResultContent() {
           </div>
         </div>
 
+        {/* 위험요소 섹션 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '4px',
+            padding: '20px 0px 16px 0px',
+            width: '100%',
+          }}
+        >
+          <img src="/icons/icon-knife.svg" alt="" width={18} height={18} />
+          <span
+            style={{
+              ...typography.title['h5-1'],
+              color: colors.text.main,
+              textAlign: 'left',
+              flex: 1,
+            }}
+          >
+            위험요소
+          </span>
+        </div>
+        <img
+          src="/icons/danger-zone-graphic.png"
+          alt="위험요소 그래픽"
+          style={{
+            width: '100%',
+            height: 'auto',
+            borderRadius: '20px',
+          }}
+        />
+        <div
+          style={{
+            width: '100%',
+            padding: '16px 0px 20px 0px',
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#1F2127',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'Wanted Sans',
+                fontWeight: 600,
+                fontSize: '15px',
+                lineHeight: '1.45em',
+                color: '#D7E1EE',
+                whiteSpace: 'pre-line',
+                display: 'block',
+              }}
+            >
+              그의 마음 근처에 4명의 여자가 있어요!{'\n'}
+              특히 <span style={{ color: colors.violet[200] }}>이**</span> 을 조심해야해요{'\n'}
+              지금이 아니면 그를 놓칠 수도 있어요...
+            </span>
+          </div>
+        </div>
+
         {/* 언제 고백할까? 섹션 */}
         <div
           style={{
@@ -299,9 +364,11 @@ export function ResultContent() {
             어디서 고백하면 좋을까?
           </span>
         </div>
-        <InputField
-          value="학교 근처 놀이터에서"
-        />
+        <div style={{ paddingBottom: '20px' }}>
+          <InputField
+            value="학교 근처 놀이터에서"
+          />
+        </div>
 
         {/* 프로모션 텍스트 */}
         <div style={{ marginBottom: '24px' }}>
