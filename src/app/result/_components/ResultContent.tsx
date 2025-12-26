@@ -319,7 +319,7 @@ export function ResultContent() {
             위험요소
           </span>
         </div>
-        <DangerZoneGraphic {...getDangerZoneData('male')} />
+        <DangerZoneGraphic {...getDangerZoneData((partnerInfo.gender as Gender) || 'male')} />
         <div
           style={{
             width: '100%',
