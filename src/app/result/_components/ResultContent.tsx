@@ -23,15 +23,43 @@ type Gender = 'male' | 'female';
 
 const namePool = ['이**', '김**', '최**', '박**', '임**', '정**', '장**', '강**'];
 
-function getShuffledNames(count: number): string[] {
-  const shuffled = [...namePool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+function shuffle<T>(array: T[]): T[] {
+  return [...array].sort(() => Math.random() - 0.5);
+}
+
+function randomInRange(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+type Position = { top?: string; bottom?: string; left?: string; right?: string };
+
+// 중앙(40-60%)을 피하고 서로 겹치지 않는 4개 위치 생성
+function generateRandomPositions(): Position[] {
+  const zones: Array<{ vertical: 'top' | 'bottom'; horizontal: 'left' | 'right' }> = shuffle([
+    { vertical: 'top', horizontal: 'left' },
+    { vertical: 'top', horizontal: 'right' },
+    { vertical: 'bottom', horizontal: 'left' },
+    { vertical: 'bottom', horizontal: 'right' },
+  ]);
+
+  return zones.map(zone => {
+    // 중앙(50%)에서 최소 30% 이상 떨어지도록 설정
+    // top/bottom: 5-20%, left/right: 3-20%
+    const vValue = `${randomInRange(5, 20)}%`;
+    const hValue = `${randomInRange(3, 20)}%`;
+
+    return {
+      [zone.vertical]: vValue,
+      [zone.horizontal]: hValue,
+    };
+  });
 }
 
 function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
   const isMale = gender === 'male';
   const rivalPrefix = isMale ? '/icons/icon-female-rival-' : '/icons/icon-male-rival-';
-  const names = getShuffledNames(4);
+  const names = shuffle(namePool).slice(0, 4);
+  const positions = generateRandomPositions();
 
   return {
     centerIcon: {
@@ -40,10 +68,10 @@ function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
       padding: '20px',
     },
     rivals: [
-      { iconImage: `${rivalPrefix}1.png`, name: names[0], bottom: '20%', left: '15%' },
-      { iconImage: `${rivalPrefix}2.png`, name: names[1], bottom: '20%', right: '15%' },
-      { iconImage: `${rivalPrefix}3.png`, name: names[2], top: '20%', left: '15%' },
-      { iconImage: `${rivalPrefix}4.png`, name: names[3], top: '20%', right: '15%' },
+      { iconImage: `${rivalPrefix}1.png`, name: names[0], ...positions[0] },
+      { iconImage: `${rivalPrefix}2.png`, name: names[1], ...positions[1] },
+      { iconImage: `${rivalPrefix}3.png`, name: names[2], ...positions[2] },
+      { iconImage: `${rivalPrefix}4.png`, name: names[3], ...positions[3] },
     ],
   };
 }
