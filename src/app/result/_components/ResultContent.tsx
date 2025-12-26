@@ -14,30 +14,30 @@ import { typography } from "@/design-system/foundations/typography";
 import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
-import { isMobileDevice } from "@/utils/device";
+import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 
 export function ResultContent() {
   const router = useRouter();
   const { partnerInfo, userInfo, setHasShared } = useTestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isApp, setIsApp] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setIsMobile(isMobileDevice());
+    setIsApp(isNativeApp());
   }, []);
 
-  // 2초 후 모달 자동 열기 (모바일에서만)
+  // 2초 후 모달 자동 열기 (Native App에서만)
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isApp) return;
 
     const timer = setTimeout(() => {
       setIsModalOpen(true);
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [isMobile]);
+  }, [isApp]);
 
   // 모달이 열려있을 때 스크롤 방지
   useEffect(() => {
@@ -318,11 +318,11 @@ export function ResultContent() {
         {/* CTA 버튼 영역 */}
         <CTAButtonGroup
           type="twoButton"
-          primaryButtonText={isMobile ? "공유하고 러브미션 받기" : "앱 설치하고 맞춤 미션 확인하기"}
-          secondButtonText={isMobile ? "메인화면으로 돌아가기" : "테스트 다시하기"}
-          secondButtonType={isMobile ? "tertiary" : "secondary"}
-          onPrimaryClick={isMobile ? handleShareConfirm : openStore}
-          onSecondButtonClick={isMobile ? () => close() : handleRestart}
+          primaryButtonText={isApp ? "공유하고 러브미션 받기" : "앱 설치하고 맞춤 미션 확인하기"}
+          secondButtonText={isApp ? "메인화면으로 돌아가기" : "테스트 다시하기"}
+          secondButtonType={isApp ? "tertiary" : "secondary"}
+          onPrimaryClick={isApp ? handleShareConfirm : openStore}
+          onSecondButtonClick={isApp ? () => close() : handleRestart}
         />
       </div>
 

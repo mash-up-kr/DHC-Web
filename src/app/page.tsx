@@ -9,16 +9,16 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { shareUrl } from "@/utils/share";
-import { isMobileDevice } from "@/utils/device";
+import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 
 export default function Home() {
   const router = useRouter();
   const { resetAll } = useTestStore();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isApp, setIsApp] = useState(false);
 
   useEffect(() => {
-    setIsMobile(isMobileDevice());
+    setIsApp(isNativeApp());
   }, []);
 
   const handleShare = async () => {
@@ -39,7 +39,7 @@ export default function Home() {
           title="그 사람과 나의 궁합은?!"
           currentPage={1}
           totalPage={4}
-          showBackButton={isMobile}
+          showBackButton={isApp}
           showIndicator={false}
           className="fixed top-0 left-0 right-0 z-50"
           onBackClick={() => close()}

@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 import { ResultLoading, ResultReadyIntro, ResultReady, ResultPreview, ResultContent } from "./_components";
 import { useTestStore } from "@/store/useTestStore";
-import { isMobileDevice } from "@/utils/device";
+import { isNativeApp } from "@/utils/device";
 
 type ResultStep = 'loading' | 'readyIntro' | 'ready' | 'preview' | 'content';
 
 export default function Result() {
   const [step, setStep] = useState<ResultStep>('loading');
   const { hasShared } = useTestStore();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isApp, setIsApp] = useState(false);
 
   useEffect(() => {
-    setIsMobile(isMobileDevice());
+    setIsApp(isNativeApp());
   }, []);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Result() {
   };
 
   const handleConfirm = () => {
-    if (isMobile) {
+    if (isApp) {
       setStep('content');
     } else {
       setStep('preview');

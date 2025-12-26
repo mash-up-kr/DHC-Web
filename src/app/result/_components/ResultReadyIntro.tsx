@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import { colors } from "@/design-system/foundations/colors";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { Tooltip } from "@/design-system/components/Tooltip";
-import { isMobileDevice } from "@/utils/device";
+import { isNativeApp } from "@/utils/device";
 
 interface ResultReadyIntroProps {
   onNext: () => void;
 }
 
 export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isApp, setIsApp] = useState(false);
 
   useEffect(() => {
-    setIsMobile(isMobileDevice());
+    setIsApp(isNativeApp());
   }, []);
 
   return (
@@ -28,7 +28,7 @@ export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
         }}
       >
         {/* ScoreText - 상단 여백 (모바일: 64px, 웹: 26px) */}
-        <div style={{ paddingTop: isMobile ? '64px' : '26px', width: '100%' }}>
+        <div style={{ paddingTop: isApp ? '64px' : '26px', width: '100%' }}>
           <ScoreText
             type="loading"
             badgeText="분석완료"
