@@ -21,8 +21,17 @@ import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
 
 type Gender = 'male' | 'female';
 
+const namePool = ['이**', '김**', '최**', '박**', '임**', '정**', '장**', '강**'];
+
+function getShuffledNames(count: number): string[] {
+  const shuffled = [...namePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
 function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
   const isMale = gender === 'male';
+  const rivalPrefix = isMale ? '/icons/icon-female-rival-' : '/icons/icon-male-rival-';
+  const names = getShuffledNames(4);
 
   return {
     centerIcon: {
@@ -31,10 +40,10 @@ function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
       padding: '20px',
     },
     rivals: [
-      { iconImage: isMale ? '/icons/icon-female-rival-1.png' : '/icons/icon-male-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
-      { iconImage: isMale ? '/icons/icon-female-rival-2.png' : '/icons/icon-male-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
-      { iconImage: isMale ? '/icons/icon-female-rival-3.png' : '/icons/icon-male-rival-3.png', name: '최**', top: '20%', left: '15%' },
-      { iconImage: isMale ? '/icons/icon-female-rival-4.png' : '/icons/icon-male-rival-4.png', name: '김**', top: '20%', right: '15%' },
+      { iconImage: `${rivalPrefix}1.png`, name: names[0], bottom: '20%', left: '15%' },
+      { iconImage: `${rivalPrefix}2.png`, name: names[1], bottom: '20%', right: '15%' },
+      { iconImage: `${rivalPrefix}3.png`, name: names[2], top: '20%', left: '15%' },
+      { iconImage: `${rivalPrefix}4.png`, name: names[3], top: '20%', right: '15%' },
     ],
   };
 }
