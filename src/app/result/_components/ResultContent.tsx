@@ -262,7 +262,19 @@ export function ResultContent() {
             위험요소
           </span>
         </div>
-        <DangerZoneGraphic />
+        <DangerZoneGraphic
+          centerIcon={{
+            iconImage: '/icons/icon-male-crush.png',
+            name: '남자 짝사랑',
+            padding: '20px',
+          }}
+          rivals={[
+            { iconImage: '/icons/icon-rival-1.png', name: '이**', bottom: '20%', left: '15%' },
+            { iconImage: '/icons/icon-rival-2.png', name: '김**', bottom: '20%', right: '15%' },
+            { iconImage: '/icons/icon-rival-3.png', name: '최**', top: '20%', left: '15%' },
+            { iconImage: '/icons/icon-rival-4.png', name: '김**', top: '20%', right: '15%' },
+          ]}
+        />
         <div
           style={{
             width: '100%',
