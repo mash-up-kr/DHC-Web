@@ -16,7 +16,7 @@ import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
 import { shareUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
-import { close } from "@/utils/bridge";
+import { goToMain } from "@/utils/bridge";
 import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
 
 type Gender = 'male' | 'female';
@@ -516,7 +516,7 @@ export function ResultContent() {
           secondButtonText={isApp ? "메인화면으로 돌아가기" : "테스트 다시하기"}
           secondButtonType={isApp ? "tertiary" : "secondary"}
           onPrimaryClick={isApp ? handleShareConfirm : openStore}
-          onSecondButtonClick={isApp ? () => close() : handleRestart}
+          onSecondButtonClick={isApp ? () => goToMain() : handleRestart}
         />
       </div>
 
