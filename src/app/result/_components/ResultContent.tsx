@@ -97,10 +97,10 @@ function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
       padding: '20px',
     },
     rivals: [
-      { iconImage: `${rivalPrefix}1.png`, name: names[0], ...positions[0] },
-      { iconImage: `${rivalPrefix}2.png`, name: names[1], ...positions[1] },
-      { iconImage: `${rivalPrefix}3.png`, name: names[2], ...positions[2] },
-      { iconImage: `${rivalPrefix}4.png`, name: names[3], ...positions[3] },
+      { iconImage: `${rivalPrefix}1.svg`, name: names[0], ...positions[0] },
+      { iconImage: `${rivalPrefix}2.svg`, name: names[1], ...positions[1] },
+      { iconImage: `${rivalPrefix}3.svg`, name: names[2], ...positions[2] },
+      { iconImage: `${rivalPrefix}4.svg`, name: names[3], ...positions[3] },
     ],
   };
 }
