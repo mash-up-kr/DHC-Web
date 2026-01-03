@@ -13,7 +13,7 @@ export function ResultLoading() {
   }, []);
 
   return (
-    <div style={{ position: 'relative', height: '100dvh' }}>
+    <div style={{ position: 'relative', height: '100dvh', backgroundColor: colors.background.main }}>
       <main
         className="flex flex-col items-center"
         style={{
