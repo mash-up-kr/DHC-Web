@@ -298,7 +298,7 @@ export const Modal: React.FC<ModalProps> = ({
         <div style={closeButtonContainerStyle}>
           <button style={closeButtonStyle} onClick={handleClose} aria-label="닫기">
             <img
-              src="/images/icon-close.svg"
+              src="/icons/icon-close.svg"
               alt="닫기"
               style={{ width: '24px', height: '24px' }}
             />

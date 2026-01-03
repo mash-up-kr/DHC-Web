@@ -232,7 +232,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                 공유하고 내용 확인하기
               </span>
               <img
-                src="/images/share-icon.svg"
+                src="/icons/share-icon.svg"
                 alt="공유"
                 style={{ width: '16px', height: '16px' }}
               />
