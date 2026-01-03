@@ -181,7 +181,7 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="뒤로가기"
           >
             <Image
-              src="/assets/design-system/icon-back.svg"
+              src="/icons/icon-back.svg"
               alt="뒤로가기"
               width={24}
               height={24}

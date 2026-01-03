@@ -346,7 +346,7 @@ export function ResultContent() {
             width: '100%',
           }}
         >
-          <img src="/icons/icon-knife.svg" alt="" width={18} height={18} />
+          <img src="/icons/icon-siren.svg" alt="" width={18} height={18} />
           <span
             style={{
               ...typography.title['h5-1'],
