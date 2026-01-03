@@ -10,6 +10,7 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
+import { QuestionBanner } from "../_components/QuestionBanner";
 
 export default function Question2() {
   const router = useRouter();
@@ -61,13 +62,10 @@ export default function Question2() {
         <div style={{ height: '24px' }} />
 
         {/* 그래픽 영역 */}
-        <div style={{ padding: '0 20px' }}>
-          <img
-            src="/images/question-banner-2.png"
-            alt="질문 2 그래픽"
-            style={{ width: '100%', height: 'auto' }}
-          />
-        </div>
+        <QuestionBanner
+          src="/images/question-banner-2.png"
+          alt="질문 2 그래픽"
+        />
 
         {/* 그래픽 하단 24px 공백 */}
         <div style={{ height: '24px' }} />
