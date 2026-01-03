@@ -8,6 +8,8 @@ interface UseScratchCanvasOptions {
   completionThreshold: number;
   onComplete: () => void;
   onProgressChange?: (progress: number) => void;
+  /** 마운트 후 입력을 무시할 시간 (ms) */
+  initialDelay?: number;
 }
 
 export function useScratchCanvas({
@@ -18,12 +20,22 @@ export function useScratchCanvas({
   completionThreshold,
   onComplete,
   onProgressChange,
+  initialDelay = 150,
 }: UseScratchCanvasOptions) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isReady, setIsReady] = useState(false);
   const hasCompleted = useRef(false);
   const rafId = useRef<number | undefined>(undefined);
   const currentProgress = useRef(0);
+
+  // 마운트 후 초기 딜레이 적용
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, initialDelay);
+    return () => clearTimeout(timer);
+  }, [initialDelay]);
 
   // Canvas 초기화 (원형 마스크 그리기)
   const initCanvas = useCallback(() => {
@@ -155,10 +167,11 @@ export function useScratchCanvas({
   // 마우스 이벤트 핸들러
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement>) => {
+      if (!isReady) return;
       setIsDrawing(true);
       scratch(e.clientX, e.clientY);
     },
-    [scratch],
+    [scratch, isReady],
   );
 
   const handleMouseMove = useCallback(
@@ -177,11 +190,12 @@ export function useScratchCanvas({
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLCanvasElement>) => {
       e.preventDefault();
+      if (!isReady) return;
       setIsDrawing(true);
       const touch = e.touches[0];
       scratch(touch.clientX, touch.clientY);
     },
-    [scratch],
+    [scratch, isReady],
   );
 
   const handleTouchMove = useCallback(
