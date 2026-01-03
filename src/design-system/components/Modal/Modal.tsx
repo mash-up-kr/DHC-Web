@@ -232,6 +232,7 @@ export const Modal: React.FC<ModalProps> = ({
     color: colors.neutral[30],
     textAlign: 'center',
     margin: 0,
+    whiteSpace: 'pre-line',
   };
 
   const descriptionStyle: React.CSSProperties = {

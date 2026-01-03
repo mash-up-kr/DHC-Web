@@ -6,6 +6,7 @@ import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
+import { Modal } from "@/design-system/components/Modal/Modal";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { shareUrl } from "@/utils/share";
@@ -16,6 +17,7 @@ export default function Home() {
   const router = useRouter();
   const { resetAll } = useTestStore();
   const [isApp, setIsApp] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
 
   useEffect(() => {
     setIsApp(isNativeApp());
@@ -42,8 +44,26 @@ export default function Home() {
           showBackButton={isApp}
           showIndicator={false}
           className="fixed top-0 left-0 right-0 z-50"
-          onBackClick={() => close()}
+          onBackClick={() => setShowExitModal(true)}
         />
+
+        {/* 종료 확인 모달 */}
+        {showExitModal && (
+          <Modal
+            title={`지금 테스트를 종료하면\n입력된 정보가 모두 사라져요!`}
+            description="정말 나가시겠어요?"
+            buttonText="이전으로 돌아가기"
+            onButtonClick={() => setShowExitModal(false)}
+            secondButtonText="테스트 종료하기"
+            onSecondButtonClick={() => close()}
+            showCloseButton={true}
+            onClose={() => setShowExitModal(false)}
+            showOverlay={true}
+            onOverlayClick={() => setShowExitModal(false)}
+            graphicNode={<></>}
+            graphicHeight={0}
+          />
+        )}
 
         {/* Header 높이(52px) + 40px 공백 */}
         <div style={{ height: '92px' }} />
