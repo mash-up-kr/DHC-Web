@@ -58,15 +58,13 @@ export default function Question1() {
         {/* Header 하단 24px 공백 */}
         <div style={{ height: '24px' }} />
 
-        {/* 임시 그래픽 영역 */}
-        <div
-          className="w-full flex items-center justify-center"
-          style={{
-            height: '188px',
-            backgroundColor: colors.violet[50],
-          }}
-        >
-          <span style={{ color: colors.neutral[500] }}>그래픽 (변경예정)</span>
+        {/* 그래픽 영역 */}
+        <div style={{ padding: '0 20px' }}>
+          <img
+            src="/images/question-banner-1.png"
+            alt="질문 1 그래픽"
+            style={{ width: '100%', height: 'auto' }}
+          />
         </div>
 
         {/* 그래픽 하단 24px 공백 */}
