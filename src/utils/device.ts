@@ -9,3 +9,11 @@ export const isNativeApp = (): boolean => {
   if (typeof window === 'undefined') return false;
   return navigator.userAgent.includes('DHCApp');
 };
+
+/**
+ * 모바일 기기에서 접속했는지 확인
+ */
+export const isMobile = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};

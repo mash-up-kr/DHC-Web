@@ -1,4 +1,4 @@
-import { isNativeApp } from './device';
+import { isNativeApp, isMobile } from './device';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
@@ -8,8 +8,8 @@ export const getRootUrl = (): string => {
 export const shareUrl = async (url?: string): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
   const shareUrlValue = url || getRootUrl();
 
-  // Native App에서만 Web Share API 사용
-  if (isNativeApp() && navigator.share) {
+  // Native App 또는 모바일 브라우저에서 Web Share API 사용
+  if ((isNativeApp() || isMobile()) && navigator.share) {
     try {
       await navigator.share({
         title: '플리핀 - 그사람과의 궁합 테스트',
