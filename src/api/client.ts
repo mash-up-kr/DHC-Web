@@ -13,6 +13,7 @@ export async function apiClient<T>(
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       ...headers,
     },
     body: body ? JSON.stringify(body) : undefined,
