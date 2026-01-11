@@ -18,6 +18,11 @@ import { shareUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { goToMain } from "@/utils/bridge";
 import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
+import { LoveTestResponse } from "@/api/loveTest";
+
+interface ResultContentProps {
+  result: LoveTestResponse | null;
+}
 
 type Gender = 'male' | 'female';
 
@@ -105,7 +110,7 @@ function getDangerZoneData(gender: Gender): DangerZoneGraphicProps {
   };
 }
 
-export function ResultContent() {
+export function ResultContent({ result }: ResultContentProps) {
   const router = useRouter();
   const { partnerInfo, userInfo, setHasShared } = useTestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
