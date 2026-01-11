@@ -51,9 +51,9 @@ function formatDate(year: string, month: string, day: string): string {
   return `${y}-${m}-${d}`;
 }
 
-function formatBirthTime(time: string, unknownTime: boolean): string {
+function formatBirthTime(time: string, unknownTime: boolean): string | null {
   if (unknownTime || !time) {
-    return '00:00:00';
+    return null;
   }
   // time이 "HH:mm" 형식이면 ":00" 추가
   if (time.length === 5) {
@@ -96,10 +96,12 @@ export function mapStoreToRequest(data: StoreData): LoveTestRequest {
     you: {
       gender: mapGender(data.partnerInfo.gender),
       name: data.partnerInfo.name,
-      birthDate: {
-        date: formatDate(data.partnerBirth.year, data.partnerBirth.month, data.partnerBirth.day),
-        calendarType: 'SOLAR',
-      },
+      birthDate: data.partnerBirth.unknownBirth
+        ? null
+        : {
+            date: formatDate(data.partnerBirth.year, data.partnerBirth.month, data.partnerBirth.day),
+            calendarType: 'SOLAR',
+          },
       birthTime: formatBirthTime(data.partnerBirth.birthTime, data.partnerBirth.unknownTime),
       additional: buildAdditional(data.partnerBirth),
     },

@@ -10,10 +10,14 @@ interface PersonInfo {
   gender: Gender;
   name: string;
   birthDate: BirthDate;
-  birthTime: string; // HH:mm:ss
+  birthTime: string | null; // HH:mm:ss or null
 }
 
-interface PartnerInfo extends PersonInfo {
+interface PartnerInfo {
+  gender: Gender;
+  name: string;
+  birthDate: BirthDate | null;
+  birthTime: string | null; // HH:mm:ss or null
   additional: string;
 }
 
