@@ -42,7 +42,18 @@ export default function Result() {
     }
   }, [step]);
 
-  // ResultLoading 진입 시 API 호출 및 최소 로딩 시간 타이머
+  // 최소 로딩 시간 타이머 (API 호출과 분리)
+  useEffect(() => {
+    if (step !== 'loading') return;
+
+    const timer = setTimeout(() => {
+      setIsMinTimeElapsed(true);
+    }, MIN_LOADING_TIME);
+
+    return () => clearTimeout(timer);
+  }, [step]);
+
+  // ResultLoading 진입 시 API 호출
   useEffect(() => {
     if (step !== 'loading' || hasCalledApi.current) return;
 
@@ -54,11 +65,6 @@ export default function Result() {
     }
 
     hasCalledApi.current = true;
-
-    // 최소 로딩 시간 타이머
-    const timer = setTimeout(() => {
-      setIsMinTimeElapsed(true);
-    }, MIN_LOADING_TIME);
 
     // API 호출
     const fetchResult = async () => {
@@ -84,8 +90,6 @@ export default function Result() {
     };
 
     fetchResult();
-
-    return () => clearTimeout(timer);
   }, [step]);
 
   // API 응답 완료 + 최소 로딩 시간 경과 시 다음 step으로 이동
