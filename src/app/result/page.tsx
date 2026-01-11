@@ -35,6 +35,13 @@ export default function Result() {
     setIsApp(isNativeApp());
   }, []);
 
+  // step 변경 시 로그
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Result] step: ${step}`);
+    }
+  }, [step]);
+
   // ResultLoading 진입 시 API 호출 및 최소 로딩 시간 타이머
   useEffect(() => {
     if (step !== 'loading' || hasCalledApi.current) return;
@@ -55,18 +62,21 @@ export default function Result() {
 
     // API 호출
     const fetchResult = async () => {
+      const request = mapStoreToRequest({
+        userInfo,
+        userBirth,
+        partnerInfo,
+        partnerBirth,
+        loveDate,
+      });
       try {
-        const request = mapStoreToRequest({
-          userInfo,
-          userBirth,
-          partnerInfo,
-          partnerBirth,
-          loveDate,
-        });
         const response = await postLoveTest(request);
         setApiResult(response);
       } catch (error) {
-        console.error('LoveTest API Error:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('[Result] LoveTest API Error:', error);
+          console.error('[Result] Request:', request);
+        }
         setStep('error');
         return;
       }
