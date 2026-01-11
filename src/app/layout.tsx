@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "내 썸녀와 잘될 수 있을까?",
-  description: "두 사람의 운명적인 궁합을 확인해보세요",
+  title: "내 짝사랑은 나한테 관심이 있을까?",
+  description: "현재 389명이 참여했어요!",
   openGraph: {
-    title: "내 썸녀와 잘될 수 있을까?",
-    description: "두 사람의 운명적인 궁합을 확인해보세요",
+    title: "내 짝사랑은 나한테 관심이 있을까?",
+    description: "현재 389명이 참여했어요!",
     images: [
       {
         url: "/og-image.png",

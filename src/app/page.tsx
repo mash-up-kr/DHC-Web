@@ -68,16 +68,22 @@ export default function Home() {
         {/* Header 높이(52px) + 40px 공백 */}
         <div style={{ height: '92px' }} />
 
-        {/* 임시 그래픽 영역 */}
+        {/* 메인 배너 */}
         <div
           className="w-full flex items-center justify-center -mx-6"
           style={{
-            height: '188px',
-            backgroundColor: colors.violet[50],
             width: 'calc(100% + 48px)',
+            padding: '0 20px',
           }}
         >
-          <span style={{ color: colors.neutral[500] }}>그래픽 (변경예정)</span>
+          <img
+            src="/images/main-banner.png"
+            alt="메인 배너"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+          />
         </div>
 
         {/* 20px 공백 */}
