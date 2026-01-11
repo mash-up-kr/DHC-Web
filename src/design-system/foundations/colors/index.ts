@@ -21,14 +21,14 @@ export const colors = {
 
   // Violet Colors
   violet: {
-    50: '#E6E8FF',
-    100: '#CDD1F2',
-    200: '#B5BAEB',
-    300: '#939BE2',
-    400: '#5E69D4',
-    500: '#5660C1',
-    600: '#414BAE',
-    700: '#343FA6',
+    50: '#F4F4FF',
+    100: '#EFEAFF',
+    200: '#E6DFFF',
+    300: '#E0D6FF',
+    400: '#D9CEFF',
+    500: '#8D83E8',
+    600: '#6F66B5',
+    700: '#564F8C',
   },
 
   // Background Colors
@@ -59,7 +59,7 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 83%
    */
-  textGradient01: 'linear-gradient(180deg, #B5BAEB 16%, #F4F4F5 83%)',
+  textGradient01: 'linear-gradient(180deg, #E6DFFF 16%, #F4F4F5 83%)',
 
   /**
    * Text Gradient 02
@@ -68,27 +68,27 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 100%
    */
-  textGradient02: 'linear-gradient(180deg, #B5BAEB 16%, #F4F4F5 100%)',
+  textGradient02: 'linear-gradient(180deg, #E6DFFF 16%, #F4F4F5 100%)',
 
   /**
    * Background Gradient 01
    * - Type: Radial
    * - Center: 50%, 59%
-   * - Color: #5E69D4 (violet-400)
+   * - Color: #564F8C (violet-700)
    * - Opacity: 100% → 30% → 10% → 5% → 0%
    * - Stops: 23%, 51%, 75%, 88%, 100%
    */
-  backgroundGradient01: 'radial-gradient(circle at 50% 59%, rgba(94, 105, 212, 1) 23%, rgba(94, 105, 212, 0.3) 51%, rgba(94, 105, 212, 0.1) 75%, rgba(94, 105, 212, 0.05) 88%, rgba(94, 105, 212, 0) 100%)',
+  backgroundGradient01: 'radial-gradient(circle at 50% 59%, rgba(86, 79, 140, 1) 23%, rgba(86, 79, 140, 0.3) 51%, rgba(86, 79, 140, 0.1) 75%, rgba(86, 79, 140, 0.05) 88%, rgba(86, 79, 140, 0) 100%)',
 
   /**
    * Background Gradient 02
    * - Type: Radial
    * - Center: 72%, 0%
-   * - Color: #5E69D4 (violet-400)
+   * - Color: #D9CEFF (violet-400)
    * - Opacity: 50% → 34% → 8% → 0%
    * - Stops: 0%, 15%, 40%, 67%
    */
-  backgroundGradient02: 'radial-gradient(circle at 72% 0%, rgba(94, 105, 212, 0.5) 0%, rgba(94, 105, 212, 0.34) 15%, rgba(94, 105, 212, 0.08) 40%, rgba(94, 105, 212, 0) 67%)',
+  backgroundGradient02: 'radial-gradient(circle at 72% 0%, rgba(217, 206, 255, 0.5) 0%, rgba(217, 206, 255, 0.34) 15%, rgba(217, 206, 255, 0.08) 40%, rgba(217, 206, 255, 0) 67%)',
 
   /**
    * Tooltip Gradient 01
@@ -97,7 +97,7 @@ export const gradients = {
    * - Colors: #F4F4F5 → #B5BAEB
    * - Stops: 43%, 100%
    */
-  tooltipGradient01: 'linear-gradient(180deg, #F4F4F5 43%, #B5BAEB 100%)',
+  tooltipGradient01: 'linear-gradient(180deg, #F4F4F5 43%, #E6DFFF 100%)',
 
   /**
    * Fortune Gradient Low
@@ -115,7 +115,7 @@ export const gradients = {
    * - Colors: #F4F4F5 (neutral-30) → #5660C1 (violet-500)
    * - Stops: 36%, 84%
    */
-  fortuneGradientMid: 'linear-gradient(180deg, #F4F4F5 36%, #5660C1 84%)',
+  fortuneGradientMid: 'linear-gradient(180deg, #F4F4F5 36%, #8D83E8 84%)',
 
   /**
    * Fortune Gradient Top
@@ -140,30 +140,30 @@ export const gradients = {
    * Card Bottom Gradient 01
    * - Type: Radial
    * - Center: 50%, 50%
-   * - Color: #343B8C
+   * - Color: #FFDAFC
    * - Opacity: 100% → 50% → 0%
    * - Stops: 0%, 50%, 100%
    */
-  cardBottomGradient01: 'radial-gradient(circle at 50% 50%, rgba(52, 59, 140, 1) 0%, rgba(52, 59, 140, 0.5) 50%, rgba(52, 59, 140, 0) 100%)',
+  cardBottomGradient01: 'radial-gradient(circle at 50% 50%, rgba(255, 218, 252, 1) 0%, rgba(255, 218, 252, 0.5) 50%, rgba(255, 218, 252, 0) 100%)',
 
   /**
    * Button Border Gradient 01
    * - Type: Linear
    * - Angle: 96deg
-   * - Colors: #5E69D4 (violet-400) → #5E69D4 (violet-400) → #939BE2 (violet-300)
+   * - Colors: #D9CEFF (violet-400) → #D9CEFF (violet-400) → #E0D6FF (violet-300)
    * - Stops: 0%, 83%, 100%
    */
-  buttonBorderGradient01: 'linear-gradient(96deg, #5E69D4 0%, #5E69D4 83%, #939BE2 100%)',
+  buttonBorderGradient01: 'linear-gradient(96deg, #D9CEFF 0%, #D9CEFF 83%, #E0D6FF 100%)',
 
   /**
    * Button Surface Gradient 01
    * - Type: Radial
    * - Center: 50%, 95%
-   * - Color: #939BE2 (violet-300)
+   * - Colors: #E0D6FF (violet-300) → #939BE2
    * - Opacity: 100% → 0%
    * - Stops: 30%, 100%
    */
-  buttonSurfaceGradient01: 'radial-gradient(circle at 50% 95%, rgba(147, 155, 226, 1) 30%, rgba(147, 155, 226, 0) 100%)',
+  buttonSurfaceGradient01: 'radial-gradient(circle at 50% 95%, rgba(224, 214, 255, 1) 30%, rgba(147, 155, 226, 0) 100%)',
 } as const;
 
 export type Colors = typeof colors;
