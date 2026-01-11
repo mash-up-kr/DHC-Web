@@ -13,26 +13,12 @@ const MIN_LOADING_TIME = 3000;
 // store 필수 값 검증 함수
 function validateStoreData(
   userInfo: { gender: string; name: string },
-  userBirth: { year: string; month: string; day: string },
+  userBirth: { year: string; month: string },
   partnerInfo: { gender: string; name: string },
-  partnerBirth: { year: string; month: string; day: string },
-  loveDate: { year: string; month: string; day: string },
 ): boolean {
-  // userInfo 검증
   if (!userInfo.gender || !userInfo.name) return false;
-
-  // userBirth 검증
-  if (!userBirth.year || !userBirth.month || !userBirth.day) return false;
-
-  // partnerInfo 검증
+  if (!userBirth.year || !userBirth.month) return false;
   if (!partnerInfo.gender || !partnerInfo.name) return false;
-
-  // partnerBirth 검증
-  if (!partnerBirth.year || !partnerBirth.month || !partnerBirth.day) return false;
-
-  // loveDate 검증
-  if (!loveDate.year || !loveDate.month || !loveDate.day) return false;
-
   return true;
 }
 
@@ -54,7 +40,7 @@ export default function Result() {
     if (step !== 'loading' || hasCalledApi.current) return;
 
     // store 값 검증 - 필수 값이 없으면 error 페이지로 이동
-    const isValid = validateStoreData(userInfo, userBirth, partnerInfo, partnerBirth, loveDate);
+    const isValid = validateStoreData(userInfo, userBirth, partnerInfo);
     if (!isValid) {
       setStep('error');
       return;
