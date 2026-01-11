@@ -256,89 +256,77 @@ export function ResultContent({ result }: ResultContentProps) {
         </div>
 
         {/* 궁합 상세보기 섹션 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            alignItems: 'flex-start',
-            padding: '24px 0',
-            width: '100%',
-          }}
-        >
-          <h2
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              width: '100%',
-              textAlign: 'left',
-            }}
-          >
-            궁합 상세보기
-          </h2>
-          <MessageCard
-            title="궁합운"
-            message="궁합운 관련 설명"
-          />
-        </div>
-
-        {/* 그녀와 사귀기 위한 꿀팁! 섹션 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <h2
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              width: '100%',
-              textAlign: 'left',
-            }}
-          >
-            그녀와 사귀기 위한 꿀팁!
-          </h2>
+        {result?.fortuneDetail && (
           <div
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              justifyContent: 'center',
+              flexDirection: 'column',
+              gap: '16px',
+              alignItems: 'flex-start',
+              padding: '24px 0',
               width: '100%',
             }}
           >
-            <TipCard
-              icon={<span style={{ fontSize: '20px' }}>🍴</span>}
-              title="행운의 메뉴"
-              value="카레"
-              width="calc(50% - 6px)"
-            />
-            <TipCard
-              icon={<span style={{ fontSize: '20px' }}>🍀</span>}
-              title="행운의 색상"
-              value="연두색"
-              color="#23B169"
-              width="calc(50% - 6px)"
-            />
-            <TipCard
-              icon={<span style={{ fontSize: '20px' }}>😰</span>}
-              title="이건 조심해야해!"
-              value="치킨, 닭"
-              width="calc(50% - 6px)"
-            />
-            <TipCard
-              icon={<span style={{ fontSize: '20px' }}>😣</span>}
-              title="이 색상도 조심해!"
-              value="흰색"
-              color={colors.text.main}
-              width="calc(50% - 6px)"
+            <h2
+              style={{
+                ...typography.title['h5-1'],
+                color: colors.text.main,
+                width: '100%',
+                textAlign: 'left',
+              }}
+            >
+              궁합 상세보기
+            </h2>
+            <MessageCard
+              title="궁합운"
+              message={result.fortuneDetail}
             />
           </div>
-        </div>
+        )}
+
+        {/* 그녀와 사귀기 위한 꿀팁! 섹션 */}
+        {result?.fortuneTips && result.fortuneTips.length > 0 && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <h2
+              style={{
+                ...typography.title['h5-1'],
+                color: colors.text.main,
+                width: '100%',
+                textAlign: 'left',
+              }}
+            >
+              그녀와 사귀기 위한 꿀팁!
+            </h2>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '12px',
+                justifyContent: 'center',
+                width: '100%',
+              }}
+            >
+              {result.fortuneTips.map((tip, index) => (
+                <TipCard
+                  key={index}
+                  icon={<img src={tip.image} alt="" style={{ width: '20px', height: '20px' }} />}
+                  title={tip.title}
+                  value={tip.description}
+                  color={tip.hexColor}
+                  width="calc(50% - 6px)"
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* 위험요소 섹션 */}
         <div
@@ -398,71 +386,82 @@ export function ResultContent({ result }: ResultContentProps) {
         </div>
 
         {/* 언제 고백할까? 섹션 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '4px',
-            padding: '20px 0px 16px 0px',
-            width: '100%',
-          }}
-        >
-          <img src="/icons/icon-alarm-clock.svg" alt="" width={18} height={18} />
-          <span
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              textAlign: 'left',
-              flex: 1,
-            }}
-          >
-            언제 고백하면 좋을까?
-          </span>
-        </div>
-        <InputFieldGroup
-          type="multi"
-          size="md"
-          align="start"
-          fullWidth
-          showLabel={false}
-          label="언제 고백할까?"
-          items={[
-            { key: 'year', value: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 175 },
-            { key: 'month', value: '1', suffix: '월', type: 'number', maxLength: 2, flex: 73.5 },
-            { key: 'day', value: '1', suffix: '일', type: 'number', maxLength: 2, flex: 73.5 },
-          ]}
-          onChange={() => {}}
-        />
+        {result?.confessDate && (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '4px',
+                padding: '20px 0px 16px 0px',
+                width: '100%',
+              }}
+            >
+              <img src="/icons/icon-alarm-clock.svg" alt="" width={18} height={18} />
+              <span
+                style={{
+                  ...typography.title['h5-1'],
+                  color: colors.text.main,
+                  textAlign: 'left',
+                  flex: 1,
+                }}
+              >
+                언제 고백하면 좋을까?
+              </span>
+            </div>
+            <InputFieldGroup
+              type="multi"
+              size="md"
+              align="start"
+              fullWidth
+              showLabel={false}
+              label="언제 고백할까?"
+              items={(() => {
+                const [year, month, day] = result.confessDate.split('-');
+                return [
+                  { key: 'year', value: year ?? '', suffix: '년', type: 'number', maxLength: 4, flex: 175 },
+                  { key: 'month', value: month ? String(Number(month)) : '', suffix: '월', type: 'number', maxLength: 2, flex: 73.5 },
+                  { key: 'day', value: day ? String(Number(day)) : '', suffix: '일', type: 'number', maxLength: 2, flex: 73.5 },
+                ];
+              })()}
+              onChange={() => {}}
+            />
+          </>
+        )}
 
         {/* 어디서 고백하면 좋을까? 섹션 */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '4px',
-            padding: '20px 0px 16px 0px',
-            width: '100%',
-          }}
-        >
-          <img src="/icons/icon-map-marker.svg" alt="" width={18} height={18} />
-          <span
-            style={{
-              ...typography.title['h5-1'],
-              color: colors.text.main,
-              textAlign: 'left',
-              flex: 1,
-            }}
-          >
-            어디서 고백하면 좋을까?
-          </span>
-        </div>
-        <div style={{ paddingBottom: '20px' }}>
-          <InputField
-            value="학교 근처 놀이터에서"
-          />
-        </div>
+        {result?.confessLocation && (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '4px',
+                padding: '20px 0px 16px 0px',
+                width: '100%',
+              }}
+            >
+              <img src="/icons/icon-map-marker.svg" alt="" width={18} height={18} />
+              <span
+                style={{
+                  ...typography.title['h5-1'],
+                  color: colors.text.main,
+                  textAlign: 'left',
+                  flex: 1,
+                }}
+              >
+                어디서 고백하면 좋을까?
+              </span>
+            </div>
+            <div style={{ paddingBottom: '20px' }}>
+              <InputField
+                value={result.confessLocation}
+              />
+            </div>
+          </>
+        )}
 
         {/* 프로모션 텍스트 */}
         <div style={{ marginBottom: '24px' }}>
