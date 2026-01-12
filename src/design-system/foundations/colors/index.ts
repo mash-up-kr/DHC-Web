@@ -48,6 +48,16 @@ export const colors = {
 } as const;
 
 /**
+ * Hex to RGBA 변환 유틸리티
+ */
+const hexToRgba = (hex: string, alpha: number): string => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+/**
  * Gradient Colors
  * 그라데이션 색상 정의
  */
@@ -59,7 +69,7 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 83%
    */
-  textGradient01: 'linear-gradient(180deg, #E6DFFF 16%, #F4F4F5 83%)',
+  textGradient01: `linear-gradient(180deg, ${colors.violet[200]} 16%, ${colors.neutral[30]} 83%)`,
 
   /**
    * Text Gradient 02
@@ -68,7 +78,7 @@ export const gradients = {
    * - Colors: #B5BAEB → #F4F4F5
    * - Stops: 16%, 100%
    */
-  textGradient02: 'linear-gradient(180deg, #E6DFFF 16%, #F4F4F5 100%)',
+  textGradient02: `linear-gradient(180deg, ${colors.violet[200]} 16%, ${colors.neutral[30]} 100%)`,
 
   /**
    * Background Gradient 01
@@ -78,7 +88,7 @@ export const gradients = {
    * - Opacity: 100% → 30% → 10% → 5% → 0%
    * - Stops: 23%, 51%, 75%, 88%, 100%
    */
-  backgroundGradient01: 'radial-gradient(circle at 50% 59%, rgba(86, 79, 140, 1) 23%, rgba(86, 79, 140, 0.3) 51%, rgba(86, 79, 140, 0.1) 75%, rgba(86, 79, 140, 0.05) 88%, rgba(86, 79, 140, 0) 100%)',
+  backgroundGradient01: `radial-gradient(circle at 50% 59%, ${hexToRgba(colors.violet[700], 1)} 23%, ${hexToRgba(colors.violet[700], 0.3)} 51%, ${hexToRgba(colors.violet[700], 0.1)} 75%, ${hexToRgba(colors.violet[700], 0.05)} 88%, ${hexToRgba(colors.violet[700], 0)} 100%)`,
 
   /**
    * Background Gradient 02
@@ -88,7 +98,7 @@ export const gradients = {
    * - Opacity: 50% → 34% → 8% → 0%
    * - Stops: 0%, 15%, 40%, 67%
    */
-  backgroundGradient02: 'radial-gradient(circle at 72% 0%, rgba(217, 206, 255, 0.5) 0%, rgba(217, 206, 255, 0.34) 15%, rgba(217, 206, 255, 0.08) 40%, rgba(217, 206, 255, 0) 67%)',
+  backgroundGradient02: `radial-gradient(circle at 72% 0%, ${hexToRgba(colors.violet[400], 0.5)} 0%, ${hexToRgba(colors.violet[400], 0.34)} 15%, ${hexToRgba(colors.violet[400], 0.08)} 40%, ${hexToRgba(colors.violet[400], 0)} 67%)`,
 
   /**
    * Tooltip Gradient 01
@@ -97,7 +107,7 @@ export const gradients = {
    * - Colors: #F4F4F5 → #B5BAEB
    * - Stops: 43%, 100%
    */
-  tooltipGradient01: 'linear-gradient(180deg, #F4F4F5 43%, #E6DFFF 100%)',
+  tooltipGradient01: `linear-gradient(180deg, ${colors.neutral[30]} 43%, ${colors.violet[200]} 100%)`,
 
   /**
    * Fortune Gradient Low
@@ -115,7 +125,7 @@ export const gradients = {
    * - Colors: #F4F4F5 (neutral-30) → #5660C1 (violet-500)
    * - Stops: 36%, 84%
    */
-  fortuneGradientMid: 'linear-gradient(180deg, #F4F4F5 36%, #8D83E8 84%)',
+  fortuneGradientMid: `linear-gradient(180deg, ${colors.neutral[30]} 36%, ${colors.violet[500]} 84%)`,
 
   /**
    * Fortune Gradient Top
@@ -134,7 +144,7 @@ export const gradients = {
    * - Opacity: 30% → 30% → 100%
    * - Stops: 0%, 89%, 100%
    */
-  cardBorderGradient01: 'linear-gradient(121deg, rgba(215, 225, 238, 0.3) 0%, rgba(65, 75, 174, 0.3) 89%, #3D424B 100%)',
+  cardBorderGradient01: `linear-gradient(121deg, ${hexToRgba(colors.neutral[100], 0.3)} 0%, rgba(65, 75, 174, 0.3) 89%, ${colors.neutral[500]} 100%)`,
 
   /**
    * Card Bottom Gradient 01
@@ -153,7 +163,7 @@ export const gradients = {
    * - Colors: #D9CEFF (violet-400) → #D9CEFF (violet-400) → #E0D6FF (violet-300)
    * - Stops: 0%, 83%, 100%
    */
-  buttonBorderGradient01: 'linear-gradient(96deg, #D9CEFF 0%, #D9CEFF 83%, #E0D6FF 100%)',
+  buttonBorderGradient01: `linear-gradient(96deg, ${colors.violet[400]} 0%, ${colors.violet[400]} 83%, ${colors.violet[300]} 100%)`,
 
   /**
    * Button Surface Gradient 01
@@ -163,7 +173,7 @@ export const gradients = {
    * - Opacity: 100% → 0%
    * - Stops: 30%, 100%
    */
-  buttonSurfaceGradient01: 'radial-gradient(circle at 50% 95%, rgba(224, 214, 255, 1) 30%, rgba(147, 155, 226, 0) 100%)',
+  buttonSurfaceGradient01: `radial-gradient(circle at 50% 95%, ${hexToRgba(colors.violet[300], 1)} 30%, rgba(147, 155, 226, 0) 100%)`,
 } as const;
 
 export type Colors = typeof colors;
