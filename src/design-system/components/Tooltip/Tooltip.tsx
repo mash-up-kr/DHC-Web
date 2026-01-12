@@ -79,8 +79,8 @@ const Arrow: React.FC<{ position: TooltipArrowPosition }> = ({ position }) => {
     >
       <defs>
         <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="43%" stopColor="#F4F4F5" />
-          <stop offset="100%" stopColor="#B5BAEB" />
+          <stop offset="43%" stopColor={colors.neutral[30]} />
+          <stop offset="100%" stopColor={colors.text.highlightsSecondary} />
         </linearGradient>
       </defs>
       <path
@@ -197,7 +197,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   // Text styles
   const textStyle: React.CSSProperties = {
     ...typography.title.h7,
-    color: colors.violet[400],
+    color: colors.background.main,
     textAlign: 'center',
     margin: 0,
   };

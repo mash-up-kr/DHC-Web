@@ -86,7 +86,7 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
       primary: {
         active: {
           backgroundColor: colors.text.highlightsPrimary,
-          color: colors.text.main,
+          color: colors.background.main,
         },
         disabled: {
           backgroundColor: colors.neutral[600],

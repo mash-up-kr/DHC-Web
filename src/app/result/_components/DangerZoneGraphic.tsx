@@ -23,7 +23,6 @@ function RivalIcon({ iconImage, name, top, bottom, left, right }: RivalIconProps
         alignItems: 'center',
         gap: '4px',
         padding: '8px',
-        border: '1px solid #FFFFFF',
       }}
     >
       <img
@@ -93,8 +92,6 @@ export function DangerZoneGraphic({
           alignItems: 'center',
           gap: '6px',
           padding: centerIcon.padding,
-          border: '1px solid #FFFFFF',
-          backgroundColor: 'rgba(255, 255, 255, 0.08)',
         }}
       >
         <img
