@@ -86,8 +86,8 @@ const CheckIcon: React.FC<{ active: boolean }> = ({ active }) => (
     />
     <path
       d="M5.5 9L7.5 11L12.5 6"
-      stroke={colors.text.main}
-      strokeWidth="1.5"
+      stroke={active ? colors.background.main : colors.text.main}
+      strokeWidth="1.2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -144,7 +144,7 @@ export const LabelButton: React.FC<LabelButtonProps> = ({
         borderRadius: '8px',
         flex: type === 'select' ? 1 : undefined,
         backgroundColor: isActive ? colors.violet[400] : colors.background.glassEffect,
-        color: isActive ? colors.text.main : colors.neutral[100],
+        color: isActive ? colors.background.main : colors.neutral[100],
       };
     }
 

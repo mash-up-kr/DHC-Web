@@ -3,48 +3,31 @@
  * 디자인 시스템의 색상 정의
  */
 
-export const colors = {
-  // Neutral Colors
-  neutral: {
-    30: '#F4F4F5',
-    50: '#E6EDF8',
-    100: '#D7E1EE',
-    200: '#A5B2C5',
-    300: '#7B8696',
-    400: '#5D6470',
-    500: '#3D424B',
-    600: '#2A2F38',
-    700: '#1F2127',
-    800: '#17191F',
-    900: '#0F1114',
-  },
+// Primitive Colors - Neutral
+const neutral = {
+  30: '#F4F4F5',
+  50: '#E6EDF8',
+  100: '#D7E1EE',
+  200: '#A5B2C5',
+  300: '#7B8696',
+  400: '#5D6470',
+  500: '#3D424B',
+  600: '#2A2F38',
+  700: '#1F2127',
+  800: '#17191F',
+  900: '#0F1114',
+} as const;
 
-  // Violet Colors
-  violet: {
-    50: '#F4F4FF',
-    100: '#EFEAFF',
-    200: '#E6DFFF',
-    300: '#E0D6FF',
-    400: '#D9CEFF',
-    500: '#8D83E8',
-    600: '#6F66B5',
-    700: '#564F8C',
-  },
-
-  // Background Colors
-  background: {
-    glassEffect: 'rgba(123, 134, 150, 0.15)', // neutral-300 with 15% opacity
-    badgePrimary: 'rgba(94, 105, 212, 0.2)', // violet-400 with 20% opacity
-    main: '#0F1114', // neutral-900
-  },
-
-  // Semantic Colors - Text
-  text: {
-    main: '#F4F4F5', // neutral-30
-    bodyPrimary: '#D7E1EE', // neutral-100
-    highlightsPrimary: '#5E69D4', // violet-400
-    highlightsSecondary: '#B5BAEB', // violet-200
-  },
+// Primitive Colors - Violet
+const violet = {
+  50: '#F4F4FF',
+  100: '#EFEAFF',
+  200: '#E6DFFF',
+  300: '#E0D6FF',
+  400: '#D9CEFF',
+  500: '#8D83E8',
+  600: '#6F66B5',
+  700: '#564F8C',
 } as const;
 
 /**
@@ -56,6 +39,26 @@ const hexToRgba = (hex: string, alpha: number): string => {
   const b = parseInt(hex.slice(5, 7), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
+
+export const colors = {
+  neutral,
+  violet,
+
+  // Background Colors
+  background: {
+    glassEffect: hexToRgba(neutral[300], 0.15),
+    badgePrimary: hexToRgba(violet[400], 0.2),
+    main: neutral[900],
+  },
+
+  // Semantic Colors - Text
+  text: {
+    main: neutral[30],
+    bodyPrimary: neutral[100],
+    highlightsPrimary: violet[400],
+    highlightsSecondary: violet[200],
+  },
+} as const;
 
 /**
  * Gradient Colors

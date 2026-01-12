@@ -265,7 +265,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   const buttonTextStyle: React.CSSProperties = {
     ...typography.title.h6,
-    color: colors.neutral[30],
+    color: colors.background.main,
     textAlign: 'center',
   };
 
