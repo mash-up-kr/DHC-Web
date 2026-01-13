@@ -27,7 +27,7 @@ export const close = (): void => {
   if (window.DHCJavascriptInterface) {
     window.DHCJavascriptInterface.close();
   } else if (window.webkit?.messageHandlers?.DHCJavascriptInterface) {
-    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ action: 'close' });
+    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ name: 'close' });
   }
 };
 
@@ -37,7 +37,7 @@ export const showToast = (message: string): void => {
   if (window.DHCJavascriptInterface) {
     window.DHCJavascriptInterface.showToast(message);
   } else if (window.webkit?.messageHandlers?.DHCJavascriptInterface) {
-    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ action: 'showToast', message });
+    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ name: 'showToast', message });
   }
 };
 
@@ -47,6 +47,6 @@ export const goToMain = (): void => {
   if (window.DHCJavascriptInterface) {
     window.DHCJavascriptInterface.goToMain();
   } else if (window.webkit?.messageHandlers?.DHCJavascriptInterface) {
-    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ action: 'goToMain' });
+    window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ name: 'goToMain' });
   }
 };
