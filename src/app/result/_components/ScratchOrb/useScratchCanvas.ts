@@ -4,6 +4,8 @@ interface UseScratchCanvasOptions {
   canvasRef: RefObject<HTMLCanvasElement | null>;
   size: number;
   maskColor: string;
+  /** 마스크 이미지 URL (maskColor보다 우선) */
+  maskImageUrl?: string;
   brushSize: number;
   completionThreshold: number;
   onComplete: () => void;
@@ -16,6 +18,7 @@ export function useScratchCanvas({
   canvasRef,
   size,
   maskColor,
+  maskImageUrl,
   brushSize,
   completionThreshold,
   onComplete,
@@ -53,18 +56,33 @@ export function useScratchCanvas({
     canvas.style.height = `${size}px`;
     ctx.scale(dpr, dpr);
 
-    // 원형 마스크 그리기
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = maskColor;
-    ctx.beginPath();
-    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-    ctx.fill();
+    // 마스크 이미지가 있으면 이미지로, 없으면 색상으로 마스크 그리기
+    if (maskImageUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(img, 0, 0, size, size);
+      };
+      img.src = maskImageUrl;
+    } else {
+      // 원형 마스크 그리기 (색상)
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = maskColor;
+      ctx.beginPath();
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     // 진행률 초기화
     setProgress(0);
     currentProgress.current = 0;
     onProgressChange?.(0);
-  }, [canvasRef, size, maskColor, onProgressChange]);
+  }, [canvasRef, size, maskColor, maskImageUrl, onProgressChange]);
 
   // 초기 Canvas 설정
   useEffect(() => {

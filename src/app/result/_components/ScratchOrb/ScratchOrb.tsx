@@ -11,10 +11,14 @@ export interface ScratchOrbProps {
    */
   size?: number;
   /**
-   * 마스크(덮개) 색상
+   * 마스크(덮개) 색상 (maskImageUrl이 없을 때 사용)
    * @default '#CDE3FF'
    */
   maskColor?: string;
+  /**
+   * 마스크(덮개) 이미지 URL (maskColor보다 우선)
+   */
+  maskImageUrl?: string;
   /**
    * 숨겨진 이미지 URL
    * @default '/images/scratch-reveal-orb.png'
@@ -48,6 +52,7 @@ export interface ScratchOrbProps {
 export function ScratchOrb({
   size = 210,
   maskColor = '#CDE3FF',
+  maskImageUrl,
   revealImageUrl = '/images/scratch-reveal-orb.png',
   revealText = '여기를 긁어보세요',
   completionThreshold = 0.5,
@@ -68,6 +73,7 @@ export function ScratchOrb({
     canvasRef,
     size,
     maskColor,
+    maskImageUrl,
     brushSize,
     completionThreshold,
     onComplete,
