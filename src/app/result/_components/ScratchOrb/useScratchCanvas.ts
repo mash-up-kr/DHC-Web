@@ -105,7 +105,7 @@ export function useScratchCanvas({
     const imageData = ctx.getImageData(0, 0, size * dpr, size * dpr);
     const pixels = imageData.data;
 
-    let transparent = 0;
+    let erasedAmount = 0;
     let total = 0;
     const centerX = (size * dpr) / 2;
     const centerY = (size * dpr) / 2;
@@ -123,12 +123,13 @@ export function useScratchCanvas({
           total++;
           const index = (y * size * dpr + x) * 4;
           const alpha = pixels[index + 3];
-          if (alpha === 0) transparent++;
+          // 그라데이션 고려: alpha 값 비율로 지워진 정도 계산 (255: 안 지워짐, 0: 완전히 지워짐)
+          erasedAmount += (255 - alpha) / 255;
         }
       }
     }
 
-    const newProgress = total > 0 ? transparent / total : 0;
+    const newProgress = total > 0 ? erasedAmount / total : 0;
     setProgress(newProgress);
     currentProgress.current = newProgress;
     onProgressChange?.(newProgress);
@@ -156,8 +157,15 @@ export function useScratchCanvas({
 
       if (distFromCenter > size / 2) return;
 
-      // 스크래치 효과
+      // 스크래치 효과 (중심에서 가장자리로 갈수록 투명해지는 그라데이션)
       ctx.globalCompositeOperation = 'destination-out';
+
+      // Radial gradient: 중심(완전히 지움) -> 가장자리(안 지움)
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, brushSize);
+      gradient.addColorStop(0, 'rgba(0, 0, 0, 1)');   // 중심: 완전히 투명하게 지움
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');   // 가장자리: 안 지움
+
+      ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(x, y, brushSize, 0, Math.PI * 2);
       ctx.fill();
