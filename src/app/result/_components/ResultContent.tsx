@@ -541,7 +541,7 @@ function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
               whiteSpace: 'pre-line',
             }}
           >
-            러브 미션을 수행하면{'\n'}연애 성공 확률이 높아져요!
+            공유한 테스트에 상대가 참여하면\n러브 미션이 열려요!
           </span>
         </>
       }
