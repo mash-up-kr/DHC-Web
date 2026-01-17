@@ -41,6 +41,26 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
     return "서로를 이해하는 시간이 필요해요\n천천히 알아가 보세요";
   };
 
+  // 점수에 따른 결과 이미지 경로 반환 (0~10: 1번, 11~20: 2번, ..., 91~100: 10번)
+  const getResultImage = (score: number): string => {
+    const imageNumber = score <= 10 ? 1 : score >= 100 ? 10 : Math.floor(score / 10);
+
+    const images: Record<number, string> = {
+      1: 'result-image-1-knife',
+      2: 'result-image-2-deadkinght',
+      3: 'result-image-3-execution',
+      4: 'result-image-4-assassin',
+      5: 'result-image-5-priest2',
+      6: 'result-image-6-queen',
+      7: 'result-image-7-king',
+      8: 'result-image-8-priest',
+      9: 'result-image-9-angel',
+      10: 'result-image-10-wizard',
+    };
+
+    return `/images/${images[imageNumber]}.png`;
+  };
+
   const handleRestart = () => {
     router.push("/");
   };
@@ -68,8 +88,8 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
         style={{ backgroundColor: colors.background.main, paddingBottom: '140px' }}
       >
         <div className="text-center max-w-md w-full">
-          {/* ScoreText - 최상단 26px 여백, 하단 24px 여백 */}
-          <div style={{ paddingTop: '26px', paddingBottom: '24px' }}>
+          {/* ScoreText */}
+          <div style={{ paddingTop: '64px' }}>
             <ScoreText
               type="result"
               badgeText="궁합점수"
@@ -85,44 +105,27 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingTop: '40px',
             }}
           >
-            <div
+            <img
+              src={getResultImage(compatibilityScore)}
+              alt="결과 이미지"
               style={{
-                width: '160px',
-                height: '160px',
-                borderRadius: '50%',
-                backgroundColor: '#2E3341',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                width: '400px',
+                height: '400px',
+                objectFit: 'contain',
               }}
-            >
-              <span
-                style={{
-                  fontFamily: 'Wanted Sans',
-                  fontSize: '16px',
-                  fontWeight: 500,
-                  color: 'white',
-                  opacity: 0.4,
-                  textAlign: 'center',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                그래픽 (변경예정)
-              </span>
-            </div>
+            />
 
             {/* FortuneCard Shadow */}
             <div
               style={{
-                width: '132px',
+                width: '200px',
                 height: '32px',
-                marginTop: '52px',
+                marginTop: '0px',
                 background: gradients.cardBottomGradient01,
                 borderRadius: '50%',
-                opacity: '0.2',
+                opacity: '0.05',
               }}
             />
           </div>
