@@ -105,15 +105,17 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
+              marginTop: '64px',
             }}
           >
             <img
               src={getResultImage(compatibilityScore)}
               alt="결과 이미지"
               style={{
-                width: '400px',
-                height: '400px',
+                width: '200px',
+                height: '200px',
                 objectFit: 'contain',
+                marginBottom: '24px',
               }}
             />
 
