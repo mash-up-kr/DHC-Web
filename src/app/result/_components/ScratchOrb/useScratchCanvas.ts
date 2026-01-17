@@ -4,9 +4,13 @@ interface UseScratchCanvasOptions {
   canvasRef: RefObject<HTMLCanvasElement | null>;
   size: number;
   maskColor: string;
+  /** 마스크 이미지 URL (maskColor보다 우선) */
+  maskImageUrl?: string;
   brushSize: number;
   completionThreshold: number;
   onComplete: () => void;
+  /** 스크래치 시작 시 콜백 */
+  onScratchStart?: () => void;
   onProgressChange?: (progress: number) => void;
   /** 마운트 후 입력을 무시할 시간 (ms) */
   initialDelay?: number;
@@ -16,9 +20,11 @@ export function useScratchCanvas({
   canvasRef,
   size,
   maskColor,
+  maskImageUrl,
   brushSize,
   completionThreshold,
   onComplete,
+  onScratchStart,
   onProgressChange,
   initialDelay = 150,
 }: UseScratchCanvasOptions) {
@@ -26,6 +32,7 @@ export function useScratchCanvas({
   const [progress, setProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const hasCompleted = useRef(false);
+  const hasStarted = useRef(false);
   const rafId = useRef<number | undefined>(undefined);
   const currentProgress = useRef(0);
 
@@ -53,18 +60,33 @@ export function useScratchCanvas({
     canvas.style.height = `${size}px`;
     ctx.scale(dpr, dpr);
 
-    // 원형 마스크 그리기
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = maskColor;
-    ctx.beginPath();
-    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-    ctx.fill();
+    // 마스크 이미지가 있으면 이미지로, 없으면 색상으로 마스크 그리기
+    if (maskImageUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(img, 0, 0, size, size);
+      };
+      img.src = maskImageUrl;
+    } else {
+      // 원형 마스크 그리기 (색상)
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = maskColor;
+      ctx.beginPath();
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     // 진행률 초기화
     setProgress(0);
     currentProgress.current = 0;
     onProgressChange?.(0);
-  }, [canvasRef, size, maskColor, onProgressChange]);
+  }, [canvasRef, size, maskColor, maskImageUrl, onProgressChange]);
 
   // 초기 Canvas 설정
   useEffect(() => {
@@ -83,7 +105,7 @@ export function useScratchCanvas({
     const imageData = ctx.getImageData(0, 0, size * dpr, size * dpr);
     const pixels = imageData.data;
 
-    let transparent = 0;
+    let erasedAmount = 0;
     let total = 0;
     const centerX = (size * dpr) / 2;
     const centerY = (size * dpr) / 2;
@@ -101,12 +123,13 @@ export function useScratchCanvas({
           total++;
           const index = (y * size * dpr + x) * 4;
           const alpha = pixels[index + 3];
-          if (alpha === 0) transparent++;
+          // 그라데이션 고려: alpha 값 비율로 지워진 정도 계산 (255: 안 지워짐, 0: 완전히 지워짐)
+          erasedAmount += (255 - alpha) / 255;
         }
       }
     }
 
-    const newProgress = total > 0 ? transparent / total : 0;
+    const newProgress = total > 0 ? erasedAmount / total : 0;
     setProgress(newProgress);
     currentProgress.current = newProgress;
     onProgressChange?.(newProgress);
@@ -134,8 +157,15 @@ export function useScratchCanvas({
 
       if (distFromCenter > size / 2) return;
 
-      // 스크래치 효과
+      // 스크래치 효과 (중심에서 가장자리로 갈수록 투명해지는 그라데이션)
       ctx.globalCompositeOperation = 'destination-out';
+
+      // Radial gradient: 중심(완전히 지움) -> 가장자리(안 지움)
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, brushSize);
+      gradient.addColorStop(0, 'rgba(0, 0, 0, 1)');   // 중심: 완전히 투명하게 지움
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');   // 가장자리: 안 지움
+
+      ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(x, y, brushSize, 0, Math.PI * 2);
       ctx.fill();
@@ -168,10 +198,14 @@ export function useScratchCanvas({
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement>) => {
       if (!isReady) return;
+      if (!hasStarted.current) {
+        hasStarted.current = true;
+        onScratchStart?.();
+      }
       setIsDrawing(true);
       scratch(e.clientX, e.clientY);
     },
-    [scratch, isReady],
+    [scratch, isReady, onScratchStart],
   );
 
   const handleMouseMove = useCallback(
@@ -191,11 +225,15 @@ export function useScratchCanvas({
     (e: React.TouchEvent<HTMLCanvasElement>) => {
       e.preventDefault();
       if (!isReady) return;
+      if (!hasStarted.current) {
+        hasStarted.current = true;
+        onScratchStart?.();
+      }
       setIsDrawing(true);
       const touch = e.touches[0];
       scratch(touch.clientX, touch.clientY);
     },
-    [scratch, isReady],
+    [scratch, isReady, onScratchStart],
   );
 
   const handleTouchMove = useCallback(

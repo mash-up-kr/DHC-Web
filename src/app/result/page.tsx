@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ResultLoading, ResultReadyIntro, ResultReady, ResultPreview, ResultContent, ResultError } from "./_components";
+import { ResultLoading, ResultReady, ResultPreview, ResultContent, ResultError } from "./_components";
 import { useTestStore } from "@/store/useTestStore";
 import { isNativeApp } from "@/utils/device";
 import { postLoveTest, mapStoreToRequest, LoveTestResponse } from "@/api/loveTest";
 
-type ResultStep = 'loading' | 'readyIntro' | 'ready' | 'preview' | 'content' | 'error';
+type ResultStep = 'loading' | 'ready' | 'preview' | 'content' | 'error';
 
 const MIN_LOADING_TIME = 3000;
 
@@ -100,13 +100,9 @@ export default function Result() {
     if (hasShared) {
       setStep('content');
     } else {
-      setStep('readyIntro');
+      setStep('ready');
     }
   }, [step, isApiLoaded, isMinTimeElapsed, hasShared]);
-
-  const handleIntroComplete = () => {
-    setStep('ready');
-  };
 
   const handleConfirm = () => {
     if (isApp) {
@@ -126,10 +122,6 @@ export default function Result() {
 
   if (step === 'error') {
     return <ResultError />;
-  }
-
-  if (step === 'readyIntro') {
-    return <ResultReadyIntro onNext={handleIntroComplete} />;
   }
 
   if (step === 'ready') {

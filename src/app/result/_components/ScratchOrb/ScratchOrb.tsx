@@ -11,10 +11,14 @@ export interface ScratchOrbProps {
    */
   size?: number;
   /**
-   * 마스크(덮개) 색상
+   * 마스크(덮개) 색상 (maskImageUrl이 없을 때 사용)
    * @default '#CDE3FF'
    */
   maskColor?: string;
+  /**
+   * 마스크(덮개) 이미지 URL (maskColor보다 우선)
+   */
+  maskImageUrl?: string;
   /**
    * 숨겨진 이미지 URL
    * @default '/images/scratch-reveal-orb.png'
@@ -40,6 +44,10 @@ export interface ScratchOrbProps {
    */
   onComplete: () => void;
   /**
+   * 스크래치 시작 시 콜백 (선택)
+   */
+  onScratchStart?: () => void;
+  /**
    * 진행률 변경 콜백 (선택)
    */
   onProgressChange?: (progress: number) => void;
@@ -48,11 +56,13 @@ export interface ScratchOrbProps {
 export function ScratchOrb({
   size = 210,
   maskColor = '#CDE3FF',
+  maskImageUrl,
   revealImageUrl = '/images/scratch-reveal-orb.png',
   revealText = '여기를 긁어보세요',
   completionThreshold = 0.5,
   brushSize = 30,
   onComplete,
+  onScratchStart,
   onProgressChange,
 }: ScratchOrbProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -68,9 +78,11 @@ export function ScratchOrb({
     canvasRef,
     size,
     maskColor,
+    maskImageUrl,
     brushSize,
     completionThreshold,
     onComplete,
+    onScratchStart,
     onProgressChange,
   });
 
@@ -95,7 +107,6 @@ export function ScratchOrb({
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          borderRadius: '50%',
         }}
       />
 
