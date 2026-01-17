@@ -36,16 +36,15 @@ export function ResultReadyIntro({ onNext }: ResultReadyIntroProps) {
           />
         </div>
 
-        {/* 원형 오브 - 화면 중앙 */}
+        {/* 원형 오브 - ScoreText 하단 */}
         <div
           style={{
-            flex: 1,
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
             gap: '16px',
+            marginTop: '24px',
           }}
         >
           {/* Swipe 툴팁 */}
