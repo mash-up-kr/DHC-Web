@@ -1,24 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { colors } from "@/design-system/foundations/colors";
+import { useEffect, useState, useRef } from "react";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { isNativeApp } from "@/utils/device";
 
 export function ResultLoading() {
   const [isApp, setIsApp] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setIsApp(isNativeApp());
   }, []);
 
+  const handleVideoCanPlay = () => {
+    setIsVideoLoaded(true);
+    videoRef.current?.play();
+  };
+
   return (
-    <div style={{ position: 'relative', height: '100dvh', backgroundColor: colors.background.main }}>
+    <div style={{ position: 'relative', height: '100dvh', backgroundColor: '#010105' }}>
       <main
         className="flex flex-col items-center"
         style={{
-          backgroundColor: colors.background.main,
-          backgroundImage: 'url(/images/loading-background.png)',
+          backgroundColor: '#000000',
           backgroundSize: 'auto 100%',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -34,7 +39,7 @@ export function ResultLoading() {
           />
         </div>
 
-        {/* Orb 이미지 섹션 - 화면 중앙 */}
+        {/* 로딩 비디오/썸네일 - 화면 중앙 */}
         <div
           style={{
             flex: 1,
@@ -47,15 +52,39 @@ export function ResultLoading() {
             background: 'radial-gradient(circle 300px 150px at 50% 66%, rgba(94, 105, 212, 0.4) 23%, rgba(94, 105, 212, 0.12) 51%, rgba(94, 105, 212, 0.04) 75%, rgba(94, 105, 212, 0.02) 88%, rgba(94, 105, 212, 0) 100%)',
           }}
         >
-          <img
-            src="/images/loading-orb.png"
-            alt="Loading Orb"
+          <div
             style={{
+              position: 'relative',
               width: '100%',
               maxWidth: '375px',
-              height: 'auto',
             }}
-          />
+          >
+            {/* 썸네일 이미지 - 비디오 로딩 전까지 표시 */}
+            {!isVideoLoaded && (
+              <img
+                src="/videos/result-loading-video-thumbnail.png"
+                alt="Loading"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                }}
+              />
+            )}
+            {/* 비디오 - 로딩 완료 후 자동재생 */}
+            <video
+              ref={videoRef}
+              src="/videos/result-loading-video.mp4"
+              muted
+              loop
+              playsInline
+              onCanPlayThrough={handleVideoCanPlay}
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: isVideoLoaded ? 'block' : 'none',
+              }}
+            />
+          </div>
         </div>
       </main>
     </div>
