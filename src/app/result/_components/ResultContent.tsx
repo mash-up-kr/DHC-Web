@@ -525,23 +525,23 @@ function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
           <span
             style={{
               ...typography.title.h4,
-              background: gradients.textGradient01,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              color: colors.text.main,
               textAlign: 'center',
+              whiteSpace: 'pre-line',
+              marginBottom: '8px',
             }}
           >
-            테스트 공유하고
+            테스트 공유하고{'\n'}러브 미션을 받아보세요
           </span>
           <span
             style={{
-              ...typography.title.h4,
-              color: colors.neutral[30],
+              ...typography.body.body5,
+              color: colors.neutral[300],
               textAlign: 'center',
+              whiteSpace: 'pre-line',
             }}
           >
-            자세한 내용 확인해보세요!
+            러브 미션을 수행하면{'\n'}연애 성공 확률이 높아져요!
           </span>
         </>
       }
