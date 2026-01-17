@@ -545,7 +545,19 @@ function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
           </span>
         </>
       }
-      graphicHeight={138}
+      graphicNode={
+        <div style={{ padding: '11px 0' }}>
+          <img
+            src="/images/share-popup-banner.svg"
+            alt="공유 배너"
+            style={{
+              width: '100%',
+              height: '116px',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
+      }
       buttonText="테스트 공유하기"
       onButtonClick={onShare}
       secondButtonText="테스트 결과 확인하기"
