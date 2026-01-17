@@ -206,7 +206,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                 whiteSpace: 'pre-line',
               }}
             >
-              자세한 꿀팁{'\n'}무료로 확인해보세요!
+              자세한 꿀팁\n무료로 확인해보세요!
             </p>
             <button
               onClick={handleShareConfirm}
@@ -312,29 +312,43 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               <span
                 style={{
                   ...typography.title.h4,
-                  background: gradients.textGradient01,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  color: colors.text.main,
                   textAlign: 'center',
+                  whiteSpace: 'pre-line',
+                  marginBottom: '8px',
                 }}
               >
-                테스트 공유하고
+                테스트 공유하고\n러브 미션을 받아보세요
               </span>
               <span
                 style={{
-                  ...typography.title.h4,
-                  color: colors.neutral[30],
+                  ...typography.body.body5,
+                  color: colors.neutral[300],
                   textAlign: 'center',
+                  whiteSpace: 'pre-line',
                 }}
               >
-                자세한 내용 확인해보세요!
+                공유한 테스트에 상대가 참여하면\n러브 미션이 열려요!
               </span>
             </>
           }
-          graphicHeight={138}
+          graphicNode={
+            <div style={{ padding: '11px 0' }}>
+              <img
+                src="/images/share-popup-banner.svg"
+                alt="공유 배너"
+                style={{
+                  width: '100%',
+                  height: '116px',
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+          }
           buttonText="테스트 공유하기"
           onButtonClick={handleShareConfirm}
+          secondButtonText="테스트 결과 확인하기"
+          onSecondButtonClick={handleModalClose}
         />
       )}
     </div>
