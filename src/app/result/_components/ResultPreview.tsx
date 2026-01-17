@@ -206,7 +206,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                 whiteSpace: 'pre-line',
               }}
             >
-              자세한 꿀팁\n무료로 확인해보세요!
+              자세한 꿀팁{'\n'}무료로 확인해보세요!
             </p>
             <button
               onClick={handleShareConfirm}
@@ -318,7 +318,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                   marginBottom: '8px',
                 }}
               >
-                테스트 공유하고\n러브 미션을 받아보세요
+                테스트 공유하고{'\n'}러브 미션을 받아보세요
               </span>
               <span
                 style={{
@@ -328,7 +328,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                   whiteSpace: 'pre-line',
                 }}
               >
-                공유한 테스트에 상대가 참여하면\n러브 미션이 열려요!
+                공유한 테스트에 상대가 참여하면{'\n'}러브 미션이 열려요!
               </span>
             </>
           }
