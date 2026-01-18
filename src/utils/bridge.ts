@@ -50,3 +50,4 @@ export const goToMain = (): void => {
     window.webkit.messageHandlers.DHCJavascriptInterface.postMessage({ name: 'goToMain' });
   }
 };
+

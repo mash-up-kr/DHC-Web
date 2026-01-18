@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
@@ -9,13 +9,14 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { Modal } from "@/design-system/components/Modal/Modal";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
-import { shareUrl } from "@/utils/share";
+import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 
 export default function Home() {
   const router = useRouter();
-  const { resetAll } = useTestStore();
+  const searchParams = useSearchParams();
+  const { resetAll, setShareToken } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
 
@@ -23,8 +24,15 @@ export default function Home() {
     setIsApp(isNativeApp());
   }, []);
 
+  useEffect(() => {
+    const token = searchParams.get('shareToken');
+    if (token) {
+      setShareToken(token);
+    }
+  }, [searchParams, setShareToken]);
+
   const handleShare = async () => {
-    const result = await shareUrl();
+    const result = await shareRootUrl();
     if (result.success && result.method === 'clipboard') {
       alert('링크가 클립보드에 복사되었습니다!');
     }

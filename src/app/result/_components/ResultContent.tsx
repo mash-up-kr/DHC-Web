@@ -14,7 +14,7 @@ import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 import { useTestStore } from "@/store/useTestStore";
 import { openStore } from "@/utils/storeUrl";
-import { shareUrl } from "@/utils/share";
+import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { goToMain } from "@/utils/bridge";
 import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
@@ -621,7 +621,7 @@ export function ResultContent({ result }: ResultContentProps) {
 
   const handleShareConfirm = async () => {
     setIsModalOpen(false);
-    const shareResult = await shareUrl();
+    const shareResult = await shareRootUrl();
     if (shareResult.success && shareResult.method === 'clipboard') {
       alert('링크가 클립보드에 복사되었습니다!');
     }
