@@ -1,5 +1,5 @@
 import { isNativeApp, isMobile } from './device';
-import { getToken } from './bridge';
+import { getShareToken } from './cookie';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
@@ -9,7 +9,7 @@ export const getRootUrl = (): string => {
 export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
   let shareUrlValue = getRootUrl();
 
-  const token = getToken();
+  const token = getShareToken();
   if (token) {
     const separator = shareUrlValue.includes('?') ? '&' : '?';
     shareUrlValue = `${shareUrlValue}${separator}shareToken=${token}`;

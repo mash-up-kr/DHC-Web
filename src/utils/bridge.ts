@@ -51,16 +51,3 @@ export const goToMain = (): void => {
   }
 };
 
-export const getToken = (): string | null => {
-  if (typeof document === 'undefined') return null;
-
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === 'shareToken') {
-      return value || null;
-    }
-  }
-
-  return null;
-};
