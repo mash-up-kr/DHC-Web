@@ -1,4 +1,5 @@
 import { isNativeApp, isMobile } from './device';
+import { getToken } from './bridge';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
@@ -6,7 +7,13 @@ export const getRootUrl = (): string => {
 };
 
 export const shareUrl = async (url?: string): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
-  const shareUrlValue = url || getRootUrl();
+  let shareUrlValue = url || getRootUrl();
+
+  const token = getToken();
+  if (token) {
+    const separator = shareUrlValue.includes('?') ? '&' : '?';
+    shareUrlValue = `${shareUrlValue}${separator}shareToken=${encodeURIComponent(token)}`;
+  }
 
   // Native App 또는 모바일 브라우저에서 Web Share API 사용
   if ((isNativeApp() || isMobile()) && navigator.share) {
