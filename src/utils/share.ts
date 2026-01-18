@@ -6,8 +6,8 @@ export const getRootUrl = (): string => {
   return window.location.origin;
 };
 
-export const shareUrl = async (url?: string): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
-  let shareUrlValue = url || getRootUrl();
+export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {
+  let shareUrlValue = getRootUrl();
 
   const token = getToken();
   if (token) {

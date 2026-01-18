@@ -9,7 +9,7 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { Modal } from "@/design-system/components/Modal/Modal";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
-import { shareUrl } from "@/utils/share";
+import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 
@@ -32,7 +32,7 @@ export default function Home() {
   }, [searchParams, setShareToken]);
 
   const handleShare = async () => {
-    const result = await shareUrl();
+    const result = await shareRootUrl();
     if (result.success && result.method === 'clipboard') {
       alert('링크가 클립보드에 복사되었습니다!');
     }

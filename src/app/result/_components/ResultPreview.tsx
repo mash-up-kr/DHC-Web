@@ -9,7 +9,7 @@ import { Modal } from "@/design-system/components/Modal";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 import { openStore } from "@/utils/storeUrl";
-import { shareUrl } from "@/utils/share";
+import { shareRootUrl } from "@/utils/share";
 import { useTestStore } from "@/store/useTestStore";
 
 interface ResultPreviewProps {
@@ -71,7 +71,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
 
   const handleShareConfirm = async () => {
     setIsModalOpen(false);
-    const result = await shareUrl();
+    const result = await shareRootUrl();
     if (result.success && result.method === 'clipboard') {
       alert('링크가 클립보드에 복사되었습니다!');
     }
