@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
@@ -14,7 +14,7 @@ import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 import { postShareComplete } from "@/api/share";
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { resetAll } = useTestStore();
@@ -143,5 +143,13 @@ export default function Home() {
       </div>
 
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }
