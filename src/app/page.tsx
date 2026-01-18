@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
@@ -15,13 +15,21 @@ import { close } from "@/utils/bridge";
 
 export default function Home() {
   const router = useRouter();
-  const { resetAll } = useTestStore();
+  const searchParams = useSearchParams();
+  const { resetAll, setShareToken } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
 
   useEffect(() => {
     setIsApp(isNativeApp());
   }, []);
+
+  useEffect(() => {
+    const token = searchParams.get('shareToken');
+    if (token) {
+      setShareToken(token);
+    }
+  }, [searchParams, setShareToken]);
 
   const handleShare = async () => {
     const result = await shareUrl();
