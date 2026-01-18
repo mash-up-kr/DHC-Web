@@ -2,7 +2,6 @@ interface DHCJavascriptInterface {
   close: () => void;
   showToast: (message: string) => void;
   goToMain: () => void;
-  getToken: () => string;
 }
 
 interface WebkitMessageHandler {
@@ -53,10 +52,14 @@ export const goToMain = (): void => {
 };
 
 export const getToken = (): string | null => {
-  if (typeof window === 'undefined') return null;
+  if (typeof document === 'undefined') return null;
 
-  if (window.DHCJavascriptInterface) {
-    return window.DHCJavascriptInterface.getToken();
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === 'shareToken') {
+      return value || null;
+    }
   }
 
   return null;
