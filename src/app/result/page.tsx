@@ -5,7 +5,6 @@ import { ResultLoading, ResultReady, ResultPreview, ResultContent, ResultError }
 import { useTestStore } from "@/store/useTestStore";
 import { isNativeApp } from "@/utils/device";
 import { postLoveTest, mapStoreToRequest, LoveTestResponse } from "@/api/loveTest";
-import { postShareComplete } from "@/api/share";
 
 type ResultStep = 'loading' | 'ready' | 'preview' | 'content' | 'error';
 
@@ -25,7 +24,7 @@ function validateStoreData(
 
 export default function Result() {
   const [step, setStep] = useState<ResultStep>('loading');
-  const { userInfo, userBirth, partnerInfo, partnerBirth, loveDate, hasShared, shareToken } = useTestStore();
+  const { userInfo, userBirth, partnerInfo, partnerBirth, loveDate, hasShared } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [apiResult, setApiResult] = useState<LoveTestResponse | null>(null);
   const [isApiLoaded, setIsApiLoaded] = useState(false);
@@ -77,14 +76,8 @@ export default function Result() {
         loveDate,
       });
       try {
-        const apiCalls: Promise<unknown>[] = [postLoveTest(request)];
-
-        if (shareToken) {
-          apiCalls.push(postShareComplete(shareToken));
-        }
-
-        const [loveTestResponse] = await Promise.all(apiCalls);
-        setApiResult(loveTestResponse as LoveTestResponse);
+        const response = await postLoveTest(request);
+        setApiResult(response);
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('[Result] LoveTest API Error:', error);
@@ -97,7 +90,7 @@ export default function Result() {
     };
 
     fetchResult();
-  }, [step, shareToken]);
+  }, [step]);
 
   // API 응답 완료 + 최소 로딩 시간 경과 시 다음 step으로 이동
   useEffect(() => {

@@ -12,11 +12,12 @@ import { useTestStore } from "@/store/useTestStore";
 import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
+import { postShareComplete } from "@/api/share";
 
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { resetAll, setShareToken } = useTestStore();
+  const { resetAll } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
 
@@ -27,9 +28,19 @@ export default function Home() {
   useEffect(() => {
     const token = searchParams.get('shareToken');
     if (token) {
-      setShareToken(token);
+      postShareComplete(token)
+        .then((response) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('[Home] ShareComplete API Success:', response);
+          }
+        })
+        .catch((error) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('[Home] ShareComplete API Error:', error);
+          }
+        });
     }
-  }, [searchParams, setShareToken]);
+  }, [searchParams]);
 
   const handleShare = async () => {
     const result = await shareRootUrl();

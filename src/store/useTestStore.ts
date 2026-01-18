@@ -67,10 +67,6 @@ interface TestState {
   hasShared: boolean;
   setHasShared: (shared: boolean) => void;
 
-  // 공유 토큰
-  shareToken: string | null;
-  setShareToken: (token: string | null) => void;
-
   // 전체 초기화
   resetAll: () => void;
 }
@@ -108,7 +104,6 @@ const initialState = {
     day: '',
   },
   hasShared: false,
-  shareToken: null,
 };
 
 export const useTestStore = create<TestState>()(
@@ -142,8 +137,6 @@ export const useTestStore = create<TestState>()(
         })),
 
       setHasShared: (shared) => set({ hasShared: shared }),
-
-      setShareToken: (token) => set({ shareToken: token }),
 
       resetAll: () => set(initialState),
     }),
