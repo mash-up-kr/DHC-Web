@@ -12,7 +12,7 @@ export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share
   const token = getToken();
   if (token) {
     const separator = shareUrlValue.includes('?') ? '&' : '?';
-    shareUrlValue = `${shareUrlValue}${separator}shareToken=${encodeURIComponent(token)}`;
+    shareUrlValue = `${shareUrlValue}${separator}shareToken=${token}`;
   }
 
   // Native App 또는 모바일 브라우저에서 Web Share API 사용
