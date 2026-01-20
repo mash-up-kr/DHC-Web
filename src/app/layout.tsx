@@ -65,6 +65,9 @@ const jsonLd = {
     priceCurrency: "KRW",
   },
   inLanguage: "ko",
+  other: {
+    "naver-site-verification": "71b43508cf6362f637bc9aa18206de06e9994ac9",
+  },
 };
 
 export default function RootLayout({
