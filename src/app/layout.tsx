@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "궁합 테스트",
   },
+  other: {
+    "naver-site-verification": "71b43508cf6362f637bc9aa18206de06e9994ac9",
+  },
 };
 
 export default function RootLayout({
