@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
@@ -108,15 +109,16 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               marginTop: '64px',
             }}
           >
-            <img
+            <Image
               src={getResultImage(compatibilityScore)}
-              alt="결과 이미지"
+              alt="연애 궁합 테스트 결과 이미지"
+              width={200}
+              height={200}
               style={{
-                width: '200px',
-                height: '200px',
                 objectFit: 'contain',
                 marginBottom: '24px',
               }}
+              priority
             />
 
             {/* FortuneCard Shadow */}
@@ -236,10 +238,11 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               >
                 공유하고 내용 확인하기
               </span>
-              <img
+              <Image
                 src="/icons/share-icon.svg"
                 alt="공유"
-                style={{ width: '16px', height: '16px' }}
+                width={16}
+                height={16}
               />
             </button>
             </div>
@@ -266,9 +269,11 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
             >
               언제 고백할까?
             </h2>
-            <img
+            <Image
               src="/images/confession-date.png"
-              alt="언제 고백할까?"
+              alt="언제 고백할까? - 고백 추천 날짜"
+              width={400}
+              height={100}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -336,9 +341,11 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
           }
           graphicNode={
             <div style={{ padding: '11px 0' }}>
-              <img
+              <Image
                 src="/images/share-popup-banner.svg"
-                alt="공유 배너"
+                alt="테스트 공유 배너"
+                width={300}
+                height={116}
                 style={{
                   width: '100%',
                   height: '116px',

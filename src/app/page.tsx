@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
@@ -55,6 +56,11 @@ function HomeContent() {
       style={{ backgroundColor: colors.background.main }}
     >
       <div className="max-w-md w-full flex flex-col items-center">
+        {/* SEO를 위한 숨겨진 H1 */}
+        <h1 className="sr-only">
+          연애 궁합 테스트 - 내 짝사랑은 나한테 관심이 있을까?
+        </h1>
+
         <Header
           type="screenInfo"
           title="그 사람과 나의 궁합은?!"
@@ -95,13 +101,16 @@ function HomeContent() {
             padding: '0 20px',
           }}
         >
-          <img
+          <Image
             src="/images/main-banner.png"
-            alt="메인 배너"
+            alt="연애 궁합 테스트 메인 배너 - 짝사랑 상대와의 궁합을 확인하세요"
+            width={335}
+            height={335}
             style={{
               width: '100%',
               height: 'auto',
             }}
+            priority
           />
         </div>
 

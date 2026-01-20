@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MessageCard } from "@/design-system/components/MessageCard";
@@ -175,15 +176,16 @@ function OrbGraphicSection({ score }: OrbGraphicSectionProps) {
         marginTop: '64px',
       }}
     >
-      <img
+      <Image
         src={imageSrc}
-        alt="결과 이미지"
+        alt="연애 궁합 테스트 결과 이미지"
+        width={200}
+        height={200}
         style={{
-          width: '200px',
-          height: '200px',
           objectFit: 'contain',
           marginBottom: '24px',
         }}
+        priority
       />
 
       {/* FortuneCard Shadow */}
@@ -276,7 +278,15 @@ function FortuneTipsSection({ fortuneTips }: FortuneTipsSectionProps) {
         {fortuneTips.map((tip, index) => (
           <TipCard
             key={index}
-            icon={<img src={tip.image} alt="" style={{ width: '20px', height: '20px' }} />}
+            icon={
+              <Image
+                src={tip.image}
+                alt=""
+                width={20}
+                height={20}
+                style={{ width: '20px', height: '20px' }}
+              />
+            }
             title={tip.title}
             value={tip.description}
             color={tip.hexColor}
@@ -307,7 +317,7 @@ function DangerZoneSection({ dangerZoneData, closestRivalName, partnerGender }: 
           width: '100%',
         }}
       >
-        <img src="/icons/icon-siren.svg" alt="" width={18} height={18} />
+        <Image src="/icons/icon-siren.svg" alt="" width={18} height={18} />
         <span
           style={{
             ...typography.title['h5-1'],
@@ -377,7 +387,7 @@ function ConfessDateSection({ confessDate }: ConfessDateSectionProps) {
           width: '100%',
         }}
       >
-        <img src="/icons/icon-alarm-clock.svg" alt="" width={18} height={18} />
+        <Image src="/icons/icon-alarm-clock.svg" alt="" width={18} height={18} />
         <span
           style={{
             ...typography.title['h5-1'],
@@ -426,7 +436,7 @@ function ConfessLocationSection({ confessLocation }: ConfessLocationSectionProps
           width: '100%',
         }}
       >
-        <img src="/icons/icon-map-marker.svg" alt="" width={18} height={18} />
+        <Image src="/icons/icon-map-marker.svg" alt="" width={18} height={18} />
         <span
           style={{
             ...typography.title['h5-1'],
@@ -492,9 +502,11 @@ function PromotionSection({ partnerName, userName }: PromotionSectionProps) {
           marginBottom: '40px',
         }}
       >
-        <img
+        <Image
           src="/images/app-preview-7e1ca8.png"
-          alt="앱 미리보기"
+          alt="연애 궁합 테스트 앱 미리보기"
+          width={400}
+          height={300}
           style={{
             width: '100%',
             height: 'auto',
@@ -549,9 +561,11 @@ function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
       }
       graphicNode={
         <div style={{ padding: '11px 0' }}>
-          <img
+          <Image
             src="/images/share-popup-banner.svg"
-            alt="공유 배너"
+            alt="테스트 공유 배너"
+            width={300}
+            height={116}
             style={{
               width: '100%',
               height: '116px',
@@ -646,6 +660,9 @@ export function ResultContent({ result }: ResultContentProps) {
       className="flex min-h-screen flex-col items-center p-6"
       style={{ backgroundColor: colors.background.main }}
     >
+      {/* SEO를 위한 숨겨진 H1 */}
+      <h1 className="sr-only">연애 궁합 테스트 결과 - 짝사랑 상대와의 궁합 점수</h1>
+
       <div className="text-center max-w-md w-full">
         <CompatibilityScoreSection score={compatibilityScore} />
         <OrbGraphicSection score={compatibilityScore} />

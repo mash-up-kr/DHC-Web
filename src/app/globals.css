@@ -31,4 +31,17 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Screen reader only - SEO를 위한 숨겨진 H1 태그용 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }

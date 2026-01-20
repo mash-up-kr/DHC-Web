@@ -24,6 +24,9 @@ export default function Question3() {
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
+      {/* SEO를 위한 숨겨진 H1 */}
+      <h1 className="sr-only">연애 궁합 테스트 - Q3. 상대방에 대해서 알려주세요</h1>
+
       {/* 상단 고정 Header */}
       <div
         style={{

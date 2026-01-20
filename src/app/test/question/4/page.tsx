@@ -28,6 +28,9 @@ export default function Question4() {
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
+      {/* SEO를 위한 숨겨진 H1 */}
+      <h1 className="sr-only">연애 궁합 테스트 - Q4. 상대방의 생년월일과 특징</h1>
+
       {/* 상단 고정 Header */}
       <div
         style={{
