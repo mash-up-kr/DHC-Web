@@ -11,10 +11,13 @@ import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { useScreenImpression } from "@/hooks/useScreenImpression";
 
 export default function Question2() {
   const router = useRouter();
   const { userBirth, setUserBirth } = useTestStore();
+
+  useScreenImpression("Question2");
 
   const isFormValid = userBirth.year && userBirth.month && userBirth.day && (userBirth.unknownTime || userBirth.birthTime);
 

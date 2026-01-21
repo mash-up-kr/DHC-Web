@@ -14,6 +14,7 @@ import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 import { postShareComplete } from "@/api/share";
+import { useScreenImpression } from "@/hooks/useScreenImpression";
 
 function HomeContent() {
   const router = useRouter();
@@ -21,6 +22,8 @@ function HomeContent() {
   const { resetAll } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
+
+  useScreenImpression("Home");
 
   useEffect(() => {
     setIsApp(isNativeApp());

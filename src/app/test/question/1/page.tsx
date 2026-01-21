@@ -9,10 +9,13 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { useScreenImpression } from "@/hooks/useScreenImpression";
 
 export default function Question1() {
   const router = useRouter();
   const { userInfo, setUserInfo } = useTestStore();
+
+  useScreenImpression("Question1");
 
   const isFormValid = userInfo.gender && userInfo.name;
 

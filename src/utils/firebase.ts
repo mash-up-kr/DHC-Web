@@ -1,5 +1,10 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
-import { getAnalytics, Analytics, isSupported } from "firebase/analytics";
+import {
+  getAnalytics,
+  Analytics,
+  isSupported,
+  logEvent as firebaseLogEvent,
+} from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -34,6 +39,16 @@ export const initAnalytics = async (): Promise<Analytics | undefined> => {
     analytics = getAnalytics(firebaseApp);
   }
   return analytics;
+};
+
+export const logEvent = async (
+  eventName: string,
+  eventParams?: Record<string, unknown>,
+): Promise<void> => {
+  const analyticsInstance = await initAnalytics();
+  if (analyticsInstance) {
+    firebaseLogEvent(analyticsInstance, eventName, eventParams);
+  }
 };
 
 export { app, analytics };

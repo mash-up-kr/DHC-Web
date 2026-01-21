@@ -9,10 +9,13 @@ import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { validateDateField } from "@/utils/dateValidation";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { useScreenImpression } from "@/hooks/useScreenImpression";
 
 export default function Question5() {
   const router = useRouter();
   const { loveDate, setLoveDate } = useTestStore();
+
+  useScreenImpression("Question5");
 
   const isFormValid = loveDate.year && loveDate.month && loveDate.day;
 
