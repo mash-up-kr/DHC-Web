@@ -6,6 +6,7 @@ import { ScoreText } from "@/design-system/components/ScoreText";
 import { Tooltip } from "@/design-system/components/Tooltip";
 import { ScratchOrb } from "./ScratchOrb";
 import { isNativeApp } from "@/utils/device";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
 // 점수에 따른 결과 이미지 경로 반환 (0~10: 1번, 11~20: 2번, ..., 91~100: 10번)
 function getResultImage(score: number): string {
@@ -34,6 +35,8 @@ interface ResultReadyProps {
 export function ResultReady({ onConfirm }: ResultReadyProps) {
   const [isApp, setIsApp] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
+
+  useScreenImpression(ScreenName.RESULT_READY);
 
   useEffect(() => {
     setIsApp(isNativeApp());

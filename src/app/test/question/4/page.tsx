@@ -11,10 +11,13 @@ import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
 export default function Question4() {
   const router = useRouter();
   const { partnerBirth, setPartnerBirth } = useTestStore();
+
+  useScreenImpression(ScreenName.QUESTION_4);
 
   const isBirthValid = partnerBirth.unknownBirth || (partnerBirth.year && partnerBirth.month && partnerBirth.day);
   const isTimeValid = partnerBirth.unknownTime || partnerBirth.birthTime;

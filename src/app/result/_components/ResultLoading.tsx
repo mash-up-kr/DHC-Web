@@ -3,11 +3,14 @@
 import { useEffect, useState, useRef } from "react";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { isNativeApp } from "@/utils/device";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
 export function ResultLoading() {
   const [isApp, setIsApp] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useScreenImpression(ScreenName.RESULT_LOADING);
 
   useEffect(() => {
     setIsApp(isNativeApp());

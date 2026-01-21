@@ -12,6 +12,7 @@ import { typography } from "@/design-system/foundations/typography";
 import { openStore } from "@/utils/storeUrl";
 import { shareRootUrl } from "@/utils/share";
 import { useTestStore } from "@/store/useTestStore";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
 interface ResultPreviewProps {
   onShare?: () => void;
@@ -21,6 +22,8 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setHasShared } = useTestStore();
+
+  useScreenImpression(ScreenName.RESULT_PREVIEW);
 
   // 2초 후 모달 자동 열기
   useEffect(() => {

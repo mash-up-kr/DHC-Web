@@ -20,6 +20,7 @@ import { isNativeApp } from "@/utils/device";
 import { goToMain } from "@/utils/bridge";
 import { DangerZoneGraphic, DangerZoneGraphicProps } from "./DangerZoneGraphic";
 import { LoveTestResponse } from "@/api/loveTest";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
 interface ResultContentProps {
   result: LoveTestResponse | null;
@@ -589,6 +590,8 @@ export function ResultContent({ result }: ResultContentProps) {
   const { partnerInfo, userInfo, setHasShared } = useTestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApp, setIsApp] = useState(false);
+
+  useScreenImpression(ScreenName.RESULT_CONTENT);
 
   // 위험요소 데이터 캐싱 (리렌더링 시 랜덤값 유지)
   const dangerZoneData = useMemo(
