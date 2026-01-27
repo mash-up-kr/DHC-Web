@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: "xK_rbbcGWiQqx5hbU-VoD_JSBkRUTGOm9TTyvxD-e_Q",
+  },
 };
 
 // JSON-LD 구조화 데이터
