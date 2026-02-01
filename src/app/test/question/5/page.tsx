@@ -89,9 +89,9 @@ export default function Question5() {
           label="사랑에 빠진 날"
           align="start"
           items={[
-            { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6 },
+            { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1 },
+            { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1 },
           ]}
           onChange={(key, value) => {
             const { value: validatedValue } = validateDateField(key, value);

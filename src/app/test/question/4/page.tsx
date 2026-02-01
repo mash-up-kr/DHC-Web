@@ -104,9 +104,9 @@ export default function Question4() {
           align="start"
           showLabel={false}
           items={[
-            { key: 'year', value: partnerBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, disabled: partnerBirth.unknownBirth },
-            { key: 'month', value: partnerBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth },
-            { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth },
+            { key: 'year', value: partnerBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, disabled: partnerBirth.unknownBirth, flex: 1.6 },
+            { key: 'month', value: partnerBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1 },
+            { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1 },
           ]}
           onChange={(key, value) => {
             const { value: validatedValue } = validateDateField(key, value);
