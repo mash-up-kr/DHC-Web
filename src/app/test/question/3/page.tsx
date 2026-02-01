@@ -78,7 +78,7 @@ export default function Question3() {
         <Title
           type="page"
           size="sm"
-          title="Q3.그녀에 대해서 알려주세요"
+          title="Q3.상대방에 대해서 알려주세요"
           description="성별과 이름을 알려주세요"
         />
 
@@ -99,7 +99,7 @@ export default function Question3() {
         <InputFieldGroup
           type="single"
           size="md"
-          label="그녀의 이름"
+          label="상대방에 이름"
           align="start"
           items={[
             { key: 'name', value: partnerInfo.name, placeholder: '홍길동' },
