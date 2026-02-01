@@ -108,7 +108,7 @@ function HomeContent() {
             src="/images/main-banner.png"
             alt="연애 궁합 테스트 메인 배너 - 짝사랑 상대와의 궁합을 확인하세요"
             width={335}
-            height={335}
+            height={220}
             style={{
               width: '100%',
               height: 'auto',
