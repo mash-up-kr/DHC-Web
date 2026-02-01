@@ -128,6 +128,9 @@ function HomeContent() {
           title="그 사람과 나의 연애궁합은?!"
           description={"짝사랑 상대의 생일을 입력하고\n나와의 궁합을 쉽게 확인해보세요!"}
         />
+
+        {/* 하단 고정 영역 높이만큼 여백 */}
+        <div style={{ height: '200px' }} />
       </div>
 
       {/* 하단 고정 영역 */}
