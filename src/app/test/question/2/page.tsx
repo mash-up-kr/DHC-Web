@@ -91,9 +91,9 @@ export default function Question2() {
           label="생년월일"
           align="start"
           items={[
-            { key: 'year', value: userBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4 },
-            { key: 'month', value: userBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2 },
-            { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2 },
+            { key: 'year', value: userBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6 },
+            { key: 'month', value: userBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1 },
+            { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1 },
           ]}
           onChange={(key, value) => {
             const { value: validatedValue } = validateDateField(key, value);
