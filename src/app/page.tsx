@@ -128,19 +128,38 @@ function HomeContent() {
           title="그 사람과 나의 연애궁합은?!"
           description={"짝사랑 상대의 생일을 입력하고\n나와의 궁합을 쉽게 확인해보세요!"}
         />
+
+        {/* 하단 고정 영역 높이만큼 여백 */}
+        <div style={{ height: '200px' }} />
       </div>
 
       {/* 하단 고정 영역 */}
       <div className="fixed bottom-0 left-0 right-0 flex flex-col items-center">
         <div className="max-w-md w-full flex flex-col items-center">
           {/* 참여 인원 표시 */}
-          <div style={{ marginBottom: '12px', pointerEvents: 'none' }}>
+          <div
+            className="relative w-full flex justify-center overflow-visible"
+            style={{ paddingBottom: '12px', pointerEvents: 'none' }}
+          >
+            {/* 그라데이션 배경 */}
+            <div
+              className="absolute inset-0 w-full h-full"
+              style={{
+                background: `linear-gradient(to top, ${colors.background.main} 0%, transparent 100%)`,
+              }}
+            />
+            <div className="relative">
             <MoreBtn showIcon={false}>
               지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
             </MoreBtn>
+            </div>
           </div>
 
           {/* CTA 버튼 그룹 */}
+          <div
+            className="w-full"
+            style={{ backgroundColor: colors.background.main }}
+          >
           <CTAButtonGroup
             type="twoButton"
             primaryButtonText="테스트 시작하기"
@@ -152,6 +171,7 @@ function HomeContent() {
             secondButtonText="공유하기"
             onSecondButtonClick={handleShare}
           />
+          </div>
         </div>
       </div>
 
