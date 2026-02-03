@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
@@ -14,14 +15,51 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 export default function Question5() {
   const router = useRouter();
   const { loveDate, setLoveDate } = useTestStore();
+  const yearRef = useRef<HTMLInputElement>(null);
+  const monthRef = useRef<HTMLInputElement>(null);
+  const dayRef = useRef<HTMLInputElement>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useScreenImpression(ScreenName.QUESTION_5);
+
+  useEffect(() => {
+    setTimeout(() => yearRef.current?.focus(), 300);
+  }, []);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const handleResize = () => {
+      setKeyboardHeight(window.innerHeight - vv.height);
+    };
+
+    vv.addEventListener("resize", handleResize);
+    return () => vv.removeEventListener("resize", handleResize);
+  }, []);
 
   const isFormValid = loveDate.year && loveDate.month && loveDate.day;
 
   const handleNext = () => {
     if (isFormValid) {
       router.push("/result");
+    }
+  };
+
+  const handleDateChange = (key: string, value: string) => {
+    const { value: validatedValue } = validateDateField(key, value);
+    if (key === 'year') {
+      setLoveDate({ year: validatedValue });
+      if (validatedValue.length === 4) {
+        setTimeout(() => monthRef.current?.focus(), 50);
+      }
+    } else if (key === 'month') {
+      setLoveDate({ month: validatedValue });
+      if (validatedValue.length === 2) {
+        setTimeout(() => dayRef.current?.focus(), 50);
+      }
+    } else if (key === 'day') {
+      setLoveDate({ day: validatedValue });
     }
   };
 
@@ -89,23 +127,22 @@ export default function Question5() {
           label="사랑에 빠진 날"
           align="start"
           items={[
-            { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6 },
-            { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1 },
-            { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1 },
+            { key: 'year', value: loveDate.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6, inputRef: yearRef as React.Ref<HTMLInputElement> },
+            { key: 'month', value: loveDate.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1, inputRef: monthRef as React.Ref<HTMLInputElement> },
+            { key: 'day', value: loveDate.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1, inputRef: dayRef as React.Ref<HTMLInputElement> },
           ]}
-          onChange={(key, value) => {
-            const { value: validatedValue } = validateDateField(key, value);
-            if (key === 'year') setLoveDate({ year: validatedValue });
-            else if (key === 'month') setLoveDate({ month: validatedValue });
-            else if (key === 'day') setLoveDate({ day: validatedValue });
-          }}
+          onChange={handleDateChange}
         />
       </div>
 
       {/* CTA 버튼 */}
       <div
-        className="fixed bottom-0 left-0 right-0"
-        style={{ backgroundColor: colors.background.main }}
+        className="fixed left-0 right-0"
+        style={{
+          bottom: `${keyboardHeight}px`,
+          backgroundColor: colors.background.main,
+          transition: 'bottom 0.1s ease-out',
+        }}
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup

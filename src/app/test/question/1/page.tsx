@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
@@ -14,8 +15,22 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 export default function Question1() {
   const router = useRouter();
   const { userInfo, setUserInfo } = useTestStore();
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useScreenImpression(ScreenName.QUESTION_1);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const handleResize = () => {
+      setKeyboardHeight(window.innerHeight - vv.height);
+    };
+
+    vv.addEventListener("resize", handleResize);
+    return () => vv.removeEventListener("resize", handleResize);
+  }, []);
 
   const isFormValid = userInfo.gender && userInfo.name;
 
@@ -92,7 +107,10 @@ export default function Question1() {
             { label: '여성', value: 'female' },
           ]}
           selectedValue={userInfo.gender}
-          onSelect={(value) => setUserInfo({ gender: value })}
+          onSelect={(value) => {
+            setUserInfo({ gender: value });
+            setTimeout(() => nameInputRef.current?.focus(), 100);
+          }}
         />
 
         {/* 이름 입력 */}
@@ -102,7 +120,7 @@ export default function Question1() {
           label="내 이름"
           align="start"
           items={[
-            { key: 'name', value: userInfo.name, placeholder: '홍길동' },
+            { key: 'name', value: userInfo.name, placeholder: '홍길동', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
           ]}
           onChange={(_, value) => setUserInfo({ name: value })}
         />
@@ -110,8 +128,12 @@ export default function Question1() {
 
       {/* CTA 버튼 */}
       <div
-        className="fixed bottom-0 left-0 right-0"
-        style={{ backgroundColor: colors.background.main }}
+        className="fixed left-0 right-0"
+        style={{
+          bottom: `${keyboardHeight}px`,
+          backgroundColor: colors.background.main,
+          transition: 'bottom 0.1s ease-out',
+        }}
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
