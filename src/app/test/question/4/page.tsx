@@ -21,7 +21,10 @@ export default function Question4() {
 
   const isBirthValid = partnerBirth.unknownBirth || (partnerBirth.year && partnerBirth.month && partnerBirth.day);
   const isTimeValid = partnerBirth.unknownTime || partnerBirth.birthTime;
-  const isFormValid = isBirthValid && isTimeValid && partnerBirth.hairColor && partnerBirth.eyeColor && partnerBirth.skinColor;
+  const isAppearanceValid = partnerBirth.unknownBirth
+    ? partnerBirth.hairColor && partnerBirth.eyeColor && partnerBirth.skinColor
+    : true;
+  const isFormValid = isBirthValid && isTimeValid && isAppearanceValid;
 
   const handleNext = () => {
     if (isFormValid) {
@@ -140,51 +143,55 @@ export default function Question4() {
         {/* 하단 24px 여백 */}
         <div style={{ height: '24px' }} />
 
-        {/* 안내 메시지 */}
-        <Title
-          type="page"
-          size="sm"
-          title={`생일을 몰라도 괜찮아요. 그 사람의\n다른 정보를 토대로 운을 점쳐드릴게요!`}
-        />
+        {partnerBirth.unknownBirth && (
+          <>
+            {/* 안내 메시지 */}
+            <Title
+              type="page"
+              size="sm"
+              title={`생일을 몰라도 괜찮아요. 그 사람의\n다른 정보를 토대로 운을 점쳐드릴게요!`}
+            />
 
-        {/* 머리색상 선택 */}
-        <LabelButton
-          type="select"
-          size="md"
-          label="그 사람의 머리색상"
-          options={[
-            { label: '밝은 편이다', value: 'light' },
-            { label: '어두운 편이다', value: 'dark' },
-          ]}
-          selectedValue={partnerBirth.hairColor}
-          onSelect={(value) => setPartnerBirth({ hairColor: value })}
-        />
+            {/* 머리색상 선택 */}
+            <LabelButton
+              type="select"
+              size="md"
+              label="그 사람의 머리색상"
+              options={[
+                { label: '밝은 편이다', value: 'light' },
+                { label: '어두운 편이다', value: 'dark' },
+              ]}
+              selectedValue={partnerBirth.hairColor}
+              onSelect={(value) => setPartnerBirth({ hairColor: value })}
+            />
 
-        {/* 눈동자 색상 선택 */}
-        <LabelButton
-          type="select"
-          size="md"
-          label="눈동자 색상"
-          options={[
-            { label: '노란편이다', value: 'yellow' },
-            { label: '푸른편이다', value: 'blue' },
-          ]}
-          selectedValue={partnerBirth.eyeColor}
-          onSelect={(value) => setPartnerBirth({ eyeColor: value })}
-        />
+            {/* 눈동자 색상 선택 */}
+            <LabelButton
+              type="select"
+              size="md"
+              label="눈동자 색상"
+              options={[
+                { label: '노란편이다', value: 'yellow' },
+                { label: '푸른편이다', value: 'blue' },
+              ]}
+              selectedValue={partnerBirth.eyeColor}
+              onSelect={(value) => setPartnerBirth({ eyeColor: value })}
+            />
 
-        {/* 피부색 선택 */}
-        <LabelButton
-          type="select"
-          size="md"
-          label="피부색"
-          options={[
-            { label: '하얀 편이다', value: 'white' },
-            { label: '어두운 편이다', value: 'dark' },
-          ]}
-          selectedValue={partnerBirth.skinColor}
-          onSelect={(value) => setPartnerBirth({ skinColor: value })}
-        />
+            {/* 피부색 선택 */}
+            <LabelButton
+              type="select"
+              size="md"
+              label="피부색"
+              options={[
+                { label: '하얀 편이다', value: 'white' },
+                { label: '어두운 편이다', value: 'dark' },
+              ]}
+              selectedValue={partnerBirth.skinColor}
+              onSelect={(value) => setPartnerBirth({ skinColor: value })}
+            />
+          </>
+        )}
       </div>
 
       {/* CTA 버튼 */}
