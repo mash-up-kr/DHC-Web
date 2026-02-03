@@ -58,6 +58,11 @@ export interface InputFieldProps {
    * 최대 입력 길이
    */
   maxLength?: number;
+
+  /**
+   * 입력 필드 ref
+   */
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -70,6 +75,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   fullWidth = true,
   className = '',
   maxLength,
+  inputRef,
 }) => {
   const [isFocused, setIsFocused] = React.useState(false);
 
@@ -138,6 +144,7 @@ export const InputField: React.FC<InputFieldProps> = ({
     <div style={containerStyle} className={className}>
       {label && <label style={labelStyle}>{label}</label>}
       <input
+        ref={inputRef}
         type={type}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}

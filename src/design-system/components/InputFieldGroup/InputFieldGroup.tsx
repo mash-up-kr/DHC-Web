@@ -56,6 +56,10 @@ export interface InputFieldItem {
    * 지정하지 않으면 기본 레이아웃 적용
    */
   flex?: number;
+  /**
+   * 입력 필드 ref
+   */
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export interface InputFieldGroupProps {
@@ -159,6 +163,7 @@ export const InputFieldGroup: React.FC<InputFieldGroupProps> = ({
     return (
       <div key={item.key} style={{ ...inputWrapperStyle, position: 'relative' }}>
         <InputField
+          inputRef={item.inputRef}
           type={item.type || 'text'}
           value={item.value}
           onChange={(value: string) => onChange(item.key, value)}

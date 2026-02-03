@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
@@ -16,14 +17,55 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 export default function Question2() {
   const router = useRouter();
   const { userBirth, setUserBirth } = useTestStore();
+  const yearRef = useRef<HTMLInputElement>(null);
+  const monthRef = useRef<HTMLInputElement>(null);
+  const dayRef = useRef<HTMLInputElement>(null);
+  const timeRef = useRef<HTMLInputElement>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useScreenImpression(ScreenName.QUESTION_2);
+
+  useEffect(() => {
+    setTimeout(() => yearRef.current?.focus(), 300);
+  }, []);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const handleResize = () => {
+      setKeyboardHeight(window.innerHeight - vv.height);
+    };
+
+    vv.addEventListener("resize", handleResize);
+    return () => vv.removeEventListener("resize", handleResize);
+  }, []);
 
   const isFormValid = userBirth.year && userBirth.month && userBirth.day && (userBirth.unknownTime || userBirth.birthTime);
 
   const handleNext = () => {
     if (isFormValid) {
       router.push("/test/question/3");
+    }
+  };
+
+  const handleDateChange = (key: string, value: string) => {
+    const { value: validatedValue } = validateDateField(key, value);
+    if (key === 'year') {
+      setUserBirth({ year: validatedValue });
+      if (validatedValue.length === 4) {
+        setTimeout(() => monthRef.current?.focus(), 50);
+      }
+    } else if (key === 'month') {
+      setUserBirth({ month: validatedValue });
+      if (validatedValue.length === 2) {
+        setTimeout(() => dayRef.current?.focus(), 50);
+      }
+    } else if (key === 'day') {
+      setUserBirth({ day: validatedValue });
+      if (validatedValue.length === 2) {
+        setTimeout(() => timeRef.current?.focus(), 50);
+      }
     }
   };
 
@@ -91,16 +133,11 @@ export default function Question2() {
           label="생년월일"
           align="start"
           items={[
-            { key: 'year', value: userBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6 },
-            { key: 'month', value: userBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1 },
-            { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1 },
+            { key: 'year', value: userBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, flex: 1.6, inputRef: yearRef as React.Ref<HTMLInputElement> },
+            { key: 'month', value: userBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, flex: 1, inputRef: monthRef as React.Ref<HTMLInputElement> },
+            { key: 'day', value: userBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, flex: 1, inputRef: dayRef as React.Ref<HTMLInputElement> },
           ]}
-          onChange={(key, value) => {
-            const { value: validatedValue } = validateDateField(key, value);
-            if (key === 'year') setUserBirth({ year: validatedValue });
-            else if (key === 'month') setUserBirth({ month: validatedValue });
-            else if (key === 'day') setUserBirth({ day: validatedValue });
-          }}
+          onChange={handleDateChange}
         />
 
         {/* 태어난 시간 체크 */}
@@ -116,6 +153,7 @@ export default function Question2() {
         {/* 시간 입력 */}
         <div style={{ padding: '0 20px 20px' }}>
           <InputField
+            inputRef={timeRef}
             type="text"
             value={userBirth.birthTime}
             onChange={(value) => setUserBirth({ birthTime: formatBirthTime(value) })}
@@ -127,8 +165,12 @@ export default function Question2() {
 
       {/* CTA 버튼 */}
       <div
-        className="fixed bottom-0 left-0 right-0"
-        style={{ backgroundColor: colors.background.main }}
+        className="fixed left-0 right-0"
+        style={{
+          bottom: `${keyboardHeight}px`,
+          backgroundColor: colors.background.main,
+          transition: 'bottom 0.1s ease-out',
+        }}
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup

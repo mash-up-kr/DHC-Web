@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
@@ -16,8 +17,29 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 export default function Question4() {
   const router = useRouter();
   const { partnerBirth, setPartnerBirth } = useTestStore();
+  const yearRef = useRef<HTMLInputElement>(null);
+  const monthRef = useRef<HTMLInputElement>(null);
+  const dayRef = useRef<HTMLInputElement>(null);
+  const timeRef = useRef<HTMLInputElement>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useScreenImpression(ScreenName.QUESTION_4);
+
+  useEffect(() => {
+    setTimeout(() => yearRef.current?.focus(), 300);
+  }, []);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const handleResize = () => {
+      setKeyboardHeight(window.innerHeight - vv.height);
+    };
+
+    vv.addEventListener("resize", handleResize);
+    return () => vv.removeEventListener("resize", handleResize);
+  }, []);
 
   const isBirthValid = partnerBirth.unknownBirth || (partnerBirth.year && partnerBirth.month && partnerBirth.day);
   const isTimeValid = partnerBirth.unknownTime || partnerBirth.birthTime;
@@ -29,6 +51,26 @@ export default function Question4() {
   const handleNext = () => {
     if (isFormValid) {
       router.push("/test/question/5");
+    }
+  };
+
+  const handleDateChange = (key: string, value: string) => {
+    const { value: validatedValue } = validateDateField(key, value);
+    if (key === 'year') {
+      setPartnerBirth({ year: validatedValue });
+      if (validatedValue.length === 4) {
+        setTimeout(() => monthRef.current?.focus(), 50);
+      }
+    } else if (key === 'month') {
+      setPartnerBirth({ month: validatedValue });
+      if (validatedValue.length === 2) {
+        setTimeout(() => dayRef.current?.focus(), 50);
+      }
+    } else if (key === 'day') {
+      setPartnerBirth({ day: validatedValue });
+      if (validatedValue.length === 2) {
+        setTimeout(() => timeRef.current?.focus(), 50);
+      }
     }
   };
 
@@ -107,16 +149,11 @@ export default function Question4() {
           align="start"
           showLabel={false}
           items={[
-            { key: 'year', value: partnerBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, disabled: partnerBirth.unknownBirth, flex: 1.6 },
-            { key: 'month', value: partnerBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1 },
-            { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1 },
+            { key: 'year', value: partnerBirth.year, placeholder: '2000', suffix: '년', type: 'number', maxLength: 4, disabled: partnerBirth.unknownBirth, flex: 1.6, inputRef: yearRef as React.Ref<HTMLInputElement> },
+            { key: 'month', value: partnerBirth.month, placeholder: '1', suffix: '월', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1, inputRef: monthRef as React.Ref<HTMLInputElement> },
+            { key: 'day', value: partnerBirth.day, placeholder: '1', suffix: '일', type: 'number', maxLength: 2, disabled: partnerBirth.unknownBirth, flex: 1, inputRef: dayRef as React.Ref<HTMLInputElement> },
           ]}
-          onChange={(key, value) => {
-            const { value: validatedValue } = validateDateField(key, value);
-            if (key === 'year') setPartnerBirth({ year: validatedValue });
-            else if (key === 'month') setPartnerBirth({ month: validatedValue });
-            else if (key === 'day') setPartnerBirth({ day: validatedValue });
-          }}
+          onChange={handleDateChange}
         />
 
         {/* 태어난 시간 체크 */}
@@ -132,6 +169,7 @@ export default function Question4() {
         {/* 시간 입력 */}
         <div style={{ padding: '0 20px 20px' }}>
           <InputField
+            inputRef={timeRef}
             type="text"
             value={partnerBirth.birthTime}
             onChange={(value) => setPartnerBirth({ birthTime: formatBirthTime(value) })}
@@ -196,8 +234,12 @@ export default function Question4() {
 
       {/* CTA 버튼 */}
       <div
-        className="fixed bottom-0 left-0 right-0"
-        style={{ backgroundColor: colors.background.main }}
+        className="fixed left-0 right-0"
+        style={{
+          bottom: `${keyboardHeight}px`,
+          backgroundColor: colors.background.main,
+          transition: 'bottom 0.1s ease-out',
+        }}
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
