@@ -2,7 +2,7 @@ interface DHCJavascriptInterface {
   close: () => void;
   showToast: (message: string) => void;
   goToMain: () => void;
-  share: (url: string) => void;
+  share: (title: string, url: string) => void;
 }
 
 interface WebkitMessageHandler {
@@ -52,11 +52,11 @@ export const goToMain = (): void => {
   }
 };
 
-export const share = (url: string): void => {
+export const share = (title: string, url: string): void => {
   if (typeof window === 'undefined') return;
 
   if (window.DHCJavascriptInterface) {
-    window.DHCJavascriptInterface.share(url);
+    window.DHCJavascriptInterface.share(title, url);
   }
 };
 

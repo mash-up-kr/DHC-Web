@@ -1,6 +1,7 @@
 import { isNativeApp, isMobile, getPlatform } from './device';
 import { getShareToken } from './cookie';
 import { share as bridgeShare } from './bridge';
+import { OG_TITLE } from '@/app/layout';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
@@ -18,7 +19,7 @@ export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share
 
   // Android Native App에서는 Bridge Action으로 공유
   if (getPlatform() === 'Android') {
-    bridgeShare(shareUrlValue);
+    bridgeShare(OG_TITLE, shareUrlValue);
     return { success: true, method: 'share' };
   }
 
@@ -26,7 +27,7 @@ export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share
   if ((isNativeApp() || isMobile()) && navigator.share) {
     try {
       await navigator.share({
-        title: '플리핀 - 그사람과의 궁합 테스트',
+        title: OG_TITLE,
         text: '나와 그사람의 궁합을 확인해보세요!',
         url: shareUrlValue,
       });

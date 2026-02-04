@@ -7,9 +7,11 @@ const GA_MEASUREMENT_ID = "G-G5Y2N2TK9L";
 
 const SITE_URL = "https://dhc-web.vercel.app";
 
+export const OG_TITLE = "내 짝사랑은 나한테 관심이 있을까?";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "내 짝사랑은 나한테 관심이 있을까? | 연애 궁합 테스트",
+  title: `${OG_TITLE} | 연애 궁합 테스트`,
   description:
     "짝사랑 상대와의 연애 궁합을 확인해보세요! 생년월일 기반 무료 궁합 테스트로 그 사람과의 궁합 점수를 알아보세요. 현재 389명이 참여했어요!",
   keywords: [
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "내 짝사랑은 나한테 관심이 있을까?",
+    title: OG_TITLE,
     description: "현재 389명이 참여했어요!",
     url: SITE_URL,
     images: [
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "내 짝사랑은 나한테 관심이 있을까? | 연애 궁합 테스트",
+    title: `${OG_TITLE} | 연애 궁합 테스트`,
     description:
       "짝사랑 상대와의 연애 궁합을 확인해보세요! 생년월일 기반 무료 궁합 테스트",
     images: ["/og-image.png?v=2"],
