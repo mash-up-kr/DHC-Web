@@ -1,5 +1,6 @@
-import { isNativeApp, isMobile } from './device';
+import { isNativeApp, isMobile, getPlatform } from './device';
 import { getShareToken } from './cookie';
+import { share as bridgeShare } from './bridge';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
@@ -13,6 +14,12 @@ export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share
   if (token) {
     const separator = shareUrlValue.includes('?') ? '&' : '?';
     shareUrlValue = `${shareUrlValue}${separator}shareToken=${token}`;
+  }
+
+  // Android Native App에서는 Bridge Action으로 공유
+  if (getPlatform() === 'Android') {
+    bridgeShare(shareUrlValue);
+    return { success: true, method: 'share' };
   }
 
   // Native App 또는 모바일 브라우저에서 Web Share API 사용
