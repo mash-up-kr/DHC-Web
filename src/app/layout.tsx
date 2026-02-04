@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import FirebaseAnalytics from "@/components/FirebaseAnalytics";
+import { OG_TITLE } from "@/constants/meta";
 
 const GA_MEASUREMENT_ID = "G-G5Y2N2TK9L";
 
 const SITE_URL = "https://dhc-web.vercel.app";
-
-export const OG_TITLE = "내 짝사랑은 나한테 관심이 있을까?";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

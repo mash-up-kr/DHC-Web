@@ -1,7 +1,7 @@
 import { isNativeApp, isMobile, getPlatform } from './device';
 import { getShareToken } from './cookie';
 import { share as bridgeShare } from './bridge';
-import { OG_TITLE } from '@/app/layout';
+import { OG_TITLE } from '@/constants/meta';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
