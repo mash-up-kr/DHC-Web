@@ -25,9 +25,10 @@ interface StorePartnerBirth {
   unknownBirth: boolean;
   unknownTime: boolean;
   birthTime: string;
-  hairColor: string;
-  eyeColor: string;
-  skinColor: string;
+  style: string;
+  bodyType: string;
+  personality: string;
+  extroversion: string;
 }
 
 interface StoreLoveDate {
@@ -69,14 +70,17 @@ function mapGender(gender: string): 'MALE' | 'FEMALE' {
 function buildAdditional(partnerBirth: StorePartnerBirth): string {
   const parts: string[] = [];
 
-  if (partnerBirth.hairColor) {
-    parts.push(`hairColor:${partnerBirth.hairColor}`);
+  if (partnerBirth.style) {
+    parts.push(`style:${partnerBirth.style}`);
   }
-  if (partnerBirth.eyeColor) {
-    parts.push(`eyeColor:${partnerBirth.eyeColor}`);
+  if (partnerBirth.bodyType) {
+    parts.push(`bodyType:${partnerBirth.bodyType}`);
   }
-  if (partnerBirth.skinColor) {
-    parts.push(`skinColor:${partnerBirth.skinColor}`);
+  if (partnerBirth.personality) {
+    parts.push(`personality:${partnerBirth.personality}`);
+  }
+  if (partnerBirth.extroversion) {
+    parts.push(`extroversion:${partnerBirth.extroversion}`);
   }
 
   return parts.join(',');

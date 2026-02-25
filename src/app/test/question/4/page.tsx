@@ -44,7 +44,7 @@ export default function Question4() {
   const isBirthValid = partnerBirth.unknownBirth || (partnerBirth.year && partnerBirth.month && partnerBirth.day);
   const isTimeValid = partnerBirth.unknownTime || partnerBirth.birthTime;
   const isAppearanceValid = partnerBirth.unknownBirth
-    ? partnerBirth.hairColor && partnerBirth.eyeColor && partnerBirth.skinColor
+    ? partnerBirth.style && partnerBirth.bodyType && partnerBirth.personality && partnerBirth.extroversion
     : true;
   const isFormValid = isBirthValid && isTimeValid && isAppearanceValid;
 
@@ -190,43 +190,58 @@ export default function Question4() {
               title={`생일을 몰라도 괜찮아요. 그 사람의\n다른 정보를 토대로 운을 점쳐드릴게요!`}
             />
 
-            {/* 머리색상 선택 */}
+            {/* 스타일 선택 */}
             <LabelButton
               type="select"
               size="md"
-              label="그 사람의 머리색상"
+              label="스타일"
               options={[
-                { label: '밝은 편이다', value: 'light' },
-                { label: '어두운 편이다', value: 'dark' },
+                { label: '귀엽다', value: 'cute' },
+                { label: '섹시하다', value: 'sexy' },
+                { label: '청순하다', value: 'innocent' },
               ]}
-              selectedValue={partnerBirth.hairColor}
-              onSelect={(value) => setPartnerBirth({ hairColor: value })}
+              selectedValue={partnerBirth.style}
+              onSelect={(value) => setPartnerBirth({ style: value })}
             />
 
-            {/* 눈동자 색상 선택 */}
+            {/* 외형 선택 */}
             <LabelButton
               type="select"
               size="md"
-              label="눈동자 색상"
+              label="외형"
               options={[
-                { label: '노란편이다', value: 'yellow' },
-                { label: '푸른편이다', value: 'blue' },
+                { label: '말랐다', value: 'slim' },
+                { label: '보통이다', value: 'average' },
+                { label: '통통하다', value: 'chubby' },
               ]}
-              selectedValue={partnerBirth.eyeColor}
-              onSelect={(value) => setPartnerBirth({ eyeColor: value })}
+              selectedValue={partnerBirth.bodyType}
+              onSelect={(value) => setPartnerBirth({ bodyType: value })}
             />
 
-            {/* 피부색 선택 */}
+            {/* 성격 선택 */}
             <LabelButton
               type="select"
               size="md"
-              label="피부색"
+              label="성격"
               options={[
-                { label: '하얀 편이다', value: 'white' },
-                { label: '어두운 편이다', value: 'dark' },
+                { label: '박력있는 편이다', value: 'bold' },
+                { label: '섬세한 편이다', value: 'delicate' },
               ]}
-              selectedValue={partnerBirth.skinColor}
-              onSelect={(value) => setPartnerBirth({ skinColor: value })}
+              selectedValue={partnerBirth.personality}
+              onSelect={(value) => setPartnerBirth({ personality: value })}
+            />
+
+            {/* 외향성 선택 */}
+            <LabelButton
+              type="select"
+              size="md"
+              label="외향성"
+              options={[
+                { label: '외향적인 편이다', value: 'extroverted' },
+                { label: '내향적인 편이다', value: 'introverted' },
+              ]}
+              selectedValue={partnerBirth.extroversion}
+              onSelect={(value) => setPartnerBirth({ extroversion: value })}
             />
           </>
         )}
