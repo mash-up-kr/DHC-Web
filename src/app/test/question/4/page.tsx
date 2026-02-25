@@ -194,7 +194,7 @@ export default function Question4() {
             <LabelButton
               type="select"
               size="md"
-              label="그 사람의 스타일"
+              label="스타일"
               options={[
                 { label: '귀엽다', value: 'cute' },
                 { label: '섹시하다', value: 'sexy' },
@@ -208,7 +208,7 @@ export default function Question4() {
             <LabelButton
               type="select"
               size="md"
-              label="그 사람의 외형"
+              label="외형"
               options={[
                 { label: '말랐다', value: 'slim' },
                 { label: '보통이다', value: 'average' },
@@ -222,7 +222,7 @@ export default function Question4() {
             <LabelButton
               type="select"
               size="md"
-              label="그 사람의 성격"
+              label="성격"
               options={[
                 { label: '박력있는 편이다', value: 'bold' },
                 { label: '섬세한 편이다', value: 'delicate' },
@@ -235,7 +235,7 @@ export default function Question4() {
             <LabelButton
               type="select"
               size="md"
-              label="그 사람의 외향성"
+              label="외향성"
               options={[
                 { label: '외향적인 편이다', value: 'extroverted' },
                 { label: '내향적인 편이다', value: 'introverted' },
