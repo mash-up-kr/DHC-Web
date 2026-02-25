@@ -30,9 +30,10 @@ interface PartnerBirth {
   unknownBirth: boolean;
   unknownTime: boolean;
   birthTime: string;
-  hairColor: string;
-  eyeColor: string;
-  skinColor: string;
+  style: string;
+  bodyType: string;
+  personality: string;
+  extroversion: string;
 }
 
 // Q5: 사랑에 빠진 날
@@ -94,9 +95,10 @@ const initialState = {
     unknownBirth: false,
     unknownTime: false,
     birthTime: '',
-    hairColor: '',
-    eyeColor: '',
-    skinColor: '',
+    style: '',
+    bodyType: '',
+    personality: '',
+    extroversion: '',
   },
   loveDate: {
     year: '',
