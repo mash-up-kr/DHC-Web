@@ -257,9 +257,6 @@
     </div>
 
     <script>
-        // 현재 서버 주소를 자동으로 가져오기
-        const API_BASE_URL = window.location.origin;
-
         // 사용자가 입력한 userId 가져오기
         function getUserIdFromInput() {
             const userIdInput = document.getElementById('userIdInput');
@@ -269,7 +266,7 @@
         // 계정 삭제 API 호출
         async function deleteAccount(userId) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+                const response = await fetch(`/api/account-deletion?userId=${encodeURIComponent(userId)}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -307,13 +304,6 @@
 
                 if (!userId) {
                     alert('사용자 ID를 입력해주세요.');
-                    document.getElementById('userIdInput').focus();
-                    return;
-                }
-
-                // 기본적인 MongoDB ObjectId 형식 검증 (24자리 hex 문자열)
-                if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
-                    alert('올바른 사용자 ID 형식이 아닙니다. 24자리 영문자와 숫자로 구성된 ID를 입력해주세요.');
                     document.getElementById('userIdInput').focus();
                     return;
                 }
