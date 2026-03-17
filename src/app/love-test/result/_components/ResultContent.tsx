@@ -157,7 +157,7 @@ function getResultImage(score: number): string {
     10: 'result-image-10-wizard',
   };
 
-  return `/images/${images[imageNumber]}.png`;
+  return `/images/love-test/${images[imageNumber]}.png`;
 }
 
 interface OrbGraphicSectionProps {
@@ -504,7 +504,7 @@ function PromotionSection({ partnerName, userName }: PromotionSectionProps) {
         }}
       >
         <Image
-          src="/images/app-preview-7e1ca8.png"
+          src="/images/love-test/app-preview-7e1ca8.png"
           alt="연애 궁합 테스트 앱 미리보기"
           width={400}
           height={300}
@@ -563,7 +563,7 @@ function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
       graphicNode={
         <div style={{ padding: '11px 0' }}>
           <Image
-            src="/images/share-popup-banner.svg"
+            src="/images/love-test/share-popup-banner.svg"
             alt="테스트 공유 배너"
             width={300}
             height={116}
@@ -648,7 +648,7 @@ export function ResultContent({ result }: ResultContentProps) {
   };
 
   const handleRestart = () => {
-    router.push("/");
+    router.push("/love-test");
   };
 
   // 상대방 이름 (없으면 빈 문자열)

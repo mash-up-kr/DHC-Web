@@ -12,13 +12,13 @@ import { useTestStore } from "@/store/useTestStore";
 import { QuestionBanner } from "../_components/QuestionBanner";
 import { useScreenImpression, ScreenName } from "@/analytics";
 
-export default function Question1() {
+export default function Question3() {
   const router = useRouter();
-  const { userInfo, setUserInfo } = useTestStore();
+  const { partnerInfo, setPartnerInfo } = useTestStore();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  useScreenImpression(ScreenName.QUESTION_1);
+  useScreenImpression(ScreenName.QUESTION_3);
 
   useEffect(() => {
     const vv = window.visualViewport;
@@ -32,18 +32,18 @@ export default function Question1() {
     return () => vv.removeEventListener("resize", handleResize);
   }, []);
 
-  const isFormValid = userInfo.gender && userInfo.name;
+  const isFormValid = partnerInfo.gender && partnerInfo.name;
 
   const handleNext = () => {
     if (isFormValid) {
-      router.push("/test/question/2");
+      router.push("/love-test/question/4");
     }
   };
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* SEO를 위한 숨겨진 H1 */}
-      <h1 className="sr-only">연애 궁합 테스트 - Q1. 당신에 대해서 알려주세요</h1>
+      <h1 className="sr-only">연애 궁합 테스트 - Q3. 상대방에 대해서 알려주세요</h1>
 
       {/* 상단 고정 Header */}
       <div
@@ -59,9 +59,9 @@ export default function Question1() {
         <div className="max-w-md w-full mx-auto">
           <Header
             type="progressBar"
-            currentPage={1}
+            currentPage={3}
             totalPage={5}
-            progress={20}
+            progress={60}
             onBackClick={() => router.back()}
           />
         </div>
@@ -82,8 +82,8 @@ export default function Question1() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/question-banner-1.png"
-          alt="질문 1 그래픽"
+          src="/images/love-test/question-banner-3.png"
+          alt="질문 3 그래픽"
         />
 
         {/* 그래픽 하단 24px 공백 */}
@@ -93,7 +93,7 @@ export default function Question1() {
         <Title
           type="page"
           size="sm"
-          title="Q1.당신에 대해서 알려주세요"
+          title="Q3.상대방에 대해서 알려주세요"
           description="성별과 이름을 알려주세요"
         />
 
@@ -106,9 +106,9 @@ export default function Question1() {
             { label: '남성', value: 'male' },
             { label: '여성', value: 'female' },
           ]}
-          selectedValue={userInfo.gender}
+          selectedValue={partnerInfo.gender}
           onSelect={(value) => {
-            setUserInfo({ gender: value });
+            setPartnerInfo({ gender: value });
             setTimeout(() => nameInputRef.current?.focus(), 100);
           }}
         />
@@ -117,12 +117,12 @@ export default function Question1() {
         <InputFieldGroup
           type="single"
           size="md"
-          label="내 이름"
+          label="상대방에 이름"
           align="start"
           items={[
-            { key: 'name', value: userInfo.name, placeholder: '홍길동', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
+            { key: 'name', value: partnerInfo.name, placeholder: '홍길동', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
           ]}
-          onChange={(_, value) => setUserInfo({ name: value })}
+          onChange={(_, value) => setPartnerInfo({ name: value })}
         />
       </div>
 
@@ -137,9 +137,9 @@ export default function Question1() {
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
-          type="oneButton"
-          primaryButtonText="다음"
-          primaryDisabled={!isFormValid}
+            type="oneButton"
+            primaryButtonText="다음"
+            primaryDisabled={!isFormValid}
             onPrimaryClick={handleNext}
           />
         </div>

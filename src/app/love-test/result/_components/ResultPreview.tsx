@@ -62,11 +62,11 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
       10: 'result-image-10-wizard',
     };
 
-    return `/images/${images[imageNumber]}.png`;
+    return `/images/love-test/${images[imageNumber]}.png`;
   };
 
   const handleRestart = () => {
-    router.push("/");
+    router.push("/love-test");
   };
 
   const handleModalClose = () => {
@@ -189,7 +189,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
                 width: '100%',
                 height: '212px',
               borderRadius: '12px',
-              backgroundImage: 'url(/images/tip-background.png)',
+              backgroundImage: 'url(/images/love-test/tip-background.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -273,7 +273,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
               언제 고백할까?
             </h2>
             <Image
-              src="/images/confession-date.png"
+              src="/images/love-test/confession-date.png"
               alt="언제 고백할까? - 고백 추천 날짜"
               width={400}
               height={100}
@@ -345,7 +345,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
           graphicNode={
             <div style={{ padding: '11px 0' }}>
               <Image
-                src="/images/share-popup-banner.svg"
+                src="/images/love-test/share-popup-banner.svg"
                 alt="테스트 공유 배너"
                 width={300}
                 height={116}

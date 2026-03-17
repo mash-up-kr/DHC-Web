@@ -50,7 +50,7 @@ export default function Question4() {
 
   const handleNext = () => {
     if (isFormValid) {
-      router.push("/test/question/5");
+      router.push("/love-test/question/5");
     }
   };
 
@@ -116,7 +116,7 @@ export default function Question4() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/question-banner-4.png"
+          src="/images/love-test/question-banner-4.png"
           alt="질문 4 그래픽"
         />
 

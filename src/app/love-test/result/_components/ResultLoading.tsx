@@ -65,7 +65,7 @@ export function ResultLoading() {
             {/* 썸네일 이미지 - 비디오 로딩 전까지 표시 */}
             {!isVideoLoaded && (
               <img
-                src="/videos/result-loading-video-thumbnail.png"
+                src="/videos/love-test/result-loading-video-thumbnail.png"
                 alt="Loading"
                 style={{
                   width: '100%',
@@ -76,7 +76,7 @@ export function ResultLoading() {
             {/* 비디오 - 로딩 완료 후 자동재생 */}
             <video
               ref={videoRef}
-              src="/videos/result-loading-video.mp4"
+              src="/videos/love-test/result-loading-video.mp4"
               muted
               loop
               playsInline

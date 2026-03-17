@@ -25,7 +25,7 @@ function getResultImage(score: number): string {
     10: 'result-image-10-wizard',
   };
 
-  return `/images/${images[imageNumber]}.png`;
+  return `/images/love-test/${images[imageNumber]}.png`;
 }
 
 interface ResultReadyProps {
@@ -108,7 +108,7 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
           {/* Scratch Orb */}
           <ScratchOrb
             size={210}
-            maskImageUrl="/images/scratch-intro-orb.png"
+            maskImageUrl="/images/love-test/scratch-intro-orb.png"
             revealImageUrl={getResultImage(85)}
             revealText=""
             completionThreshold={0.65}

@@ -21,7 +21,7 @@ export interface ScratchOrbProps {
   maskImageUrl?: string;
   /**
    * 숨겨진 이미지 URL
-   * @default '/images/scratch-reveal-orb.png'
+   * @default '/images/love-test/scratch-reveal-orb.png'
    */
   revealImageUrl?: string;
   /**
@@ -57,7 +57,7 @@ export function ScratchOrb({
   size = 210,
   maskColor = '#CDE3FF',
   maskImageUrl,
-  revealImageUrl = '/images/scratch-reveal-orb.png',
+  revealImageUrl = '/images/love-test/scratch-reveal-orb.png',
   revealText = '여기를 긁어보세요',
   completionThreshold = 0.5,
   brushSize = 30,
