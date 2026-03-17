@@ -5,7 +5,7 @@ import { OG_TITLE } from '@/constants/meta';
 
 export const getRootUrl = (): string => {
   if (typeof window === 'undefined') return '';
-  return window.location.origin;
+  return `${window.location.origin}/love-test`;
 };
 
 export const shareRootUrl = async (): Promise<{ success: boolean; method: 'share' | 'clipboard' }> => {

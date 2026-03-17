@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/test/"],
+      disallow: ["/api/", "/love-test/question/"],
     },
     sitemap: "https://dhc-web.vercel.app/sitemap.xml",
   };
