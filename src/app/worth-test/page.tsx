@@ -161,8 +161,7 @@ function HomeContent() {
               status="active"
               size="xl"
               fullWidth
-              // TODO: onClick 추후 수정 예정
-              onClick={() => {}}
+              onClick={() => router.push('/worth-test/group/create')}
             >
               랭킹 그룹 만들기
             </CTAButton>

@@ -36,14 +36,16 @@ export default function Question1() {
 
   const handleNext = () => {
     if (isFormValid) {
-      router.push("/worth-test/question/2");
+      // TODO: groupNo는 그룹 생성 API 응답에서 받아올 예정
+      const groupNo = 1;
+      router.push(`/worth-test/group/${groupNo}`);
     }
   };
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* SEO를 위한 숨겨진 H1 */}
-      <h1 className="sr-only">부자 테스트 - Q1. 당신에 대해서 알려주세요</h1>
+      <h1 className="sr-only">부자 테스트 - 그룹 생성하기</h1>
 
       {/* 상단 고정 Header */}
       <div
@@ -93,34 +95,18 @@ export default function Question1() {
         <Title
           type="page"
           size="sm"
-          title="Q1.당신에 대해서 알려주세요"
+          title="생성할 그룹의 이름을 입력해주세요"
           description="성별과 이름을 알려주세요"
-        />
-
-        {/* 성별 선택 */}
-        <LabelButton
-          type="select"
-          size="md"
-          label="성별"
-          options={[
-            { label: '남성', value: 'male' },
-            { label: '여성', value: 'female' },
-          ]}
-          selectedValue={userInfo.gender}
-          onSelect={(value) => {
-            setUserInfo({ gender: value });
-            setTimeout(() => nameInputRef.current?.focus(), 100);
-          }}
         />
 
         {/* 이름 입력 */}
         <InputFieldGroup
           type="single"
           size="md"
-          label="내 이름"
+          label="그룹이름"
           align="start"
           items={[
-            { key: 'name', value: userInfo.name, placeholder: '홍길동', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
+            { key: 'name', value: userInfo.name, placeholder: '부자 모임', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
           ]}
           onChange={(_, value) => setUserInfo({ name: value })}
         />
