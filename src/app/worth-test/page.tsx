@@ -161,7 +161,8 @@ function HomeContent() {
               status="active"
               size="xl"
               fullWidth
-              onClick={handleShare}
+              // TODO: onClick 추후 수정 예정
+              onClick={() => {}}
             >
               랭킹 그룹 만들기
             </CTAButton>
