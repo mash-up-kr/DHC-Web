@@ -1,30 +1,183 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import mainBanner from "../../../public/images/love-test/main-banner.png";
+import { Header } from "@/design-system/components/Header/Header";
+import { ScoreText } from "@/design-system/components/ScoreText";
+import { MoreBtn } from "@/design-system/components/MoreBtn";
+import { CTAButton } from "@/design-system/components/Button/CTAButton";
+import { Modal } from "@/design-system/components/Modal/Modal";
 import { colors } from "@/design-system/foundations/colors";
+import { useTestStore } from "@/store/useTestStore";
+import { shareRootUrl } from "@/utils/share";
+import { isNativeApp } from "@/utils/device";
+import { close } from "@/utils/bridge";
+import { postShareComplete } from "@/api/share";
+import { useScreenImpression, ScreenName } from "@/analytics";
 
-export default function WorthTest() {
+function HomeContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { resetAll } = useTestStore();
+  const [isApp, setIsApp] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
+
+  useScreenImpression(ScreenName.HOME);
+
+  useEffect(() => {
+    setIsApp(isNativeApp());
+  }, []);
+
+  useEffect(() => {
+    const token = searchParams.get('shareToken');
+    if (token) {
+      postShareComplete(token)
+        .then((response) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('[Home] ShareComplete API Success:', response);
+          }
+        })
+        .catch((error) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('[Home] ShareComplete API Error:', error);
+          }
+        });
+    }
+  }, [searchParams]);
+
+  const handleShare = async () => {
+    const result = await shareRootUrl();
+    if (result.success && result.method === 'clipboard') {
+      alert('링크가 클립보드에 복사되었습니다!');
+    }
+  };
 
   return (
-    <div
-      style={{ backgroundColor: colors.background.main, minHeight: "100vh" }}
-      className="flex flex-col items-center"
+    <main
+      className="flex min-h-screen flex-col items-center p-6"
+      style={{ backgroundColor: colors.background.main }}
     >
-      <div className="max-w-md w-full flex-1 flex items-center justify-center">
-        <h1 className="text-2xl font-bold">Worth Test</h1>
-      </div>
+      <div className="max-w-md w-full flex flex-col items-center">
+        {/* SEO를 위한 숨겨진 H1 */}
+        <h1 className="sr-only">
+          부자 테스트
+        </h1>
 
-      <div className="fixed bottom-0 left-0 right-0" style={{ backgroundColor: colors.background.main }}>
-        <div className="max-w-md w-full mx-auto">
-          <CTAButtonGroup
-            type="oneButton"
-            primaryButtonText="다음"
-            onPrimaryClick={() => router.push("/worth-test/question/1")}
+        <Header
+          type="screenInfo"
+          title="부자 테스트"
+          currentPage={1}
+          totalPage={2}
+          showBackButton={isApp}
+          showIndicator={false}
+          className="fixed top-0 left-0 right-0 z-50"
+          onBackClick={() => setShowExitModal(true)}
+        />
+
+
+        {/* Header 높이(52px) + 40px 공백 */}
+        <div style={{ height: '92px' }} />
+
+        {/* 메인 배너 */}
+        <div
+          className="w-full flex items-center justify-center -mx-6"
+          style={{
+            width: 'calc(100% + 48px)',
+            padding: '0 20px',
+          }}
+        >
+          <Image
+            src={mainBanner}
+            alt="연애 궁합 테스트 메인 배너 - 짝사랑 상대와의 궁합을 확인하세요"
+            placeholder="blur"
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '25px',
+            }}
+            priority
           />
         </div>
+
+        {/* 20px 공백 */}
+        <div style={{ height: '20px' }} />
+
+        {/* ScoreText */}
+        <ScoreText
+          type="result"
+          badgeText="금전운 테스트"
+          title="나는 언제쯤 부자될 수 있을까?"
+          description={"생년월일을 입력하고\n내 금전운 그래프를 확인해보세요"}
+        />
+
+        {/* 하단 고정 영역 높이만큼 여백 */}
+        <div style={{ height: '200px' }} />
       </div>
-    </div>
+
+      {/* 하단 고정 영역 */}
+      <div className="fixed bottom-0 left-0 right-0 flex flex-col items-center">
+        <div className="max-w-md w-full flex flex-col items-center">
+          {/* 참여 인원 표시 */}
+          <div
+            className="relative w-full flex justify-center overflow-visible"
+            style={{ paddingBottom: '12px', pointerEvents: 'none' }}
+          >
+            {/* 그라데이션 배경 */}
+            <div
+              className="absolute inset-0 w-full h-full"
+              style={{
+                background: `linear-gradient(to top, ${colors.background.main} 0%, transparent 100%)`,
+              }}
+            />
+            <div className="relative">
+            <MoreBtn showIcon={false}>
+              지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
+            </MoreBtn>
+            </div>
+          </div>
+
+          {/* CTA 버튼 그룹 */}
+          <div
+            className="w-full"
+            style={{ backgroundColor: colors.background.main }}
+          >
+          <div className="flex flex-col gap-2 w-full px-5 pb-8">
+            <CTAButton
+              buttonType="secondary"
+              status="active"
+              size="xl"
+              fullWidth
+              onClick={() => {
+                resetAll();
+                router.push('/worth-test/question/1');
+              }}
+            >
+              내 부자운 확인하기
+            </CTAButton>
+            <CTAButton
+              buttonType="secondary"
+              status="active"
+              size="xl"
+              fullWidth
+              onClick={handleShare}
+            >
+              랭킹 그룹 만들기
+            </CTAButton>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }
