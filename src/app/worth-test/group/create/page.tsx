@@ -60,10 +60,9 @@ export default function Question1() {
       >
         <div className="max-w-md w-full mx-auto">
           <Header
-            type="progressBar"
-            currentPage={1}
-            totalPage={2}
-            progress={50}
+            type="screenInfo"
+            showBackButton={true}
+            showIndicator={false}
             onBackClick={() => router.back()}
           />
         </div>
