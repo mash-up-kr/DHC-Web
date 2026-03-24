@@ -95,7 +95,7 @@ export default function Question1() {
           type="page"
           size="sm"
           title="생성할 그룹의 이름을 입력해주세요"
-          description="성별과 이름을 알려주세요"
+          description="그룹 이름은 모두에게 표시돼요"
         />
 
         {/* 이름 입력 */}
