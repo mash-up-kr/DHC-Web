@@ -12,21 +12,10 @@ import { openStore } from "@/utils/storeUrl";
 import { shareRootUrl } from "@/utils/share";
 import { typography } from "@/design-system/foundations/typography";
 
-export default function WorthTestResult() {
-  const router = useRouter();
-
-  const handleShareConfirm = async () => {
-    const result = await shareRootUrl();
-    if (result.success && result.method === 'clipboard') {
-      alert('링크가 클립보드에 복사되었습니다!');
-    }
-  };
-
+/** 점수/타입 결과 섹션 */
+function ScoreSection() {
   return (
-    <div
-      style={{ backgroundColor: colors.background.main, minHeight: "100vh" }}
-      className="flex flex-col items-center"
-    >
+    <>
       <div style={{ paddingTop: "26px" }}>
         <ScoreText
           type="result"
@@ -55,36 +44,46 @@ export default function WorthTestResult() {
           opacity: '0.05',
         }}
       />
+    </>
+  );
+}
 
-      <div style={{ height: "24px" }} />
-
-      <div
-        className="max-w-md w-full"
+/** 금전운 상세보기 섹션 */
+function FortuneDetailSection() {
+  return (
+    <div
+      className="max-w-md w-full"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        alignItems: 'flex-start',
+        padding: '24px 0',
+        width: '100%',
+      }}
+    >
+      <h2
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          alignItems: 'flex-start',
-          padding: '24px 0',
+          ...typography.title['h5-1'],
+          color: colors.text.main,
           width: '100%',
+          textAlign: 'left',
         }}
       >
-        <h2
-          style={{
-            ...typography.title['h5-1'],
-            color: colors.text.main,
-            width: '100%',
-            textAlign: 'left',
-          }}
-        >
-          금전운 상세보기
-        </h2>
-        <MessageCard
-          title="금전운"
-          message={"초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 크게 성공합니다.\n\n투자 및 인내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 때 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다."}
-        />
-      </div>
+        금전운 상세보기
+      </h2>
+      <MessageCard
+        title="금전운"
+        message={"초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 크게 성공합니다.\n\n투자 및 인내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 때 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다."}
+      />
+    </div>
+  );
+}
 
+/** 금전운 인생 그래프 섹션 */
+function LifeGraphSection() {
+  return (
+    <>
       <h2
         className="max-w-md w-full"
         style={{
@@ -164,7 +163,14 @@ export default function WorthTestResult() {
           23살에 로또에 2등에 당첨되서{'\n'}5,300만원을 받아요
         </span>
       </div>
+    </>
+  );
+}
 
+/** 금전운 랭킹 섹션 */
+function RankingSection() {
+  return (
+    <>
       <h2
         className="max-w-md w-full"
         style={{
@@ -187,98 +193,108 @@ export default function WorthTestResult() {
           marginTop: '16px',
         }}
       />
+    </>
+  );
+}
 
-      {/* 꿀팁 섹션 */}
-      <div
-        className="max-w-md w-full"
+/** 꿀팁 섹션 */
+function TipSection({ onShare }: { onShare: () => void }) {
+  return (
+    <div
+      className="max-w-md w-full"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        alignItems: 'flex-start',
+        width: '100%',
+        margin: '24px 0',
+      }}
+    >
+      <h2
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          alignItems: 'flex-start',
+          ...typography.title['h5-1'],
+          color: colors.text.main,
           width: '100%',
-          margin: '24px 0',
+          textAlign: 'left',
         }}
       >
-        <h2
+        금전운에 도움되는 꿀팁
+      </h2>
+      <div
+        style={{
+          width: '100%',
+          height: '212px',
+          borderRadius: '12px',
+          backgroundImage: 'url(/images/love-test/tip-background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '62px 76px',
+        }}
+      >
+        <p
           style={{
             ...typography.title['h5-1'],
-            color: colors.text.main,
-            width: '100%',
-            textAlign: 'left',
+            background: gradients.textGradient01,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            textAlign: 'center',
+            margin: 0,
+            whiteSpace: 'pre-line',
           }}
         >
-          금전운에 도움되는 꿀팁
-        </h2>
-        <div
+          자세한 꿀팁{'\n'}무료로 확인해보세요!
+        </p>
+        <button
+          onClick={onShare}
           style={{
-            width: '100%',
-            height: '212px',
-            borderRadius: '12px',
-            backgroundImage: 'url(/images/love-test/tip-background.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '8px',
-            padding: '62px 76px',
+            gap: '10px',
+            padding: '8px 12px 8px 16px',
+            backgroundColor: 'rgba(123, 134, 150, 0.15)',
+            borderRadius: '4px',
+            border: 'none',
+            cursor: 'pointer',
           }}
         >
-          <p
+          <span
             style={{
-              ...typography.title['h5-1'],
-              background: gradients.textGradient01,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              textAlign: 'center',
-              margin: 0,
-              whiteSpace: 'pre-line',
+              fontFamily: 'Wanted Sans',
+              fontWeight: 700,
+              fontSize: '14px',
+              lineHeight: '20px',
+              color: '#D7E1EE',
             }}
           >
-            자세한 꿀팁{'\n'}무료로 확인해보세요!
-          </p>
-          <button
-            onClick={handleShareConfirm}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '8px 12px 8px 16px',
-              backgroundColor: 'rgba(123, 134, 150, 0.15)',
-              borderRadius: '4px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            <span
-              style={{
-                fontFamily: 'Wanted Sans',
-                fontWeight: 700,
-                fontSize: '14px',
-                lineHeight: '20px',
-                color: '#D7E1EE',
-              }}
-            >
-              공유하고 내용 확인하기
-            </span>
-            <Image
-              src="/icons/share-icon.svg"
-              alt="공유"
-              width={16}
-              height={16}
-              style={{ display: 'block' }}
-            />
-          </button>
-        </div>
+            공유하고 내용 확인하기
+          </span>
+          <Image
+            src="/icons/share-icon.svg"
+            alt="공유"
+            width={16}
+            height={16}
+            style={{ display: 'block' }}
+          />
+        </button>
       </div>
+    </div>
+  );
+}
 
-      {/* Promotion Section */}
+/** 프로모션 섹션 */
+function PromotionSection() {
+  return (
+    <>
       <div className="max-w-md w-full" style={{ marginBottom: '24px', textAlign: 'center' }}>
         <Title
           type="intro"
@@ -327,9 +343,15 @@ export default function WorthTestResult() {
           }}
         />
       </div>
+    </>
+  );
+}
 
+/** CTA 버튼 섹션 */
+function CTASection({ onRestart }: { onRestart: () => void }) {
+  return (
+    <>
       <div style={{ height: "15px" }} />
-
       <div className="max-w-md w-full">
         <CTAButtonGroup
           type="twoButton"
@@ -337,9 +359,36 @@ export default function WorthTestResult() {
           secondButtonText="테스트 다시하기"
           secondButtonType="secondary"
           onPrimaryClick={openStore}
-          onSecondButtonClick={() => router.push("/worth-test")}
+          onSecondButtonClick={onRestart}
         />
       </div>
+    </>
+  );
+}
+
+export default function WorthTestResult() {
+  const router = useRouter();
+
+  const handleShareConfirm = async () => {
+    const result = await shareRootUrl();
+    if (result.success && result.method === 'clipboard') {
+      alert('링크가 클립보드에 복사되었습니다!');
+    }
+  };
+
+  return (
+    <div
+      style={{ backgroundColor: colors.background.main, minHeight: "100vh" }}
+      className="flex flex-col items-center"
+    >
+      <ScoreSection />
+      <div style={{ height: "24px" }} />
+      <FortuneDetailSection />
+      <LifeGraphSection />
+      <RankingSection />
+      <TipSection onShare={handleShareConfirm} />
+      <PromotionSection />
+      <CTASection onRestart={() => router.push("/worth-test")} />
     </div>
   );
 }
