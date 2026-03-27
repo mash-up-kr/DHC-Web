@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { ScoreText } from "@/design-system/components/ScoreText/ScoreText";
 import { Title } from "@/design-system/components/Title";
+import { FortuneLifeGraph } from "@/design-system/components/FortuneLifeGraph";
 import { MessageCard } from "@/design-system/components/MessageCard/MessageCard";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { openStore } from "@/utils/storeUrl";
@@ -96,14 +97,31 @@ export default function WorthTestResult() {
         금전운 인생 그래프
       </h2>
 
-      <div
+      <FortuneLifeGraph
         className="max-w-md w-full"
-        style={{
-          height: '330px',
-          backgroundColor: colors.neutral[700],
-          borderRadius: '12px',
-          marginTop: '16px',
+        style={{ marginTop: '16px' }}
+        headerLabel="내 금전운 전성기"
+        dataPoints={[
+          { x: 20, value: 500 },
+          { x: 23, value: 800 },
+          { x: 35, value: 1500 },
+          { x: 47, value: 4500 },
+          { x: 60, value: 4528 },
+          { x: 75, value: 4300 },
+          { x: 80, value: 4100 },
+        ]}
+        peak={{
+          defaultX: 47,
+          ageLabel: "47살",
+          amountLabel: "4500만원",
         }}
+        events={[
+          { x: 23, iconSrc: "/icons/icon-luckybag.svg", tooltipText: "로또 2등 당첨!" },
+          { x: 60, iconSrc: "/icons/icon-flying-money.svg", tooltipText: "4,528만원" },
+        ]}
+        xAxisLabels={[20, 40, 60, 80]}
+        xAxisLabelFormat={(x) => `${x}대`}
+        peakTooltipFormat={(v) => `${v.toLocaleString()}만원`}
       />
 
       <div

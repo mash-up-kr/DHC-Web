@@ -36,3 +36,7 @@ export type { ModalProps } from './Modal/Modal';
 // Tooltip Components
 export { Tooltip } from './Tooltip/Tooltip';
 export type { TooltipProps, TooltipArrowPosition } from './Tooltip/Tooltip';
+
+// FortuneLifeGraph Components
+export { FortuneLifeGraph } from './FortuneLifeGraph/FortuneLifeGraph';
+export type { FortuneLifeGraphProps, FortuneDataPoint, FortuneEvent, FortunePeakInfo } from './FortuneLifeGraph/FortuneLifeGraph';
