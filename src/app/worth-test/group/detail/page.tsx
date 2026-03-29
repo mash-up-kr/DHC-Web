@@ -339,7 +339,7 @@ function FortuneDetailRankingSection({
 }
 
 
-const MEMBER_LABELS = ['금전의길', '부자왕', '재테크왕', '부자되자', '돈벼락맞자', '월급루팡', '주식천재', '절약왕'];
+const MEMBER_LABELS = ['전체', '20대', '30대', '40대', '50대', '60대', '70대', '80대'];
 
 export default function WorthTestGroupDetail() {
   const router = useRouter();
@@ -525,6 +525,7 @@ export default function WorthTestGroupDetail() {
           buttonText="멤버 초대하기"
           onButtonClick={() => router.push('/worth-test/question/1')}
         />
+        <div style={{ height: '100px' }} />
       </div>
 
       {/* 하단 고정 CTA 버튼 */}
