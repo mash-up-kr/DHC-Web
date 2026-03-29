@@ -13,6 +13,8 @@
 
 import React from 'react';
 import { CTAButton } from '../Button/CTAButton';
+import { colors } from '../../foundations/colors';
+import { typography } from '../../foundations/typography';
 
 export type CTAButtonGroupType = 'oneButton' | 'twoButton';
 export type SecondButtonType = 'secondary' | 'tertiary';
@@ -48,6 +50,14 @@ export interface CTAButtonGroupProps {
    */
   onSecondButtonClick?: () => void;
   /**
+   * Sub 버튼 텍스트 (Primary 버튼 위에 표시, 없으면 미표시)
+   */
+  subButtonText?: string;
+  /**
+   * Sub 버튼 클릭 핸들러
+   */
+  onSubButtonClick?: () => void;
+  /**
    * 커스텀 클래스명
    */
   className?: string;
@@ -61,8 +71,27 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
   secondButtonType = 'tertiary',
   secondButtonText = '취소',
   onSecondButtonClick,
+  subButtonText,
+  onSubButtonClick,
   className = '',
 }) => {
+  const subButton = subButtonText ? (
+    <button
+      onClick={onSubButtonClick}
+      style={{
+        padding: '4px 0',
+        backgroundColor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        ...typography.title['h5-1'],
+        color: colors.neutral[300],
+        width: '100%',
+        marginBottom: '8px',
+      }}
+    >
+      {subButtonText}
+    </button>
+  ) : null;
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -74,6 +103,7 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
   if (type === 'oneButton') {
     return (
       <div className={className} style={containerStyle}>
+        {subButton}
         <CTAButton
           buttonType="primary"
           size="xl"
@@ -90,6 +120,7 @@ export const CTAButtonGroup: React.FC<CTAButtonGroupProps> = ({
   // type === 'twoButton'
   return (
     <div className={className} style={containerStyle}>
+      {subButton}
       <CTAButton
         buttonType="primary"
         size="xl"

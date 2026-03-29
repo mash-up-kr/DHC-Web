@@ -14,16 +14,18 @@ import { CTAButton } from '../Button/CTAButton';
 export interface RankingEntry {
   /** 등수 (1, 2, 3, ...) */
   rank: number;
-  /** 이름 */
-  name: string;
-  /** 점수/금액 텍스트 */
-  score: string;
+  /** 이름 (미지정시 '홍길동' 플레이스홀더) */
+  name?: string;
+  /** 점수/금액 텍스트 (미지정시 '?원' 플레이스홀더) */
+  score?: string;
   /** 프로필 이미지 URL (없으면 ? 플레이스홀더) */
   imageUrl?: string;
   /** 막대 높이 (px) */
   barHeight: number;
   /** 점수 옆 아이콘 경로 */
   scoreIconSrc?: string;
+  /** 막대 배경 (커스텀 그라데이션 등, 미지정시 기본 스타일) */
+  barBackground?: string;
 }
 
 export interface RankingPodiumProps {
@@ -111,7 +113,7 @@ export function RankingPodium({
             {/* 아바타 */}
             <div
               style={{
-                padding: '4px 11px',
+                padding: entry.imageUrl ? '8px' : '4px 11px',
                 borderRadius: '8px',
                 backgroundColor: '#2E3341',
                 display: 'flex',
@@ -127,8 +129,8 @@ export function RankingPodium({
                   src={entry.imageUrl}
                   alt={entry.name}
                   style={{
-                    width: '100%',
-                    height: '100%',
+                    width: '16px',
+                    height: '16px',
                     objectFit: 'cover',
                   }}
                 />
@@ -154,7 +156,7 @@ export function RankingPodium({
                 lineHeight: '18px',
                 fontWeight: 700,
                 letterSpacing: '0px',
-                color: '#FFFFFF',
+                color: entry.name ? '#FFFFFF' : colors.neutral[400],
                 textAlign: 'center',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -163,7 +165,7 @@ export function RankingPodium({
                 marginBottom: '4px',
               }}
             >
-              {entry.name}
+              {entry.name || '홍길동'}
             </span>
 
             {/* 점수 */}
@@ -194,11 +196,11 @@ export function RankingPodium({
                   lineHeight: '18px',
                   fontWeight: 600,
                   letterSpacing: '0px',
-                  color: colors.text.highlightsSecondary,
+                  color: entry.score ? colors.text.highlightsSecondary : colors.background.badgePrimary,
                   whiteSpace: 'nowrap',
                 }}
               >
-                {entry.score}
+                {entry.score || '?원'}
               </span>
             </div>
 
@@ -207,8 +209,8 @@ export function RankingPodium({
               style={{
                 width: '100%',
                 height: `${entry.barHeight}px`,
-                backgroundColor: 'rgba(248, 250, 252, 0.1)',
-                border: '2px dashed #6B7285',
+                background: entry.barBackground ?? 'rgba(248, 250, 252, 0.1)',
+                border: entry.barBackground ? 'none' : '2px dashed #6B7285',
                 borderRadius: '16px 16px 0 0',
                 display: 'flex',
                 justifyContent: 'center',

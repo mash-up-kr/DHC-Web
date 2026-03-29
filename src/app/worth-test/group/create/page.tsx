@@ -36,9 +36,7 @@ export default function Question1() {
 
   const handleNext = () => {
     if (isFormValid) {
-      // TODO: groupNo는 그룹 생성 API 응답에서 받아올 예정
-      const groupNo = 1;
-      router.push(`/worth-test/group/${groupNo}`);
+      router.push('/worth-test/group/detail');
     }
   };
 
