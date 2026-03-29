@@ -32,7 +32,7 @@ export default function Question1() {
     return () => vv.removeEventListener("resize", handleResize);
   }, []);
 
-  const isFormValid = userInfo.gender && userInfo.name;
+  const isFormValid = !!userInfo.name;
 
   const handleNext = () => {
     if (isFormValid) {
