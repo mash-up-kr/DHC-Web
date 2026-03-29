@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { RankingPodium } from "@/design-system/components/RankingPodium/RankingPodium";
+import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
+import { shareRootUrl } from "@/utils/share";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 
@@ -458,7 +460,7 @@ export default function WorthTestGroupDetail() {
       <div
         className="max-w-md w-full"
         style={{
-          padding: '0 20px 100px',
+          padding: '0 20px 160px',
         }}
       >
         {/* 랭킹 TOP 3 */}
@@ -523,6 +525,30 @@ export default function WorthTestGroupDetail() {
           buttonText="멤버 초대하기"
           onButtonClick={() => router.push('/worth-test/question/1')}
         />
+      </div>
+
+      {/* 하단 고정 CTA 버튼 */}
+      <div
+        className="fixed left-0 right-0 bottom-0"
+        style={{ backgroundColor: colors.background.main }}
+      >
+        <div className="max-w-md w-full mx-auto">
+          <CTAButtonGroup
+            type="twoButton"
+            subButtonText="+ 새 모임 만들기"
+            onSubButtonClick={() => router.push('/worth-test/group/create')}
+            primaryButtonText="공유하기"
+            secondButtonText="메인으로 돌아가기"
+            secondButtonType="secondary"
+            onPrimaryClick={async () => {
+              const result = await shareRootUrl();
+              if (result.success && result.method === 'clipboard') {
+                alert('링크가 클립보드에 복사되었습니다!');
+              }
+            }}
+            onSecondButtonClick={() => router.push('/worth-test')}
+          />
+        </div>
       </div>
     </div>
   );
