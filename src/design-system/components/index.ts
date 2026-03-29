@@ -40,3 +40,7 @@ export type { TooltipProps, TooltipArrowPosition } from './Tooltip/Tooltip';
 // FortuneLifeGraph Components
 export { FortuneLifeGraph } from './FortuneLifeGraph/FortuneLifeGraph';
 export type { FortuneLifeGraphProps, FortuneDataPoint, FortuneEvent, FortunePeakInfo } from './FortuneLifeGraph/FortuneLifeGraph';
+
+// RankingPodium Components
+export { RankingPodium } from './RankingPodium/RankingPodium';
+export type { RankingPodiumProps, RankingEntry } from './RankingPodium/RankingPodium';
