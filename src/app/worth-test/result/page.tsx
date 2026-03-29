@@ -7,6 +7,7 @@ import { ScoreText } from "@/design-system/components/ScoreText/ScoreText";
 import { Title } from "@/design-system/components/Title";
 import { FortuneLifeGraph } from "@/design-system/components/FortuneLifeGraph";
 import { MessageCard } from "@/design-system/components/MessageCard/MessageCard";
+import { RankingPodium } from "@/design-system/components/RankingPodium/RankingPodium";
 import { colors, gradients } from "@/design-system/foundations/colors";
 import { openStore } from "@/utils/storeUrl";
 import { shareRootUrl } from "@/utils/share";
@@ -168,7 +169,7 @@ function LifeGraphSection() {
 }
 
 /** 금전운 랭킹 섹션 */
-function RankingSection() {
+function RankingSection({ onGroupCreate }: { onGroupCreate: () => void }) {
   return (
     <>
       <h2
@@ -178,20 +179,24 @@ function RankingSection() {
           color: colors.text.main,
           width: '100%',
           textAlign: 'left',
-          marginTop: '24px',
+          marginTop: '20px',
         }}
       >
         금전운 랭킹
       </h2>
 
-      <div
+      <RankingPodium
         className="max-w-md w-full"
-        style={{
-          height: '405px',
-          backgroundColor: colors.neutral[700],
-          borderRadius: '12px',
-          marginTop: '16px',
-        }}
+        style={{ marginTop: '24px' }}
+        title={"랭킹 그룹 만들고 친구들과\n금전운 랭킹을 확인해보세요!"}
+        entries={[
+          { rank: 1, name: '홍길동', score: '5,500만원', barHeight: 120, scoreIconSrc: '/icons/icon-flying-money.svg' },
+          { rank: 2, name: '홍길동', score: '5,500만원', barHeight: 90, scoreIconSrc: '/icons/icon-flying-money.svg' },
+          { rank: 3, name: '홍길동', score: '5,500만원', barHeight: 60, scoreIconSrc: '/icons/icon-flying-money.svg' },
+        ]}
+        displayOrder={[2, 1, 3]}
+        buttonText="랭킹 그룹 만들기"
+        onButtonClick={onGroupCreate}
       />
     </>
   );
@@ -385,7 +390,7 @@ export default function WorthTestResult() {
       <div style={{ height: "24px" }} />
       <FortuneDetailSection />
       <LifeGraphSection />
-      <RankingSection />
+      <RankingSection onGroupCreate={() => router.push("/worth-test/group/create")} />
       <TipSection onShare={handleShareConfirm} />
       <PromotionSection />
       <CTASection onRestart={() => router.push("/worth-test")} />
