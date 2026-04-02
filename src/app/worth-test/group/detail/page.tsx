@@ -347,7 +347,7 @@ const RANKING_MEMBERS: DetailRankingRow[] = [
     rank: 1,
     name: '금전의길',
     score: '총 45억원',
-    imageUrl: '/icons/icon-male-rival-1.svg',
+    imageUrl: '/icons/icon_dragon.svg',
     scoreIconSrc: '/icons/icon-flying-money.svg',
     fortuneType: {
       title: '대기만성 거북이형',
@@ -358,7 +358,7 @@ const RANKING_MEMBERS: DetailRankingRow[] = [
     rank: 2,
     name: '부자왕',
     score: '총 25억원',
-    imageUrl: '/icons/icon-female-rival-1.svg',
+    imageUrl: '/icons/icon_rabbit.svg',
     scoreIconSrc: '/icons/icon-flying-money.svg',
     fortuneType: {
       title: '꾸준한 다람쥐형',
