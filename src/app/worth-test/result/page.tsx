@@ -116,8 +116,8 @@ function LifeGraphSection() {
           amountLabel: "4500만원",
         }}
         events={[
-          { x: 23, iconSrc: "/icons/icon-luckybag.svg", tooltipText: "로또 2등 당첨!" },
-          { x: 60, iconSrc: "/icons/icon-flying-money.svg", tooltipText: "4,528만원" },
+          { x: 23, iconSrc: "/icons/icon-luckybag.svg" },
+          { x: 60, iconSrc: "/icons/icon-flying-money.svg" },
         ]}
         xAxisLabels={[20, 40, 60, 80]}
         xAxisLabelFormat={(x) => `${x}대`}

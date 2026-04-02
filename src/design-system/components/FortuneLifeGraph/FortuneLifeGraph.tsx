@@ -21,8 +21,6 @@ export interface FortuneEvent {
   x: number;
   /** 아이콘 경로 (e.g. "/icons/icon-luckybag.svg") */
   iconSrc: string;
-  /** 말풍선 텍스트 */
-  tooltipText: string;
 }
 
 /** 전성기(peak) 마커 설정 */
