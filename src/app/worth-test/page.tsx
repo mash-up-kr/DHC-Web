@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import mainBanner from "../../../public/images/love-test/main-banner.png";
+import worthTestBanner from "../../../public/worth-test-banner.png";
 import { Header } from "@/design-system/components/Header/Header";
 import { ScoreText } from "@/design-system/components/ScoreText";
 import { MoreBtn } from "@/design-system/components/MoreBtn";
@@ -89,13 +89,13 @@ function HomeContent() {
           }}
         >
           <Image
-            src={mainBanner}
-            alt="연애 궁합 테스트 메인 배너 - 짝사랑 상대와의 궁합을 확인하세요"
+            src={worthTestBanner}
+            alt="부자 테스트 메인 배너"
             placeholder="blur"
             style={{
               width: '100%',
               height: 'auto',
-              borderRadius: '25px',
+              borderRadius: '16px',
             }}
             priority
           />

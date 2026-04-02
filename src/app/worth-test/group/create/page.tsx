@@ -81,8 +81,8 @@ export default function Question1() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/love-test/question-banner-1.png"
-          alt="질문 1 그래픽"
+          src="/group-create-banner.png"
+          alt="그룹 생성 배너"
         />
 
         {/* 그래픽 하단 24px 공백 */}
@@ -121,7 +121,7 @@ export default function Question1() {
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
           type="oneButton"
-          primaryButtonText="다음"
+          primaryButtonText="그룹 생성하기"
           primaryDisabled={!isFormValid}
             onPrimaryClick={handleNext}
           />

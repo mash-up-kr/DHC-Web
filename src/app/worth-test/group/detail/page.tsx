@@ -466,7 +466,7 @@ export default function WorthTestGroupDetail() {
         {/* 랭킹 TOP 3 */}
         <RankingTop3Section
           sectionTitle="전체 금전운 TOP 3"
-          podiumTitle="금전운이 가장 좋은 3명이애요"
+          podiumTitle="금전운이 가장 좋은 3명이애요\n친구들을 더 초대하고 랭킹을 확인해보세요"
           entries={[
             {
               rank: 1,
@@ -522,7 +522,7 @@ export default function WorthTestGroupDetail() {
               },
             },
           ]}
-          buttonText="멤버 초대하기"
+          buttonText="랭킹 참여하기"
           onButtonClick={() => router.push('/worth-test/question/1')}
         />
         <div style={{ height: '100px' }} />

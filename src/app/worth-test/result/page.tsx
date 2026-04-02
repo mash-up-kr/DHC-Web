@@ -360,8 +360,8 @@ function CTASection({ onRestart }: { onRestart: () => void }) {
       <div className="max-w-md w-full">
         <CTAButtonGroup
           type="twoButton"
-          primaryButtonText="앱 설치하고 맞춤 미션 확인하기"
-          secondButtonText="테스트 다시하기"
+          primaryButtonText="앱 설치하고 금전운 높이기"
+          secondButtonText="메인으로 돌아가기"
           secondButtonType="secondary"
           onPrimaryClick={openStore}
           onSecondButtonClick={onRestart}
