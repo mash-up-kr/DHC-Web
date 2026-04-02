@@ -7,7 +7,7 @@ import { Header } from "@/design-system/components/Header/Header";
 import { RankingPodium } from "@/design-system/components/RankingPodium/RankingPodium";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { shareRootUrl } from "@/utils/share";
-import { colors, gradients } from "@/design-system/foundations/colors";
+import { colors } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
 
 /** 섹션 타이틀 */
@@ -341,6 +341,63 @@ function FortuneDetailRankingSection({
 
 const MEMBER_LABELS = ['전체', '20대', '30대', '40대', '50대', '60대', '70대', '80대'];
 
+/** 전체 멤버 랭킹 데이터 (mock) */
+const RANKING_MEMBERS: DetailRankingRow[] = [
+  {
+    rank: 1,
+    name: '금전의길',
+    score: '총 45억원',
+    imageUrl: '/icons/icon_dragon.svg',
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+    fortuneType: {
+      title: '대기만성 거북이형',
+      description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
+    },
+  },
+  {
+    rank: 2,
+    name: '부자왕',
+    score: '총 25억원',
+    imageUrl: '/icons/icon_rabbit.svg',
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+    fortuneType: {
+      title: '꾸준한 다람쥐형',
+      description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
+    },
+  },
+];
+
+/** TOP 3 포디움용 데이터 생성 (전체 랭킹에서 상위 3명 추출) */
+const TOP3_ENTRIES: import("@/design-system/components/RankingPodium/RankingPodium").RankingEntry[] = [
+  {
+    rank: 1,
+    name: RANKING_MEMBERS[0]?.name,
+    score: RANKING_MEMBERS[0]?.score?.replace('총 ', ''),
+    barHeight: 120,
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+    barGradientStartColor: '#B5FFCA',
+    barGradientEndColor: 'rgba(109, 153, 143, 0)',
+    barTextColor: '#DBFFCE',
+    imageUrl: RANKING_MEMBERS[0]?.imageUrl,
+  },
+  {
+    rank: 2,
+    name: RANKING_MEMBERS[1]?.name,
+    score: RANKING_MEMBERS[1]?.score?.replace('총 ', ''),
+    barHeight: 90,
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+    barGradientStartColor: '#C6B5FF',
+    barGradientEndColor: 'rgba(198, 181, 255, 0)',
+    barTextColor: '#C3D1F1',
+    imageUrl: RANKING_MEMBERS[1]?.imageUrl,
+  },
+  {
+    rank: 3,
+    barHeight: 60,
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+  },
+];
+
 export default function WorthTestGroupDetail() {
   const router = useRouter();
   const [selectedLabel, setSelectedLabel] = useState(MEMBER_LABELS[0]);
@@ -466,63 +523,16 @@ export default function WorthTestGroupDetail() {
         {/* 랭킹 TOP 3 */}
         <RankingTop3Section
           sectionTitle="전체 금전운 TOP 3"
-          podiumTitle="금전운이 가장 좋은 3명이애요"
-          entries={[
-            {
-              rank: 1,
-              name: '금전의길',
-              score: '5,500만원',
-              barHeight: 120,
-              scoreIconSrc: '/icons/icon-flying-money.svg',
-              barBackground: gradients.fortuneGradientTop,
-              imageUrl: '/icons/icon-male-rival-1.svg',
-            },
-            {
-              rank: 2,
-              name: '부자왕',
-              score: '4,200만원',
-              barHeight: 90,
-              scoreIconSrc: '/icons/icon-flying-money.svg',
-              barBackground: gradients.fortuneGradientMid,
-              imageUrl: '/icons/icon-female-rival-1.svg',
-            },
-            {
-              rank: 3,
-              barHeight: 60,
-              scoreIconSrc: '/icons/icon-flying-money.svg',
-            },
-          ]}
+          podiumTitle={"금전운이 가장 좋은 3명이애요\n친구들을 더 초대하고 랭킹을 확인해보세요"}
+          entries={TOP3_ENTRIES}
           displayOrder={[2, 1, 3]}
         />
 
         {/* 금전운 상세랭킹 */}
         <FortuneDetailRankingSection
           sectionTitle="금전운 상세랭킹"
-          rows={[
-            {
-              rank: 1,
-              name: '홍길동',
-              score: '총 45억원',
-              imageUrl: '/icons/icon-male-rival-1.svg',
-              scoreIconSrc: '/icons/icon-flying-money.svg',
-              fortuneType: {
-                title: '대기만성 거북이형',
-                description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
-              },
-            },
-            {
-              rank: 2,
-              name: '홍길동',
-              score: '총 25억원',
-              imageUrl: '/icons/icon-female-rival-1.svg',
-              scoreIconSrc: '/icons/icon-flying-money.svg',
-              fortuneType: {
-                title: '꾸준한 다람쥐형',
-                description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
-              },
-            },
-          ]}
-          buttonText="멤버 초대하기"
+          rows={RANKING_MEMBERS}
+          buttonText="랭킹 참여하기"
           onButtonClick={() => router.push('/worth-test/question/1')}
         />
         <div style={{ height: '100px' }} />

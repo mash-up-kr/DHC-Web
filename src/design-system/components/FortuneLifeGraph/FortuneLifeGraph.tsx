@@ -21,8 +21,6 @@ export interface FortuneEvent {
   x: number;
   /** 아이콘 경로 (e.g. "/icons/icon-luckybag.svg") */
   iconSrc: string;
-  /** 말풍선 텍스트 */
-  tooltipText: string;
 }
 
 /** 전성기(peak) 마커 설정 */
@@ -534,10 +532,19 @@ export const FortuneLifeGraph: React.FC<FortuneLifeGraphProps> = ({
               height={LAYOUT.chartHeight}
             />
           </clipPath>
+          <linearGradient id="line-area-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={colors.violet[400]} stopOpacity={0.2} />
+            <stop offset="100%" stopColor={colors.violet[400]} stopOpacity={0} />
+          </linearGradient>
         </defs>
 
-        {/* 곡선 + dot (차트 영역 내 클리핑) */}
+        {/* 곡선 + 그라데이션 영역 + dot (차트 영역 내 클리핑) */}
         <g clipPath="url(#chart-clip)">
+          {/* 곡선 아래 그라데이션 영역 */}
+          <path
+            d={`${linePath} L ${svgPoints[svgPoints.length - 1]?.x},${CHART_TOP + LAYOUT.chartHeight} L ${svgPoints[0]?.x},${CHART_TOP + LAYOUT.chartHeight} Z`}
+            fill="url(#line-area-gradient)"
+          />
           <path
             d={linePath}
             stroke={colors.violet[400]}

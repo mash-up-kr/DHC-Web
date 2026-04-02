@@ -175,7 +175,7 @@ export default function Question2() {
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
             type="oneButton"
-            primaryButtonText="다음"
+            primaryButtonText="결과 확인"
             primaryDisabled={!isFormValid}
             onPrimaryClick={handleNext}
           />

@@ -26,6 +26,12 @@ export interface RankingEntry {
   scoreIconSrc?: string;
   /** 막대 배경 (커스텀 그라데이션 등, 미지정시 기본 스타일) */
   barBackground?: string;
+  /** 막대 그라데이션 시작 색상 (상단) */
+  barGradientStartColor?: string;
+  /** 막대 그라데이션 끝 색상 (하단) */
+  barGradientEndColor?: string;
+  /** 막대 안 순위 텍스트 색상 */
+  barTextColor?: string;
 }
 
 export interface RankingPodiumProps {
@@ -209,8 +215,10 @@ export function RankingPodium({
               style={{
                 width: '100%',
                 height: `${entry.barHeight}px`,
-                background: entry.barBackground ?? 'rgba(248, 250, 252, 0.1)',
-                border: entry.barBackground ? 'none' : '2px dashed #6B7285',
+                background: entry.barGradientStartColor
+                  ? `linear-gradient(to bottom, ${entry.barGradientStartColor}, ${entry.barGradientEndColor ?? 'transparent'})`
+                  : entry.barBackground ?? 'rgba(248, 250, 252, 0.1)',
+                border: entry.barGradientStartColor ? 'none' : entry.barBackground ? 'none' : '2px dashed #6B7285',
                 borderRadius: '16px 16px 0 0',
                 display: 'flex',
                 justifyContent: 'center',
@@ -221,7 +229,7 @@ export function RankingPodium({
               <span
                 style={{
                   ...typography.title['h4-1'],
-                  color: '#CBD5E1',
+                  color: entry.barTextColor ?? '#CBD5E1',
                 }}
               >
                 {entry.rank}
