@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRef, useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
@@ -12,10 +12,14 @@ import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { QUESTION_2_COPY, parseQuestionType } from "../_types/questionType";
 import { useScreenImpression, ScreenName } from "@/analytics";
 
-export default function Question2() {
+function Question2Content() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const questionType = parseQuestionType(searchParams.get("type"));
+  const copy = QUESTION_2_COPY[questionType];
   const { userBirth, setUserBirth } = useTestStore();
   const yearRef = useRef<HTMLInputElement>(null);
   const monthRef = useRef<HTMLInputElement>(null);
@@ -72,7 +76,7 @@ export default function Question2() {
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* SEO를 위한 숨겨진 H1 */}
-      <h1 className="sr-only">부자 테스트 - Q2. 당신의 생년월일과 태어난 시간</h1>
+      <h1 className="sr-only">{copy.srOnly}</h1>
 
       {/* 상단 고정 Header */}
       <div
@@ -122,7 +126,7 @@ export default function Question2() {
         <Title
           type="page"
           size="sm"
-          title={`Q2.당신의 생년월일과\n태어난 시간을 입력해주세요`}
+          title={copy.title}
           description={`생년월일이 정확할수록\n더 적합한 정보를 제공해 드릴 수 있어요`}
         />
 
@@ -182,5 +186,13 @@ export default function Question2() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Question2() {
+  return (
+    <Suspense>
+      <Question2Content />
+    </Suspense>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRef, useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
 import { LabelButton } from "@/design-system/components/LabelButton";
@@ -10,10 +10,14 @@ import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { QuestionBanner } from "../_components/QuestionBanner";
+import { QUESTION_1_COPY, parseQuestionType } from "../_types/questionType";
 import { useScreenImpression, ScreenName } from "@/analytics";
 
-export default function Question1() {
+function Question1Content() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const questionType = parseQuestionType(searchParams.get("type"));
+  const copy = QUESTION_1_COPY[questionType];
   const { userInfo, setUserInfo } = useTestStore();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -36,14 +40,17 @@ export default function Question1() {
 
   const handleNext = () => {
     if (isFormValid) {
-      router.push("/worth-test/question/2");
+      const nextPath = questionType === 'member'
+        ? "/worth-test/question/2?type=member"
+        : "/worth-test/question/2";
+      router.push(nextPath);
     }
   };
 
   return (
     <div style={{ backgroundColor: colors.background.main, minHeight: '100vh' }} className="flex flex-col items-center">
       {/* SEO를 위한 숨겨진 H1 */}
-      <h1 className="sr-only">부자 테스트 - Q1. 당신에 대해서 알려주세요</h1>
+      <h1 className="sr-only">{copy.srOnly}</h1>
 
       {/* 상단 고정 Header */}
       <div
@@ -93,7 +100,7 @@ export default function Question1() {
         <Title
           type="page"
           size="sm"
-          title="Q1.당신에 대해서 알려주세요"
+          title={copy.title}
           description="성별과 이름을 알려주세요"
         />
 
@@ -117,7 +124,7 @@ export default function Question1() {
         <InputFieldGroup
           type="single"
           size="md"
-          label="내 이름"
+          label={copy.nameLabel}
           align="start"
           items={[
             { key: 'name', value: userInfo.name, placeholder: '홍길동', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
@@ -145,5 +152,13 @@ export default function Question1() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Question1() {
+  return (
+    <Suspense>
+      <Question1Content />
+    </Suspense>
   );
 }
