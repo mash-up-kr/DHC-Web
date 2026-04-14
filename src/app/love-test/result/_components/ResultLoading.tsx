@@ -7,7 +7,6 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 
 export function ResultLoading() {
   const [isApp, setIsApp] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useScreenImpression(ScreenName.RESULT_LOADING);
@@ -17,7 +16,6 @@ export function ResultLoading() {
   }, []);
 
   const handleVideoCanPlay = () => {
-    setIsVideoLoaded(true);
     videoRef.current?.play();
   };
 
@@ -62,21 +60,11 @@ export function ResultLoading() {
               maxWidth: '375px',
             }}
           >
-            {/* 썸네일 이미지 - 비디오 로딩 전까지 표시 */}
-            {!isVideoLoaded && (
-              <img
-                src="/videos/love-test/result-loading-video-thumbnail.png"
-                alt="Loading"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                }}
-              />
-            )}
-            {/* 비디오 - 로딩 완료 후 자동재생 */}
+            {/* 비디오 - poster로 썸네일 노출 후 자동재생 */}
             <video
               ref={videoRef}
               src="/videos/love-test/result-loading-video.mp4"
+              poster="/videos/love-test/result-loading-video-thumbnail.png"
               muted
               loop
               playsInline
@@ -84,7 +72,6 @@ export function ResultLoading() {
               style={{
                 width: '100%',
                 height: 'auto',
-                display: isVideoLoaded ? 'block' : 'none',
               }}
             />
           </div>
