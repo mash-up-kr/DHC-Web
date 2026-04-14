@@ -532,8 +532,8 @@ export default function WorthTestGroupDetail() {
         <FortuneDetailRankingSection
           sectionTitle="금전운 상세랭킹"
           rows={RANKING_MEMBERS}
-          buttonText="랭킹 참여하기"
-          onButtonClick={() => router.push('/worth-test/question/1')}
+          buttonText="멤버 추가하기"
+          onButtonClick={() => router.push('/worth-test/question/1?type=member')}
         />
         <div style={{ height: '100px' }} />
       </div>

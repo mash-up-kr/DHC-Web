@@ -23,14 +23,6 @@ export const metadata: Metadata = {
     title: OG_TITLE,
     description: "현재 389명이 참여했어요!",
     url: `${SITE_URL}/love-test`,
-    images: [
-      {
-        url: "/og-image.png?v=2",
-        width: 1200,
-        height: 630,
-        alt: "연애 궁합 테스트 - 짝사랑 상대와의 궁합을 확인해보세요",
-      },
-    ],
     type: "website",
     siteName: "연애 궁합 테스트",
     locale: "ko_KR",
@@ -40,7 +32,6 @@ export const metadata: Metadata = {
     title: `${OG_TITLE} | 연애 궁합 테스트`,
     description:
       "짝사랑 상대와의 연애 궁합을 확인해보세요! 생년월일 기반 무료 궁합 테스트",
-    images: ["/og-image.png?v=2"],
   },
   robots: {
     index: true,

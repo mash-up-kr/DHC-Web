@@ -81,7 +81,7 @@ export default function Question1() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/group-create-banner.png"
+          src="/images/worth-test/group-create-banner.png"
           alt="그룹 생성 배너"
         />
 
