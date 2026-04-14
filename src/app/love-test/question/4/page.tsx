@@ -116,7 +116,7 @@ export default function Question4() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/love-test/question-banner-4.png"
+          src="/images/question-banners/question-banner-4.png"
           alt="질문 4 그래픽"
         />
 

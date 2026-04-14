@@ -82,7 +82,7 @@ export default function Question3() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/love-test/question-banner-3.png"
+          src="/images/question-banners/question-banner-3.png"
           alt="질문 3 그래픽"
         />
 

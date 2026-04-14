@@ -115,7 +115,7 @@ function Question2Content() {
 
         {/* 그래픽 영역 */}
         <QuestionBanner
-          src="/images/love-test/question-banner-2.png"
+          src="/images/question-banners/question-banner-2.png"
           alt="질문 2 그래픽"
         />
 
