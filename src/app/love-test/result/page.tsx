@@ -78,11 +78,7 @@ export default function Result() {
       try {
         const response = await postLoveTest(request);
         setApiResult(response);
-      } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('[Result] LoveTest API Error:', error);
-          console.error('[Result] Request:', request);
-        }
+      } catch {
         setStep('error');
         return;
       }
