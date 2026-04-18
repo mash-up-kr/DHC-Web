@@ -1,14 +1,21 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
-import { RankingPodium } from "@/design-system/components/RankingPodium/RankingPodium";
+import { RankingPodium, RankingEntry } from "@/design-system/components/RankingPodium/RankingPodium";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { shareRootUrl } from "@/utils/share";
 import { colors } from "@/design-system/foundations/colors";
 import { typography } from "@/design-system/foundations/typography";
+import { useTestStore } from "@/store/useTestStore";
+import {
+  getWorthGroupRanking,
+  WealthAgeGroup,
+  WealthGroupRankingEntry,
+  WealthGroupRankingResponse,
+} from "@/api/worthTest";
 
 /** 섹션 타이틀 */
 function SectionTitle({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
@@ -38,7 +45,7 @@ function RankingTop3Section({
 }: {
   sectionTitle: string;
   podiumTitle: string;
-  entries: import("@/design-system/components/RankingPodium/RankingPodium").RankingEntry[];
+  entries: RankingEntry[];
   displayOrder: number[];
 }) {
   return (
@@ -338,69 +345,125 @@ function FortuneDetailRankingSection({
   );
 }
 
-
-const MEMBER_LABELS = ['전체', '20대', '30대', '40대', '50대', '60대', '70대', '80대'];
-
-/** 전체 멤버 랭킹 데이터 (mock) */
-const RANKING_MEMBERS: DetailRankingRow[] = [
-  {
-    rank: 1,
-    name: '금전의길',
-    score: '총 45억원',
-    imageUrl: '/icons/icon_dragon.svg',
-    scoreIconSrc: '/icons/icon-flying-money.svg',
-    fortuneType: {
-      title: '대기만성 거북이형',
-      description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
-    },
-  },
-  {
-    rank: 2,
-    name: '부자왕',
-    score: '총 25억원',
-    imageUrl: '/icons/icon_rabbit.svg',
-    scoreIconSrc: '/icons/icon-flying-money.svg',
-    fortuneType: {
-      title: '꾸준한 다람쥐형',
-      description: '초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 늦게 크게 성공합니다.\n\n투자 및 안내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 떄 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다.',
-    },
-  },
+const MEMBER_LABELS: { label: string; ageGroup: WealthAgeGroup }[] = [
+  { label: '전체', ageGroup: 'all' },
+  { label: '20대', ageGroup: '20' },
+  { label: '30대', ageGroup: '30' },
+  { label: '40대', ageGroup: '40' },
+  { label: '50대', ageGroup: '50' },
+  { label: '60대', ageGroup: '60' },
+  { label: '70대', ageGroup: '70' },
+  { label: '80대', ageGroup: '80' },
 ];
 
-/** TOP 3 포디움용 데이터 생성 (전체 랭킹에서 상위 3명 추출) */
-const TOP3_ENTRIES: import("@/design-system/components/RankingPodium/RankingPodium").RankingEntry[] = [
-  {
-    rank: 1,
-    name: RANKING_MEMBERS[0]?.name,
-    score: RANKING_MEMBERS[0]?.score?.replace('총 ', ''),
+interface Top3Style {
+  barHeight: number;
+  barGradientStartColor?: string;
+  barGradientEndColor?: string;
+  barTextColor?: string;
+}
+
+const TOP3_STYLE_BY_RANK: Record<number, Top3Style> = {
+  1: {
     barHeight: 120,
-    scoreIconSrc: '/icons/icon-flying-money.svg',
     barGradientStartColor: '#B5FFCA',
     barGradientEndColor: 'rgba(109, 153, 143, 0)',
     barTextColor: '#DBFFCE',
-    imageUrl: RANKING_MEMBERS[0]?.imageUrl,
   },
-  {
-    rank: 2,
-    name: RANKING_MEMBERS[1]?.name,
-    score: RANKING_MEMBERS[1]?.score?.replace('총 ', ''),
+  2: {
     barHeight: 90,
-    scoreIconSrc: '/icons/icon-flying-money.svg',
     barGradientStartColor: '#C6B5FF',
     barGradientEndColor: 'rgba(198, 181, 255, 0)',
     barTextColor: '#C3D1F1',
-    imageUrl: RANKING_MEMBERS[1]?.imageUrl,
   },
-  {
-    rank: 3,
+  3: {
     barHeight: 60,
-    scoreIconSrc: '/icons/icon-flying-money.svg',
   },
-];
+};
 
-export default function WorthTestGroupDetail() {
+function formatAmount(amount: number): string {
+  if (amount >= 100000000) {
+    const uk = Math.round(amount / 100000000);
+    return `${uk.toLocaleString()}억원`;
+  }
+  if (amount >= 10000) {
+    const man = Math.round(amount / 10000);
+    return `${man.toLocaleString()}만원`;
+  }
+  return `${amount.toLocaleString()}원`;
+}
+
+function toTop3Entries(
+  rankings: WealthGroupRankingEntry[],
+): RankingEntry[] {
+  return [1, 2, 3].map((rank) => {
+    const entry = rankings.find((e) => e.rank === rank);
+    const style = TOP3_STYLE_BY_RANK[rank] ?? { barHeight: 60 };
+    if (!entry) {
+      return {
+        rank,
+        scoreIconSrc: '/icons/icon-flying-money.svg',
+        ...style,
+      };
+    }
+    return {
+      rank,
+      name: entry.name,
+      score: formatAmount(entry.amount),
+      scoreIconSrc: '/icons/icon-flying-money.svg',
+      ...style,
+    };
+  });
+}
+
+function toDetailRows(rankings: WealthGroupRankingEntry[]): DetailRankingRow[] {
+  return rankings.map((entry) => ({
+    rank: entry.rank,
+    name: entry.name,
+    score: `총 ${formatAmount(entry.amount)}`,
+    imageUrl: entry.result.fortuneTypeImageUrl,
+    scoreIconSrc: '/icons/icon-flying-money.svg',
+    fortuneType: {
+      title: entry.result.fortuneType,
+      description: entry.result.fortuneDetail,
+    },
+  }));
+}
+
+function WorthTestGroupDetailContent() {
   const router = useRouter();
-  const [selectedLabel, setSelectedLabel] = useState(MEMBER_LABELS[0]);
+  const searchParams = useSearchParams();
+  const { worthGroup, setWorthGroup } = useTestStore();
+  const queryGroupId = searchParams.get('groupId');
+  const groupId = queryGroupId ?? worthGroup?.groupId ?? null;
+
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<WealthAgeGroup>('all');
+  const [ranking, setRanking] = useState<WealthGroupRankingResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!groupId) {
+      setError('그룹 정보를 찾을 수 없어요.');
+      return;
+    }
+    let cancelled = false;
+    getWorthGroupRanking(groupId, selectedAgeGroup)
+      .then((response) => {
+        if (cancelled) return;
+        setRanking(response);
+        setWorthGroup({
+          groupId,
+          groupName: response.groupName,
+          inviteCode: response.inviteCode,
+        });
+      })
+      .catch(() => {
+        if (!cancelled) setError('랭킹을 불러오지 못했어요.');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [groupId, selectedAgeGroup, setWorthGroup]);
 
   // 드래그 스크롤
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -429,6 +492,19 @@ export default function WorthTestGroupDetail() {
     isDragging.current = false;
   }, []);
 
+  const top3Entries = useMemo(
+    () => (ranking ? toTop3Entries(ranking.rankings) : []),
+    [ranking],
+  );
+  const detailRows = useMemo(
+    () => (ranking ? toDetailRows(ranking.rankings) : []),
+    [ranking],
+  );
+
+  const headerTitle = ranking
+    ? `${ranking.groupName} 부자랭킹`
+    : '부자랭킹';
+
   return (
     <div
       style={{ backgroundColor: colors.background.main, minHeight: "100vh" }}
@@ -451,7 +527,7 @@ export default function WorthTestGroupDetail() {
         <div className="max-w-md w-full mx-auto">
           <Header
             type="screenInfo"
-            title="부자 모임 부자랭킹"
+            title={headerTitle}
             showBackButton={true}
             showIndicator={false}
             onBackClick={() => router.back()}
@@ -486,12 +562,14 @@ export default function WorthTestGroupDetail() {
             width: 'max-content',
           }}
         >
-          {MEMBER_LABELS.map((label) => {
-            const isSelected = label === selectedLabel;
+          {MEMBER_LABELS.map(({ label, ageGroup }) => {
+            const isSelected = ageGroup === selectedAgeGroup;
             return (
               <button
-                key={label}
-                onClick={() => { if (!hasDragged.current) setSelectedLabel(label); }}
+                key={ageGroup}
+                onClick={() => {
+                  if (!hasDragged.current) setSelectedAgeGroup(ageGroup);
+                }}
                 style={{
                   padding: '8px 17px',
                   backgroundColor: isSelected ? '#D9CEFF' : '#1F2127',
@@ -520,22 +598,43 @@ export default function WorthTestGroupDetail() {
           padding: '0 20px 160px',
         }}
       >
-        {/* 랭킹 TOP 3 */}
-        <RankingTop3Section
-          sectionTitle="전체 금전운 TOP 3"
-          podiumTitle={"금전운이 가장 좋은 3명이애요\n친구들을 더 초대하고 랭킹을 확인해보세요"}
-          entries={TOP3_ENTRIES}
-          displayOrder={[2, 1, 3]}
-        />
+        {error && (
+          <div
+            style={{
+              marginTop: '24px',
+              color: colors.text.bodyPrimary,
+              textAlign: 'center',
+            }}
+          >
+            {error}
+          </div>
+        )}
 
-        {/* 금전운 상세랭킹 */}
-        <FortuneDetailRankingSection
-          sectionTitle="금전운 상세랭킹"
-          rows={RANKING_MEMBERS}
-          buttonText="멤버 추가하기"
-          onButtonClick={() => router.push('/worth-test/question/1?type=member')}
-        />
-        <div style={{ height: '100px' }} />
+        {!error && (
+          <>
+            {/* 랭킹 TOP 3 */}
+            <RankingTop3Section
+              sectionTitle="전체 금전운 TOP 3"
+              podiumTitle={"금전운이 가장 좋은 3명이애요\n친구들을 더 초대하고 랭킹을 확인해보세요"}
+              entries={top3Entries}
+              displayOrder={[2, 1, 3]}
+            />
+
+            {/* 금전운 상세랭킹 */}
+            <FortuneDetailRankingSection
+              sectionTitle="금전운 상세랭킹"
+              rows={detailRows}
+              buttonText="멤버 추가하기"
+              onButtonClick={() => {
+                const target = groupId
+                  ? `/worth-test/question/1?type=member&groupId=${groupId}`
+                  : '/worth-test/question/1?type=member';
+                router.push(target);
+              }}
+            />
+            <div style={{ height: '100px' }} />
+          </>
+        )}
       </div>
 
       {/* 하단 고정 CTA 버튼 */}
@@ -562,5 +661,13 @@ export default function WorthTestGroupDetail() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function WorthTestGroupDetail() {
+  return (
+    <Suspense>
+      <WorthTestGroupDetailContent />
+    </Suspense>
   );
 }

@@ -15,6 +15,7 @@ import { shareRootUrl } from "@/utils/share";
 import { isNativeApp } from "@/utils/device";
 import { close } from "@/utils/bridge";
 import { postShareComplete } from "@/api/share";
+import { getWorthTestStats } from "@/api/worthTest";
 import { useScreenImpression, ScreenName } from "@/analytics";
 
 function HomeContent() {
@@ -23,6 +24,7 @@ function HomeContent() {
   const { resetAll } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
+  const [totalParticipants, setTotalParticipants] = useState<number | null>(null);
 
   useScreenImpression(ScreenName.HOME);
 
@@ -31,19 +33,15 @@ function HomeContent() {
   }, []);
 
   useEffect(() => {
+    getWorthTestStats()
+      .then((response) => setTotalParticipants(response.totalParticipants))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     const token = searchParams.get('shareToken');
     if (token) {
-      postShareComplete(token)
-        .then((response) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('[Home] ShareComplete API Success:', response);
-          }
-        })
-        .catch((error) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.error('[Home] ShareComplete API Error:', error);
-          }
-        });
+      postShareComplete(token).catch(() => {});
     }
   }, [searchParams]);
 
@@ -133,7 +131,11 @@ function HomeContent() {
             />
             <div className="relative">
             <MoreBtn showIcon={false}>
-              지금까지 <span style={{ color: '#D8DCE2' }}>389</span>명이 참여했어요
+              지금까지{' '}
+              <span style={{ color: '#D8DCE2' }}>
+                {(totalParticipants ?? 389).toLocaleString()}
+              </span>
+              명이 참여했어요
             </MoreBtn>
             </div>
           </div>
