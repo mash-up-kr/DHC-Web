@@ -356,28 +356,33 @@ const MEMBER_LABELS: { label: string; ageGroup: WealthAgeGroup }[] = [
   { label: '80대', ageGroup: '80' },
 ];
 
-interface Top3Style {
-  barHeight: number;
-  barGradientStartColor?: string;
-  barGradientEndColor?: string;
-  barTextColor?: string;
+const BAR_HEIGHT_BY_RANK: Record<number, number> = {
+  1: 120,
+  2: 90,
+  3: 60,
+};
+
+interface Top3Colors {
+  barGradientStartColor: string;
+  barGradientEndColor: string;
+  barTextColor: string;
 }
 
-const TOP3_STYLE_BY_RANK: Record<number, Top3Style> = {
+const TOP3_COLORS_BY_RANK: Record<number, Top3Colors> = {
   1: {
-    barHeight: 120,
     barGradientStartColor: '#B5FFCA',
     barGradientEndColor: 'rgba(109, 153, 143, 0)',
     barTextColor: '#DBFFCE',
   },
   2: {
-    barHeight: 90,
     barGradientStartColor: '#C6B5FF',
     barGradientEndColor: 'rgba(198, 181, 255, 0)',
     barTextColor: '#C3D1F1',
   },
   3: {
-    barHeight: 60,
+    barGradientStartColor: '#72A5CA',
+    barGradientEndColor: 'rgba(114, 165, 202, 0)',
+    barTextColor: '#70B7E6',
   },
 };
 
@@ -398,12 +403,12 @@ function toTop3Entries(
 ): RankingEntry[] {
   return [1, 2, 3].map((rank) => {
     const entry = rankings.find((e) => e.rank === rank);
-    const style = TOP3_STYLE_BY_RANK[rank] ?? { barHeight: 60 };
+    const barHeight = BAR_HEIGHT_BY_RANK[rank] ?? 60;
     if (!entry) {
       return {
         rank,
+        barHeight,
         scoreIconSrc: '/icons/icon-flying-money.svg',
-        ...style,
       };
     }
     return {
@@ -411,7 +416,8 @@ function toTop3Entries(
       name: entry.name,
       score: formatAmount(entry.amount),
       scoreIconSrc: '/icons/icon-flying-money.svg',
-      ...style,
+      barHeight,
+      ...TOP3_COLORS_BY_RANK[rank],
     };
   });
 }
