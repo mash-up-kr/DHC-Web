@@ -21,7 +21,7 @@ import { useScreenImpression, ScreenName } from "@/analytics";
 function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { resetAll } = useTestStore();
+  const { resetAll, setWorthResultId, setGroupNameInput } = useTestStore();
   const [isApp, setIsApp] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [totalParticipants, setTotalParticipants] = useState<number | null>(null);
@@ -163,7 +163,11 @@ function HomeContent() {
               status="active"
               size="xl"
               fullWidth
-              onClick={() => router.push('/worth-test/group/create')}
+              onClick={() => {
+                setWorthResultId(null);
+                setGroupNameInput('');
+                router.push('/worth-test/group/create');
+              }}
             >
               랭킹 그룹 만들기
             </CTAButton>
