@@ -415,6 +415,7 @@ function toTop3Entries(
       rank,
       name: entry.name,
       score: formatAmount(entry.amount),
+      imageUrl: entry.result.fortuneTypeImageUrl,
       scoreIconSrc: '/icons/icon-flying-money.svg',
       barHeight,
       ...TOP3_COLORS_BY_RANK[rank],
