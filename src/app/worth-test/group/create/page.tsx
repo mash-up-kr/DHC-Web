@@ -4,19 +4,25 @@ import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/design-system/components/Header/Header";
 import { Title } from "@/design-system/components/Title";
-import { LabelButton } from "@/design-system/components/LabelButton";
 import { InputFieldGroup } from "@/design-system/components/InputFieldGroup";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { colors } from "@/design-system/foundations/colors";
 import { useTestStore } from "@/store/useTestStore";
 import { QuestionBanner } from "../../question/_components/QuestionBanner";
 import { useScreenImpression, ScreenName } from "@/analytics";
+import { postWorthGroup } from "@/api/worthTest";
 
 export default function Question1() {
   const router = useRouter();
-  const { userInfo, setUserInfo } = useTestStore();
+  const {
+    groupNameInput,
+    setGroupNameInput,
+    worthResultId,
+    setWorthGroup,
+  } = useTestStore();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   useScreenImpression(ScreenName.QUESTION_1);
 
@@ -32,11 +38,25 @@ export default function Question1() {
     return () => vv.removeEventListener("resize", handleResize);
   }, []);
 
-  const isFormValid = !!userInfo.name;
+  const isFormValid = !!groupNameInput.trim();
 
-  const handleNext = () => {
-    if (isFormValid) {
-      router.push('/worth-test/group/detail');
+  const handleNext = async () => {
+    if (!isFormValid || submitting) return;
+    setSubmitting(true);
+    try {
+      const response = await postWorthGroup({
+        groupName: groupNameInput.trim(),
+        resultId: worthResultId ?? undefined,
+      });
+      setWorthGroup({
+        groupId: response.groupId,
+        groupName: response.groupName,
+        inviteCode: response.inviteCode,
+      });
+      router.push(`/worth-test/group/detail?groupId=${response.groupId}`);
+    } catch {
+      alert('그룹 생성에 실패했어요. 잠시 후 다시 시도해주세요.');
+      setSubmitting(false);
     }
   };
 
@@ -103,9 +123,9 @@ export default function Question1() {
           label="그룹이름"
           align="start"
           items={[
-            { key: 'name', value: userInfo.name, placeholder: '부자 모임', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
+            { key: 'name', value: groupNameInput, placeholder: '부자 모임', inputRef: nameInputRef as React.Ref<HTMLInputElement> },
           ]}
-          onChange={(_, value) => setUserInfo({ name: value })}
+          onChange={(_, value) => setGroupNameInput(value)}
         />
       </div>
 
@@ -120,9 +140,9 @@ export default function Question1() {
       >
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
-          type="oneButton"
-          primaryButtonText="그룹 생성하기"
-          primaryDisabled={!isFormValid}
+            type="oneButton"
+            primaryButtonText={submitting ? "생성 중..." : "그룹 생성하기"}
+            primaryDisabled={!isFormValid || submitting}
             onPrimaryClick={handleNext}
           />
         </div>

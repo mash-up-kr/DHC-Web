@@ -9,6 +9,11 @@ export async function apiClient<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const { body, headers, ...restOptions } = options;
+  const method = (restOptions.method ?? 'GET').toUpperCase();
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[api] → ${method} ${endpoint}`, body ?? '');
+  }
 
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
@@ -21,8 +26,19 @@ export async function apiClient<T>(
   });
 
   if (!response.ok) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(
+        `[api] ✖ ${method} ${endpoint} — ${response.status} ${response.statusText}`,
+      );
+    }
     throw new Error(`API Error: ${response.status} ${response.statusText}`);
   }
 
-  return response.json() as Promise<T>;
+  const data = (await response.json()) as T;
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[api] ← ${method} ${endpoint}`, data);
+  }
+
+  return data;
 }

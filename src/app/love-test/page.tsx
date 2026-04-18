@@ -33,17 +33,7 @@ function HomeContent() {
   useEffect(() => {
     const token = searchParams.get('shareToken');
     if (token) {
-      postShareComplete(token)
-        .then((response) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('[Home] ShareComplete API Success:', response);
-          }
-        })
-        .catch((error) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.error('[Home] ShareComplete API Error:', error);
-          }
-        });
+      postShareComplete(token).catch(() => {});
     }
   }, [searchParams]);
 

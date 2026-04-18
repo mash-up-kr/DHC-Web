@@ -43,6 +43,13 @@ interface LoveDate {
   day: string;
 }
 
+// worth-test 그룹 정보
+interface WorthGroup {
+  groupId: string;
+  groupName: string;
+  inviteCode: string;
+}
+
 interface TestState {
   // Q1 데이터
   userInfo: UserInfo;
@@ -67,6 +74,18 @@ interface TestState {
   // 공유 여부
   hasShared: boolean;
   setHasShared: (shared: boolean) => void;
+
+  // worth-test 결과 ID
+  worthResultId: string | null;
+  setWorthResultId: (resultId: string | null) => void;
+
+  // worth-test 그룹
+  worthGroup: WorthGroup | null;
+  setWorthGroup: (group: WorthGroup | null) => void;
+
+  // worth-test 그룹 이름 입력값
+  groupNameInput: string;
+  setGroupNameInput: (name: string) => void;
 
   // 전체 초기화
   resetAll: () => void;
@@ -106,6 +125,9 @@ const initialState = {
     day: '',
   },
   hasShared: false,
+  worthResultId: null,
+  worthGroup: null,
+  groupNameInput: '',
 };
 
 export const useTestStore = create<TestState>()(
@@ -139,6 +161,12 @@ export const useTestStore = create<TestState>()(
         })),
 
       setHasShared: (shared) => set({ hasShared: shared }),
+
+      setWorthResultId: (resultId) => set({ worthResultId: resultId }),
+
+      setWorthGroup: (group) => set({ worthGroup: group }),
+
+      setGroupNameInput: (name) => set({ groupNameInput: name }),
 
       resetAll: () => set(initialState),
     }),

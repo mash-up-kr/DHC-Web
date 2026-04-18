@@ -14,18 +14,30 @@ import { validateDateField, formatBirthTime } from "@/utils/dateValidation";
 import { QuestionBanner } from "../_components/QuestionBanner";
 import { QUESTION_2_COPY, parseQuestionType } from "../_types/questionType";
 import { useScreenImpression, ScreenName } from "@/analytics";
+import {
+  mapStoreToWealthRequest,
+  postWorthGroupJoin,
+  postWorthTest,
+} from "@/api/worthTest";
 
 function Question2Content() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const questionType = parseQuestionType(searchParams.get("type"));
   const copy = QUESTION_2_COPY[questionType];
-  const { userBirth, setUserBirth } = useTestStore();
+  const {
+    userInfo,
+    userBirth,
+    setUserBirth,
+    setWorthResultId,
+    worthGroup,
+  } = useTestStore();
   const yearRef = useRef<HTMLInputElement>(null);
   const monthRef = useRef<HTMLInputElement>(null);
   const dayRef = useRef<HTMLInputElement>(null);
   const timeRef = useRef<HTMLInputElement>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   useScreenImpression(ScreenName.QUESTION_2);
 
@@ -47,9 +59,26 @@ function Question2Content() {
 
   const isFormValid = userBirth.year && userBirth.month && userBirth.day && (userBirth.unknownTime || userBirth.birthTime);
 
-  const handleNext = () => {
-    if (isFormValid) {
+  const handleNext = async () => {
+    if (!isFormValid || submitting) return;
+    setSubmitting(true);
+    try {
+      const request = mapStoreToWealthRequest({ userInfo, userBirth });
+      const response = await postWorthTest(request);
+      setWorthResultId(response.resultId);
+
+      if (questionType === 'member' && worthGroup?.groupId) {
+        await postWorthGroupJoin(worthGroup.groupId, {
+          resultId: response.resultId,
+        });
+        router.push(`/worth-test/group/detail?groupId=${worthGroup.groupId}`);
+        return;
+      }
+
       router.push("/worth-test/result");
+    } catch {
+      alert('결과 처리 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.');
+      setSubmitting(false);
     }
   };
 
@@ -179,8 +208,8 @@ function Question2Content() {
         <div className="max-w-md w-full mx-auto">
           <CTAButtonGroup
             type="oneButton"
-            primaryButtonText="결과 확인"
-            primaryDisabled={!isFormValid}
+            primaryButtonText={submitting ? "처리 중..." : "결과 확인"}
+            primaryDisabled={!isFormValid || submitting}
             onPrimaryClick={handleNext}
           />
         </div>

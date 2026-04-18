@@ -1,7 +1,8 @@
 "use client";
 
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CTAButtonGroup } from "@/design-system/components/CTAButtonGroup";
 import { ScoreText } from "@/design-system/components/ScoreText/ScoreText";
 import { Title } from "@/design-system/components/Title";
@@ -12,24 +13,43 @@ import { colors, gradients } from "@/design-system/foundations/colors";
 import { openStore } from "@/utils/storeUrl";
 import { shareRootUrl } from "@/utils/share";
 import { typography } from "@/design-system/foundations/typography";
+import { useTestStore } from "@/store/useTestStore";
+import {
+  getWorthTestResult,
+  WealthFortuneEvent,
+  WealthFortuneResultResponse,
+  WealthTestResultResponse,
+} from "@/api/worthTest";
+
+function formatAmount(amount: number): string {
+  if (amount >= 100000000) {
+    const uk = Math.round(amount / 100000000);
+    return `${uk.toLocaleString()}억원`;
+  }
+  if (amount >= 10000) {
+    const man = Math.round(amount / 10000);
+    return `${man.toLocaleString()}만원`;
+  }
+  return `${amount.toLocaleString()}원`;
+}
 
 /** 점수/타입 결과 섹션 */
-function ScoreSection() {
+function ScoreSection({ result }: { result: WealthFortuneResultResponse }) {
   return (
     <>
       <div style={{ paddingTop: "26px" }}>
         <ScoreText
           type="result"
           badgeText="내 금전운 타입"
-          title="대기만성 거북이형"
-          description={"처음엔 느리지만 꾸준함이 힘이에요!\n무리하지 말고 차근차근 나아가는 힘이 있어요"}
+          title={result.fortuneType}
+          description={result.fortuneTypeDescription}
         />
       </div>
 
       <div className="max-w-md w-full" style={{ marginTop: "24px" }}>
         <img
-          src="https://picsum.photos/400/200"
-          alt="result"
+          src={result.fortuneTypeImageUrl}
+          alt={result.fortuneType}
           style={{ width: "100%", height: "200px", objectFit: "cover" }}
         />
       </div>
@@ -50,7 +70,7 @@ function ScoreSection() {
 }
 
 /** 금전운 상세보기 섹션 */
-function FortuneDetailSection() {
+function FortuneDetailSection({ fortuneDetail }: { fortuneDetail: string }) {
   return (
     <div
       className="max-w-md w-full"
@@ -73,16 +93,43 @@ function FortuneDetailSection() {
       >
         금전운 상세보기
       </h2>
-      <MessageCard
-        title="금전운"
-        message={"초년 고생, 말년 풍요: 젊을 때는 금전적 어려움이나 정체기가 있을 수 있으나, 꾸준한 노력으로 내공을 쌓아 크게 성공합니다.\n\n투자 및 인내: 당장의 작은 이익에 연연하지 않고 장기적인 관점에서 노력과 투자를 지속할 때 큰 결실을 봅니다.\n\n노력의 산물: 요행을 바라기보다는 묵묵히 자신의 분야에서 역량을 기르면, 그 대가가 뒤늦게 재물로 돌아오는 구조입니다."}
-      />
+      <MessageCard title="금전운" message={fortuneDetail} />
     </div>
   );
 }
 
 /** 금전운 인생 그래프 섹션 */
-function LifeGraphSection() {
+function LifeGraphSection({
+  result,
+}: {
+  result: WealthFortuneResultResponse;
+}) {
+  const dataPoints = useMemo(
+    () => result.graphData.map((p) => ({ x: p.age, value: p.amount })),
+    [result.graphData],
+  );
+
+  const events = useMemo(
+    () =>
+      result.events.map((e) => ({
+        x: e.age,
+        iconSrc: e.iconUrl,
+      })),
+    [result.events],
+  );
+
+  const peakPoint = useMemo(() => {
+    if (dataPoints.length === 0) {
+      return { x: 0, value: 0 };
+    }
+    return dataPoints.reduce(
+      (max, curr) => (curr.value > max.value ? curr : max),
+      dataPoints[0],
+    );
+  }, [dataPoints]);
+
+  const firstEvent: WealthFortuneEvent | undefined = result.events[0];
+
   return (
     <>
       <h2
@@ -101,69 +148,68 @@ function LifeGraphSection() {
         className="max-w-md w-full"
         style={{ marginTop: '16px' }}
         headerLabel="내 금전운 전성기"
-        dataPoints={[
-          { x: 20, value: 500 },
-          { x: 23, value: 800 },
-          { x: 35, value: 1500 },
-          { x: 47, value: 4500 },
-          { x: 60, value: 4528 },
-          { x: 75, value: 4300 },
-          { x: 80, value: 4100 },
-        ]}
+        dataPoints={dataPoints}
         peak={{
-          defaultX: 47,
-          ageLabel: "47살",
-          amountLabel: "4500만원",
+          defaultX: peakPoint.x,
+          ageLabel: `${peakPoint.x}살`,
+          amountLabel: formatAmount(peakPoint.value),
         }}
-        events={[
-          { x: 23, iconSrc: "/icons/icon-luckybag.svg" },
-          { x: 60, iconSrc: "/icons/icon-flying-money.svg" },
-        ]}
+        events={events}
         xAxisLabels={[20, 40, 60, 80]}
         xAxisLabelFormat={(x) => `${x}대`}
-        peakTooltipFormat={(v) => `${v.toLocaleString()}만원`}
+        peakTooltipFormat={(v) => formatAmount(v)}
       />
 
-      <div
-        className="max-w-md w-full"
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: '12px',
-          padding: '20px 24px',
-          backgroundColor: colors.neutral[700],
-          borderRadius: '12px',
-          margin: '16px 20px',
-        }}
-      >
+      {firstEvent && (
         <div
+          className="max-w-md w-full"
           style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
-            backgroundColor: '#2E3341',
             display: 'flex',
+            flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
+            gap: '12px',
+            padding: '20px 24px',
+            backgroundColor: colors.neutral[700],
+            borderRadius: '12px',
+            margin: '16px 20px',
           }}
         >
-          <Image src="/icons/icon-luckybag.svg" alt="" width={24} height={24} />
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '12px',
+              backgroundColor: '#2E3341',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src={firstEvent.iconUrl}
+              alt=""
+              width={24}
+              height={24}
+              style={{ display: 'block' }}
+            />
+          </div>
+          <span
+            style={{
+              fontFamily: 'Wanted Sans',
+              fontSize: '14px',
+              lineHeight: '20px',
+              fontWeight: 600,
+              color: colors.neutral[100],
+              whiteSpace: 'pre-line',
+            }}
+          >
+            {`${firstEvent.age}살에 ${firstEvent.description}\n${formatAmount(
+              Math.abs(firstEvent.amount),
+            )}${firstEvent.amount >= 0 ? '을 받아요' : '을 잃어요'}`}
+          </span>
         </div>
-        <span
-          style={{
-            fontFamily: 'Wanted Sans',
-            fontSize: '14px',
-            lineHeight: '20px',
-            fontWeight: 600,
-            color: colors.neutral[100],
-            whiteSpace: 'pre-line',
-          }}
-        >
-          23살에 로또에 2등에 당첨되서{'\n'}5,300만원을 받아요
-        </span>
-      </div>
+      )}
     </>
   );
 }
@@ -371,8 +417,32 @@ function CTASection({ onRestart }: { onRestart: () => void }) {
   );
 }
 
-export default function WorthTestResult() {
+function WorthTestResultContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { worthResultId } = useTestStore();
+  const resolvedResultId = searchParams.get('resultId') ?? worthResultId;
+
+  const [data, setData] = useState<WealthTestResultResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!resolvedResultId) {
+      setError('결과 ID가 없어요. 테스트를 먼저 진행해주세요.');
+      return;
+    }
+    let cancelled = false;
+    getWorthTestResult(resolvedResultId)
+      .then((response) => {
+        if (!cancelled) setData(response);
+      })
+      .catch(() => {
+        if (!cancelled) setError('결과를 불러오지 못했어요.');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [resolvedResultId]);
 
   const handleShareConfirm = async () => {
     const result = await shareRootUrl();
@@ -381,19 +451,49 @@ export default function WorthTestResult() {
     }
   };
 
+  if (error) {
+    return (
+      <div
+        style={{ backgroundColor: colors.background.main, minHeight: '100vh', color: colors.text.main }}
+        className="flex items-center justify-center px-6 text-center"
+      >
+        {error}
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div
+        style={{ backgroundColor: colors.background.main, minHeight: '100vh', color: colors.text.main }}
+        className="flex items-center justify-center"
+      >
+        결과 불러오는 중...
+      </div>
+    );
+  }
+
   return (
     <div
       style={{ backgroundColor: colors.background.main, minHeight: "100vh" }}
       className="flex flex-col items-center"
     >
-      <ScoreSection />
+      <ScoreSection result={data.result} />
       <div style={{ height: "24px" }} />
-      <FortuneDetailSection />
-      <LifeGraphSection />
+      <FortuneDetailSection fortuneDetail={data.result.fortuneDetail} />
+      <LifeGraphSection result={data.result} />
       <RankingSection onGroupCreate={() => router.push("/worth-test/group/create")} />
       <TipSection onShare={handleShareConfirm} />
       <PromotionSection />
       <CTASection onRestart={() => router.push("/worth-test")} />
     </div>
+  );
+}
+
+export default function WorthTestResult() {
+  return (
+    <Suspense>
+      <WorthTestResultContent />
+    </Suspense>
   );
 }
