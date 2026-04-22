@@ -121,11 +121,11 @@ export default function Result() {
   }
 
   if (step === 'ready') {
-    return <ResultReady onConfirm={handleConfirm} />;
+    return <ResultReady score={apiResult?.score} onConfirm={handleConfirm} />;
   }
 
   if (step === 'preview') {
-    return <ResultPreview onShare={handleShare} />;
+    return <ResultPreview result={apiResult} onShare={handleShare} />;
   }
 
   return <ResultContent result={apiResult} />;

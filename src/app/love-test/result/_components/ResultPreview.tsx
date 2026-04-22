@@ -13,12 +13,14 @@ import { openStore } from "@/utils/storeUrl";
 import { shareRootUrl } from "@/utils/share";
 import { useTestStore } from "@/store/useTestStore";
 import { useScreenImpression, ScreenName } from "@/analytics";
+import { LoveTestResponse } from "@/api/loveTest";
 
 interface ResultPreviewProps {
+  result: LoveTestResponse | null;
   onShare?: () => void;
 }
 
-export function ResultPreview({ onShare }: ResultPreviewProps) {
+export function ResultPreview({ result, onShare }: ResultPreviewProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setHasShared } = useTestStore();
@@ -34,8 +36,7 @@ export function ResultPreview({ onShare }: ResultPreviewProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
-  const compatibilityScore = 85;
+  const compatibilityScore = result?.score ?? 0;
 
   const getScoreMessage = (score: number) => {
     if (score >= 90) return "천생연분이에요!\n지금 바로 고백하세요!";

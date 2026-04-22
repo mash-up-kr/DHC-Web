@@ -29,10 +29,11 @@ function getResultImage(score: number): string {
 }
 
 interface ResultReadyProps {
+  score?: number;
   onConfirm: () => void;
 }
 
-export function ResultReady({ onConfirm }: ResultReadyProps) {
+export function ResultReady({ score, onConfirm }: ResultReadyProps) {
   const [isApp, setIsApp] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
 
@@ -109,7 +110,7 @@ export function ResultReady({ onConfirm }: ResultReadyProps) {
           <ScratchOrb
             size={210}
             maskImageUrl="/images/love-test/scratch-intro-orb.png"
-            revealImageUrl={getResultImage(85)}
+            revealImageUrl={getResultImage(score ?? 0)}
             revealText=""
             completionThreshold={0.65}
             brushSize={30}

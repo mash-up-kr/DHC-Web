@@ -655,8 +655,7 @@ export function ResultContent({ result }: ResultContentProps) {
   const partnerName = partnerInfo.name || '';
   // 사용자 이름 (없으면 빈 문자열)
   const userName = userInfo.name || '';
-  // 임시 궁합 점수 (나중에 실제 계산 로직으로 대체)
-  const compatibilityScore = 85;
+  const compatibilityScore = result?.score ?? 0;
 
   return (
     <main
