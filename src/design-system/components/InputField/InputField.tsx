@@ -1,8 +1,6 @@
 /**
  * InputField Component
  * 텍스트 입력 필드 컴포넌트
- *
- * @TODO 임시 코드 - 수정 예정
  */
 
 'use client';

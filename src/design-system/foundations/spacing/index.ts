@@ -1,8 +1,6 @@
 /**
  * Spacing System
  * 간격 시스템 정의
- *
- * @TODO 임시 코드 - 수정 예정
  */
 
 export const spacing = {

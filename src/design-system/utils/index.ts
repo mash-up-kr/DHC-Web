@@ -1,8 +1,6 @@
 /**
  * Design System Utilities
  * 디자인 시스템 관련 유틸리티 함수들
- *
- * @TODO 임시 코드 - 수정 예정
  */
 
 /**
