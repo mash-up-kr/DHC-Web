@@ -49,8 +49,8 @@ function ScoreSection({ result }: { result: WealthFortuneResultResponse }) {
       <div
         className="max-w-md w-full"
         style={{
-          paddingTop: "25px",
-          paddingBottom: "25px",
+          paddingTop: "40px",
+          paddingBottom: "30px",
           display: "flex",
           justifyContent: "center",
         }}
