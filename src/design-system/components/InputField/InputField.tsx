@@ -102,6 +102,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       borderRadius: '8px',
       backgroundColor: colors.neutral[700],
       ...typography.title.h6,
+      fontSize: '16px',
       textAlign: 'center',
       transition: 'all 0.2s ease',
       outline: 'none',
