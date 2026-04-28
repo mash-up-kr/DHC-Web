@@ -46,12 +46,32 @@ function ScoreSection({ result }: { result: WealthFortuneResultResponse }) {
         />
       </div>
 
-      <div className="max-w-md w-full" style={{ marginTop: "24px" }}>
-        <img
-          src={result.fortuneTypeImageUrl}
-          alt={result.fortuneType}
-          style={{ width: "100%", height: "200px", objectFit: "cover" }}
-        />
+      <div
+        className="max-w-md w-full"
+        style={{
+          paddingTop: "25px",
+          paddingBottom: "25px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "156px",
+            height: "156px",
+            borderRadius: "50%",
+            backgroundColor: "#D9D9D9",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={result.fortuneTypeImageUrl}
+            alt={result.fortuneType}
+            style={{ width: "64px", height: "64px", objectFit: "contain" }}
+          />
+        </div>
       </div>
 
       {/* FortuneCard Shadow */}
