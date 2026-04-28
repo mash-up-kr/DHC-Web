@@ -57,8 +57,8 @@ function ScoreSection({ result }: { result: WealthFortuneResultResponse }) {
       >
         <div
           style={{
-            width: "156px",
-            height: "156px",
+            width: "128px",
+            height: "128px",
             borderRadius: "50%",
             backgroundColor: "#D9D9D9",
             display: "flex",
